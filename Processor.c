@@ -166,7 +166,16 @@ void Processor_DecodeAndExecuteInstruction() {
 			break;
 
 		case MEMADD_INST:
-			registerAccumulator_CPU = MEMADD_INST + operand2;
+			//Qué dirección leemos 
+			registerMAR_CPU = operand1; 
+			Buses_write_AddressBus_From_To(CPU, MAINMEMORY);
+			//Que leemos 
+			registerCTRL_CPU = CTRLREAD; 
+			Buses_write_ControlBus_From_To(CPU, MAINMEMORY);
+			//El dato queda en el MBR
+			registerAccumulator_CPU = registerMBR_CPU.cell + operand2;
+			//Incrementar el PC 
+			registerPC_CPU ++;
 			break;	
 
 			  
