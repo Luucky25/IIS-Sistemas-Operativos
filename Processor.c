@@ -164,6 +164,10 @@ void Processor_DecodeAndExecuteInstruction() {
 		case HALT_INST: 
 			registerPSW_CPU=POWEROFF;
 			break;
+
+		case MEMADD_INST:
+			
+
 			  
 		// Unknown instruction
 		default : registerPC_CPU++;
