@@ -166,7 +166,8 @@ void Processor_DecodeAndExecuteInstruction() {
 			break;
 
 		case MEMADD_INST:
-			
+			registerAccumulator_CPU = MEMADD_INST + operand2;
+			break;	
 
 			  
 		// Unknown instruction
