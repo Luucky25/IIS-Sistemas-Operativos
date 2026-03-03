@@ -16,6 +16,8 @@ int numberOfProgramsInArrivalTimeQueue=0;
 // Powers on of the Computer System.
 void ComputerSystem_PowerOn(int argc, char *argv[], int paramIndex) {
 
+	ComputerSystem_PrintProgramList();
+
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 99, POWERON, "STARTING simulation\n");
 
 	// Obtain a list of programs in the command line
@@ -37,5 +39,20 @@ void ComputerSystem_PowerOff() {
 	exit(0);
 }
 
+
 /////////////////////////////////////////////////////////
 //  New functions below this line  //////////////////////
+
+//Print the contents at the ProgramLists
+//
+//	Format : Program_[Example1]_with_arrival_time_[0]
+void ComputerSystem_PrintProgramList(){
+	//IMprimir mensaje cabecera x101
+	ComputerSystem_DebugMessage(NO_TIMED_MESSAGE, 101, INIT);
+	//Recorrer ProgramList e imprimir mensaje x102
+	for(int i=0; i<PROGRAMSMAXNUMBER; i++){
+		if(programList[i] != NULL){
+			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE, 102, INIT,programList[i]->executableName,  programList[i]->arrivalTime);
+		}
+	}
+}

@@ -7,6 +7,7 @@
 // Functions prototypes
 void ComputerSystem_PowerOn(int argc, char *argv[], int);
 void ComputerSystem_PowerOff();
+void ComputerSystem_PrintProgramList();
 
 // This "extern" declarations enables other source code files to gain access
 // to the variables "programList", etc.
