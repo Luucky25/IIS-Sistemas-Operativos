@@ -213,22 +213,22 @@ void Processor_DecodeAndExecuteInstruction() {
 				case REGISTERACCUMULATOR_CPU:
 					registerAccumulator_CPU=registerMBR_CPU.cell;
 					//Sumar registerMar_CPU y el acumulador +  Dejarlo en el acumulador 
-					ADD registerMAR_CPU registerAccumulator_CPU;
+					registerAccumulator_CPU =  registerMAR_CPU  + registerAccumulator_CPU;
 					break;
 				case REGISTERA_CPU:
 					registerA_CPU=registerMBR_CPU.cell;
 					//Sumar registerMar_CPU y el acumulador +  Dejarlo en el acumulador 
-					ADD registerMAR_CPU registerA_CPU;
+					registerAccumulator_CPU = registerMAR_CPU + registerA_CPU;
 					break;
 				case REGISTERB_CPU:
 					registerB_CPU=registerMBR_CPU.cell;
 					//Sumar registerMar_CPU y el acumulador +  Dejarlo en el acumulador 
-					ADD registerMAR_CPU registerB_CPU;
+					registerAccumulator_CPU =  registerMAR_CPU + registerB_CPU;
 					break;
 				default:
 					registerAccumulator_CPU=registerMBR_CPU.cell;
 					//Default --> Leer acumulador y sumar al contenido de operand1
-					ADD registerMAR_CPU registerAccumulator_CPU;
+					registerAccumulator_CPU = registerMAR_CPU + registerAccumulator_CPU;
 
 			}
 			registerPC_CPU++;
