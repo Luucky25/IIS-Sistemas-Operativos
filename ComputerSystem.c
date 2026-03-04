@@ -23,7 +23,7 @@ void ComputerSystem_PowerOn(int argc, char *argv[], int paramIndex) {
 	
 	//Llamada a PrintProgramList antes del arranque del SO 
 	ComputerSystem_PrintProgramList();
-	
+
 	// Request the OS to do the initial set of tasks. The last one will be
 	// the processor allocation to the process with the highest priority
 	OperatingSystem_Initialize(programsFromFilesBaseIndex);
@@ -48,11 +48,10 @@ void ComputerSystem_PowerOff() {
 //
 //	Format : Program_[Example1]_with_arrival_time_[0]
 void ComputerSystem_PrintProgramList(){
-	printf("Entrando en PrintProgramList");
 	//IMprimir mensaje cabecera x101
 	ComputerSystem_DebugMessage(NO_TIMED_MESSAGE, 101, INIT);
 	//Recorrer ProgramList e imprimir mensaje x102
-	for(int i=0; i<PROGRAMSMAXNUMBER; i++){
+	for(int i=1; i<PROGRAMSMAXNUMBER; i++){
 		if(programList[i] != NULL){
 			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE, 102, INIT,programList[i]->executableName,  programList[i]->arrivalTime);
 		}
