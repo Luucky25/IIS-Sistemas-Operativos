@@ -4,5 +4,5 @@
 // numbers of messages greather than 100 for students
 //
 
-101, "[0]_User_programs_list:"
-102, "<tab>Program_@[ejemplo1]_with_arrival_time_[@0] "
+101, "[0] User programs list:"
+102, "\t Program @[%s] with arrival time [@%d] \n"
