@@ -202,7 +202,7 @@ void Processor_DecodeAndExecuteInstruction() {
 			break;
 		
 		case MEMADD_INST:
-			registerMAR_CPU=operand1;
+			registerMAR_CPU=operand1;	//memAdress
 			// Send to the MMU controller the address in which the reading has to take place: use the address bus for this
 			Buses_write_AddressBus_From_To(CPU, MMU);
 			// Tell the MMU controller to read
@@ -211,24 +211,16 @@ void Processor_DecodeAndExecuteInstruction() {
 			// Copy the read data to the register indicated in operand2
 			switch (operand2) {
 				case REGISTERACCUMULATOR_CPU:
-					registerAccumulator_CPU=registerMBR_CPU.cell;
-					//Sumar registerMar_CPU y el acumulador +  Dejarlo en el acumulador 
-					registerAccumulator_CPU =  registerMBR_CPU.cell + registerAccumulator_CPU;
+					registerAccumulator_CPU = registerAccumulator_CPU + registerMBR_CPU.cell;
 					break;
 				case REGISTERA_CPU:
-					registerA_CPU=registerMBR_CPU.cell;
-					//Sumar registerMar_CPU y el acumulador +  Dejarlo en el acumulador 
-					registerAccumulator_CPU = registerMBR_CPU.cell + registerA_CPU;
+					registerAccumulator_CPU = registerA_CPU + registerMBR_CPU.cell;
 					break;
 				case REGISTERB_CPU:
-					registerB_CPU=registerMBR_CPU.cell;
-					//Sumar registerMar_CPU y el acumulador +  Dejarlo en el acumulador 
-					registerAccumulator_CPU =   registerMBR_CPU.cell + registerB_CPU;
+					registerAccumulator_CPU = registerB_CPU + registerMBR_CPU.cell;
 					break;
 				default:
-					registerAccumulator_CPU=registerMBR_CPU.cell;
-					//Default --> Leer acumulador y sumar al contenido de operand1
-					registerAccumulator_CPU = registerMBR_CPU.cell + registerAccumulator_CPU;
+					registerAccumulator_CPU = registerAccumulator_CPU + registerMBR_CPU.cell;
 
 			}
 			registerPC_CPU++;

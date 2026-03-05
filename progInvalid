@@ -1,0 +1,4 @@
+//Error: Tamaño inicial no definido 
+ADD 0 0 
+TRAP 3
+
