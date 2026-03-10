@@ -78,4 +78,28 @@ Hacemos un if comprobando PROGRAMNOTVALID y retornando (evitando el error)
 Añadimos los mensajes de error oportunos a NOFREEENTRY con el mensaje asignado 51 y sus parametros. 
 MOdificamos el meótodo OperatingSystem_LongTermScheduler
 
+Ejercicio 8 ==============================
+Creamos el programa prog-V1-E8 que supera el max de proceso posible 
+Al ejecutarlo genera una ejecución infinita en bucle 
+
+De nuevo, repetimos la dinámica de los dos anteriores casos, deteniendo la creación del proceso y 
+gestionando la interrupción con un mensaje concreto.
+
+
+Ejercicio 9 ===============================
+Creamos el programa prog-V1-E9 que supera el numero de instrucciones indicados por el programa 
+Al ejecutarlo entramos en un bucle infinito de ejecución 
+
+Repetimos la dinámica de los anteriores casos, deteniendo la ejecución y 
+gestionando la interrupcion con un mensaje concreto. 
+
+
+Ejercicio 10 ================================
+Ejecutamos programas con las opciones indicadas por el enunciado. 
+El resultado de la ejecución es: El SystemIdleProcess se carga directamente en la posición [3] de la lista de procesos
+
+El PID inicial en caso de no especificarse es -1. Indicado en la linea 45 (en la versión actual). 
+
+Trabajmos para que el PID sea algo aislado de la ejecución y funcionamiento correcto de los programas. 
+
 
