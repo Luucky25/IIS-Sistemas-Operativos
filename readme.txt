@@ -101,5 +101,7 @@ El resultado de la ejecución es: El SystemIdleProcess se carga directamente en 
 El PID inicial en caso de no especificarse es -1. Indicado en la linea 45 (en la versión actual). 
 
 Trabajmos para que el PID sea algo aislado de la ejecución y funcionamiento correcto de los programas. 
-
+    - Modificamos el valor predeterminado de initialPID (line 77) para que se ajuste a: 
+            PROCESSTABLEMAXSIZE -1, siendo este valor el último valor con el que los 
+            programas no generan errores
 
