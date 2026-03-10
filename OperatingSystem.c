@@ -158,6 +158,12 @@ int OperatingSystem_LongTermScheduler() {
 			case PROGRAMDOESNOTEXIST:
 				ComputerSystem_DebugMessage(TIMED_MESSAGE,51, ERROR, programList[i]->executableName, "it does not exist");
 				break;
+			case NOFREEENTRY: 
+				ComputerSystem_DebugMessage(TIMED_MESSAGE,50,ERROR, programList[i] -> executableName);
+				break;
+			case PROGRAMNOTVALID: 
+				ComputerSystem_DebugMessage(TIMED_MESSAGE,51, ERROR, programList[i] -> executableName, "invalid priority or size");
+				break;
 			default:
 				// Process creation has succeeded: additional actions
 				// Show message "Process [createdProcessPID] created from program [executableName]\n"
@@ -185,6 +191,9 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 
 	// Obtain a process ID
 	assignedPID=OperatingSystem_ObtainAnEntryInTheProcessTable();
+	if(assignedPID == NOFREEENTRY){
+		return assignedPID;
+	}
 
 	// Check if programFile exists
 	programFile=fopen(executableProgram->executableName, "r");
@@ -193,9 +202,15 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 	}
 	// Obtain the memory requirements of the program
 	processSize=OperatingSystem_ObtainProgramSize(programFile);	
+	if(processSize == PROGRAMNOTVALID){
+		return processSize;
+	}
 
 	// Obtain the priority for the process
 	priority=OperatingSystem_ObtainPriority(programFile);
+	if(priority == PROGRAMNOTVALID){
+		return priority;
+	}
 	
 	// Obtain enough memory space
  	loadingPhysicalAddress=OperatingSystem_ObtainMainMemory(processSize, assignedPID);

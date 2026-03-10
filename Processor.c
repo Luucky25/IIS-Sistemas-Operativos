@@ -209,20 +209,26 @@ void Processor_DecodeAndExecuteInstruction() {
 			registerCTRL_CPU=CTRLREAD;
 			Buses_write_ControlBus_From_To(CPU,MMU);
 			// Copy the read data to the register indicated in operand2
+			
+			int valorMemoria = registerMBR_CPU.cell;
 			switch (operand2) {
 				case REGISTERACCUMULATOR_CPU:
-					registerAccumulator_CPU = registerAccumulator_CPU + registerMBR_CPU.cell;
+					tempAcc = registerAccumulator_CPU;
+					registerAccumulator_CPU += valorMemoria;
 					break;
 				case REGISTERA_CPU:
-					registerAccumulator_CPU = registerA_CPU + registerMBR_CPU.cell;
+					tempAcc = registerA_CPU;
+					registerAccumulator_CPU = valorMemoria  + registerB_CPU;	
 					break;
 				case REGISTERB_CPU:
-					registerAccumulator_CPU = registerB_CPU + registerMBR_CPU.cell;
+					tempAcc = registerB_CPU; 
+					registerAccumulator_CPU = valorMemoria + registerB_CPU;
 					break;
 				default:
-					registerAccumulator_CPU = registerAccumulator_CPU + registerMBR_CPU.cell;
-
+					tempAcc = registerAccumulator_CPU; 
+					registerAccumulator_CPU += valorMemoria;
 			}
+			Processor_CheckOverflow(valorMemoria, tempAcc, REGISTERACCUMULATOR_CPU);
 			registerPC_CPU++;
 			break;
 

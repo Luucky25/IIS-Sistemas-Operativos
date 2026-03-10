@@ -53,3 +53,29 @@ Los programas modificados para realizar estos 5 ejercicios son:
 - Instructions.def
 - messagesSTD.txt
 Estos archivos van compilados en la entrega 
+
+================================================================
+        SESION 7 : Ejercicios 6-10 
+=================================================================
+Ejercicio 6 ============================
+Ejecutamos el simulador con 4 versiones del programa, valor acorde a la variable PROCESSTABLEMAXSIZE declarada a 4. 
+Al ejecutarla salta un error "SegmentationFault"
+
+Hacemos un if comprobando comprobando NOFREENTRY y retornando (evitando el error). 
+
+Añadimos los mensajes de error oportunos a NOFREEENTRY con el mensaje asignado 50 y sus parámetros. 
+Modificamos el método OperatingSystem_LongTermScheduler
+
+Ejercicio 7 ============================
+
+Probamos los 3 casos: 
+- Size negativo --> Error 
+- Prioridad negativa --> Eror
+- No hay elementos presentes --> Bucle infinito
+
+Hacemos un if comprobando PROGRAMNOTVALID y retornando (evitando el error)
+
+Añadimos los mensajes de error oportunos a NOFREEENTRY con el mensaje asignado 51 y sus parametros. 
+MOdificamos el meótodo OperatingSystem_LongTermScheduler
+
+
