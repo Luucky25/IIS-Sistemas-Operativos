@@ -83,6 +83,11 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	
 	// Space for the processTable
 	processTable = (PCB *) malloc(PROCESSTABLEMAXSIZE*sizeof(PCB));
+
+	for(i = 0 ; i< NUMBEROFQUEUES; i++){
+		readyToRunQUEUE[i] = Heap_create(PROCESSTABLEMAXSIZE);
+		numberOfReadyToRunProcesses[i] = 0;
+	}
 	
 	// Space for the ready to run queues
 	for (int i=0; i<NUMBEROFQUEUES; i++) {
@@ -263,7 +268,6 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].programListIndex=processPLIndex;
 
 	//Asignar correctamente el proceso 
-	
 	if(processTable[PID].processSize < 30){
 		processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
 	}else if(processTable[PID].processSize >= 30){
@@ -307,8 +311,15 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 int OperatingSystem_ShortTermScheduler() {
 	
 	int selectedProcess;
+	
+	for(int i= 0; i<NUMBEROFQUEUES; i++){
+		selectedProcess = OperatingSystem_ExtractFromReadyToRunQueue(i);
+		if(selectedProcess != NOPROCESS){
+			return selectedProcess; 
+		}
+	}
 
-	selectedProcess=OperatingSystem_ExtractFromReadyToRunQueue(ALLPROCESSESQUEUE);
+	// selectedProcess=OperatingSystem_ExtractFromReadyToRunQueue(ALLPROCESSESQUEUE);
 	
 	return selectedProcess;
 }
@@ -468,13 +479,12 @@ void OperatingSystem_PrintReadyToRunQueue(){
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 103, SHORTTERMSCHEDULE);
 
 	//Recorremos las tres colas de programas 
-	for(int i= 0; i< NUMBEROFQUEUES; i++){
-		if( i == HIGHPRIOUSERPROCQUEUE){		//Cola de alta proridad
-			Heap_print(readyToRunQueue[HIGHPRIOUSERPROCQUEUE], numberOfReadyToRunProcesses[HIGHPRIOUSERPROCQUEUE], queueNames[HIGHPRIOUSERPROCQUEUE]);
-		}else if( i == LOWPRIOUSERPROCQUEUE){	//Cola de baja prioridad
-			Heap_print(readyToRunQueue[LOWPRIOUSERPROCQUEUE], numberOfReadyToRunProcesses[LOWPRIOUSERPROCQUEUE], queueNames[LOWPRIOUSERPROCQUEUE]);
-		}else if( i == DEAMONSQUEUE){			//Cola de demonios
-			Heap_print(readyToRunQueue[DEAMONSQUEUE], numberOfReadyToRunProcesses[DEAMONSQUEUE], queueNames[DEAMONSQUEUE]);
+	for(i = 0; i < NUMBEROFQUEUES; i++){
+		ComputerSystem_DebugMessage(TIMED_MESSAGE, 104, SHORTTERMSCHEDULE, queueNames[i]);
+		if(numberOfReadyToRunProcesses[i] > 0){
+			Head_print(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+		}else{
+			printf("\n");
 		}
 	}
 }
