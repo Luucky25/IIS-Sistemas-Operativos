@@ -174,7 +174,8 @@ int OperatingSystem_LongTermScheduler() {
 			default:
 				// Process creation has succeeded: additional actions
 				// Show message "Process [createdProcessPID] created from program [executableName]\n"
-				ComputerSystem_DebugMessage(TIMED_MESSAGE,70,SYSPROC,createdProcessPID,programList[i]->executableName);
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 54, SYSPROC, createdProcessPID, statesNames[NEW], programList[i]->executableName);
+				//ComputerSystem_DebugMessage(TIMED_MESSAGE,70,SYSPROC,createdProcessPID,programList[i]->executableName);
 				numberOfSuccessfullyCreatedProcesses++;
 				if (programList[i]->type==USERPROGRAM) 
 					numberOfNotTerminatedUserProcesses++;
@@ -284,6 +285,9 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 
 	//Funcion creada PrintReadyToRunQueue
 	OperatingSystem_PrintReadyToRunQueue();
+
+	//Imprimir el mensaje de cambio de estado - message 53 - 
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, statesNames[READY], programList[processTable[PID].programListIndex]->executableName, statesNames[NEW], statesNames[READY]);
 }
 
 
@@ -321,6 +325,10 @@ void OperatingSystem_Dispatch(int PID) {
 	processTable[PID].state=EXECUTING;
 	// Modify hardware registers with appropriate values for the process identified by PID
 	OperatingSystem_RestoreContext(PID);
+
+	//Print state change message - message 53-
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, statesNames[EXECUTING], programList[processTable[PID].programListIndex]->executableName, statesNames[READY], statesNames[EXECUTING]);
+
 }
 
 
@@ -377,6 +385,9 @@ void OperatingSystem_HandleException() {
 void OperatingSystem_TerminateExecutingProcess() {
 
 	processTable[executingProcessID].state=EXIT;
+
+	//Imprimir el mensaje de cambio de estado - message 53 - 
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, executingProcessID, statesNames[EXIT], programList[processTable[executingProcessID].programListIndex]->executableName, statesNames[EXECUTING], statesNames[EXIT]);
 	
 	if (executingProcessID==sipID) {
 		// finishing sipID, change PC to address of OS HALT instruction
