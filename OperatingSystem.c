@@ -12,8 +12,8 @@
 
 // Functions prototypes
 void OperatingSystem_PCBInitialization(int, int, int, int, int);
-void OperatingSystem_MoveToTheREADYState(int);
 void OperatingSystem_PrintReadyToRunQueue();
+void OperatingSystem_MoveToTheREADYState(int);
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_RestoreContext(int);
 void OperatingSystem_SaveContext(int);
@@ -63,6 +63,7 @@ int PROCESSTABLEMAXSIZE = 4;
 
 //Variables del ejercicio 11-14
 char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
+char * queueNames [NUMBEROFQUEUES] = {"HIGHPRIOUSER", "LOWPRIOUSER", "DAEMONS"}
 
 // Initial set of tasks of the OS
 void OperatingSystem_Initialize(int programsFromFileIndex) {
@@ -260,6 +261,15 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].state=NEW;
 	processTable[PID].priority=priority;
 	processTable[PID].programListIndex=processPLIndex;
+
+	//Asignar correctamente el proceso 
+	
+	if(processTable[PID].processSize < 30){
+		processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
+	}else if(processTable[PID].processSize >= 30){
+		processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
+	}else if(programList[PID] -> type == DAEMONPROGRAM){
+	
 	processTable[PID].queueID=ALLPROCESSESQUEUE;
 	// Daemons run in protected mode and MMU use real address
 	if (programList[processPLIndex]->type == DAEMONPROGRAM) {
@@ -328,7 +338,7 @@ void OperatingSystem_Dispatch(int PID) {
 
 	//Print state change message - message 53-
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, statesNames[EXECUTING], programList[processTable[PID].programListIndex]->executableName, statesNames[READY], statesNames[EXECUTING]);
-
+	OperatingSystem_PrintReadyToRunQueue();
 }
 
 
@@ -453,16 +463,19 @@ void OperatingSystem_InterruptLogic(int entryPoint){
 
 // ================== SESION PRACTICA 11- 14 ==================
 
-void OperatinSystem_PrintReadyToRunQueue(){
+void OperatingSystem_PrintReadyToRunQueue(){
 	//Imprimir el mensaje cabecera 
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 103, SHORTTERMSCHEDULE);
 
-	//Verificamos si hay procesos en la cola 
-	if(numberOfReadyToRunProcesses[ALLPROCESSESQUEUE] > 0){
-		Heap_print(readyToRunQueue[ALLPROCESSESQUEUE], numberOfReadyToRunProcesses[ALLPROCESSESQUEUE], QUEUE_PRIORITY);
-	}
-	else{
-		printf("\n");
+	//Recorremos las tres colas de programas 
+	for(int i= 0; i< NUMBEROFQUEUES; i++){
+		if( i == HIGHPRIOUSERPROCQUEUE){		//Cola de alta proridad
+			Heap_print(readyToRunQueue[HIGHPRIOUSERPROCQUEUE], numberOfReadyToRunProcesses[HIGHPRIOUSERPROCQUEUE], queueNames[HIGHPRIOUSERPROCQUEUE]);
+		}else if( i == LOWPRIOUSERPROCQUEUE){	//Cola de baja prioridad
+			Heap_print(readyToRunQueue[LOWPRIOUSERPROCQUEUE], numberOfReadyToRunProcesses[LOWPRIOUSERPROCQUEUE], queueNames[LOWPRIOUSERPROCQUEUE]);
+		}else if( i == DEAMONSQUEUE){			//Cola de demonios
+			Heap_print(readyToRunQueue[DEAMONSQUEUE], numberOfReadyToRunProcesses[DEAMONSQUEUE], queueNames[DEAMONSQUEUE]);
+		}
 	}
 }
 

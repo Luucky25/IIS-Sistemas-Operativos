@@ -15,8 +15,8 @@
 #define NOPROCESS -1
 
 // Number of queues of ready to run processes, initially one queue...
-#define NUMBEROFQUEUES 1
-enum TypeOfReadyToRunProcessQueues { ALLPROCESSESQUEUE }	; 
+#define NUMBEROFQUEUES 3
+enum TypeOfReadyToRunProcessQueues { HIGHPRIOUSERPROCQUEUE, LOWPRIOUSERPROCQUEUE, DEAMONSQUEUE};	; 
 
 // Contains the possible type of programs
 enum ProgramTypes { USERPROGRAM=100, DAEMONPROGRAM }; 

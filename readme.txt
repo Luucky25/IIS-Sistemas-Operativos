@@ -105,3 +105,23 @@ Trabajmos para que el PID sea algo aislado de la ejecución y funcionamiento cor
             PROCESSTABLEMAXSIZE -1, siendo este valor el último valor con el que los 
             programas no generan errores
 
+
+========================================================================
+============= SESION 8 - Ejercicios 11-14 =============================
+========================================================================
+
+Ejercicio 11 =====================================================
+Escribimos el código necesario: 
+    - Creamos la nueva plantilla de mensajes 
+    - Indicamos la llamada a ese método para cuando se mueva a Ready un proceso 
+
+Ejercicio 12 =====================================================
+Escribimos el código en cada situación donde se asigna un nuevo estado ( ".state=")
+- Tras copiar y pegar el código necesario, tenemos las referencias necesarias para utilizar los mensajes 53 y 54 para pasar los parámetros correctos a estos mensajes. 
+
+Ejercicio 13 =====================================================
+Preparamos OperatingSystem.h para que podamos poseer tres colas, al igual que preparar el array de char que contiene las colas de prioridad 
+
+    1. Asignamos a la cola oportuna cada proceso dependiendo de su tamaño 
+    2. Enviamos el mensaje oportuno dependiendo de la cola en la que se encuentre cada proceso
+    
