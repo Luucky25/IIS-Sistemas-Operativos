@@ -13,6 +13,7 @@
 // Functions prototypes
 void OperatingSystem_PCBInitialization(int, int, int, int, int);
 void OperatingSystem_MoveToTheREADYState(int);
+void OperatingSystem_PrintReadyToRunQueue();
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_RestoreContext(int);
 void OperatingSystem_SaveContext(int);
@@ -59,6 +60,9 @@ int MAINMEMORYSECTIONSIZE = 60;
 extern int MAINMEMORYSIZE;
 
 int PROCESSTABLEMAXSIZE = 4;
+
+//Variables del ejercicio 11-14
+char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
 
 // Initial set of tasks of the OS
 void OperatingSystem_Initialize(int programsFromFileIndex) {
@@ -277,6 +281,9 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 	if (Heap_add(PID, readyToRunQueue[processQueueID],QUEUE_PRIORITY ,&(numberOfReadyToRunProcesses[processQueueID]))>=0) {
 		processTable[PID].state=READY;
 	} 
+
+	//Funcion creada PrintReadyToRunQueue
+	OperatingSystem_PrintReadyToRunQueue();
 }
 
 
@@ -432,4 +439,21 @@ void OperatingSystem_InterruptLogic(int entryPoint){
 	}
 
 }
+
+// ================== SESION PRACTICA 11- 14 ==================
+
+void OperatinSystem_PrintReadyToRunQueue(){
+	//Imprimir el mensaje cabecera 
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 103, SHORTTERMSCHEDULE);
+
+	//Verificamos si hay procesos en la cola 
+	if(numberOfReadyToRunProcesses[ALLPROCESSESQUEUE] > 0){
+		Heap_print(readyToRunQueue[ALLPROCESSESQUEUE], numberOfReadyToRunProcesses[ALLPROCESSESQUEUE], QUEUE_PRIORITY);
+	}
+	else{
+		printf("\n");
+	}
+}
+
+
 
