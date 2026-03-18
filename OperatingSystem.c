@@ -363,6 +363,11 @@ void OperatingSystem_RestoreContext(int PID) {
 	Processor_PushInSystemStack(processTable[PID].copyOfPSWRegister);
 	Processor_SetRegisterSP(processTable[PID].copyOfSPRegister);
 
+	//Restore register values for the process identified by PID
+	Processor_SetAccumulator(processTable[PID].copyOfAccumulator);
+	Processor_SetRegisterA(processTable[PID].copyOfRegisterA);
+	Processor_SetRegisterB(processTable[PID].copyOfRegisterB);
+
 	// Same thing for the MMU registers
 	MMU_SetBase(processTable[PID].initialPhysicalAddress);
 	MMU_SetLimit(processTable[PID].processSize);
@@ -392,6 +397,11 @@ void OperatingSystem_SaveContext(int PID) {
 	
 	// Save RegisterSP 
 	processTable[PID].copyOfSPRegister=Processor_GetRegisterSP();
+
+	//Save register values for the process identified by PID 
+	processTable[PID].copyOfAccumulator = Processor_GetAccumulator();
+	processTable[PID].copyOfRegisterA = Processor_GetRegisterA();
+	processTable[PID].copyOfRegisterB = Processor_GetRegisterB();
 }
 
 

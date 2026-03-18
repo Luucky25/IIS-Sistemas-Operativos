@@ -132,3 +132,23 @@ Ahora modificamos 'OperatingSystem_HandleSystemCall', añadiendo un nuevo caso e
         1. No hay procesos con la misma prioridad >> Escribimos el mensaje 55 pasando parámetros el PID y el nombre del programa ejecutandose 
         2. No hay procesos en la lista de programas >> Mismo que en el apartado 1 
         3. Si que existe un proceso con la misma prioridad >> Pasamos el control a ese proceso (liberando de la CPU el anterior proceso ejecutandose)
+
+
+==============================================================
+========== TRABAJO EN CASA ==================================
+====== EJERCICIOS 15 Y 16 DEL GUION ==========================
+
+Ejericicio 15 ==================================================
+    1) Es fundamental almacenar el PC y el PSW debido a que podemos así garantizar que al retomar el proceso se haga exactamente desde donde se pausó su ejecución 
+
+    2) Para conseguir un cambio de contexto completo, deberíamos salvar los registros de propósito general: Acumulador, Registro A y Registro B 
+
+    3) Para que el cambio de contexto sea exitoso, debemos recuperar exactamente lo mismo que guardamos al pausar la ejecución. 
+        Lo que recuperamos actualmente, deja los valores que el proceso anterior ha dejado en el acumulador y registros de trabajo, provocando resultados anómalos y que dependerían de la ejecución de procesos intermedios
+
+    4) Afectarían principalmente a la estructura de la PCB y la inicialización de procesos 
+        - Debemos añadir tres campos declarados en OperatingSystem.h para las copias de los registros de trabajo 
+        - Debemos inicializar los campos a 0 cuando se crea un proceso
+
+    5) 
+Ejercicio 16 ======================================================
