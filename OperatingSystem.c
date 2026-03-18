@@ -63,7 +63,7 @@ int PROCESSTABLEMAXSIZE = 4;
 
 //Variables del ejercicio 11-14
 char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
-char * queueNames [NUMBEROFQUEUES] = {"HIGHPRIOUSER", "LOWPRIOUSER", "DAEMONS"}
+char * queueNames [NUMBEROFQUEUES] = {"HIGHPRIOUSER", "LOWPRIOUSER", "DAEMONS"};
 
 // Initial set of tasks of the OS
 void OperatingSystem_Initialize(int programsFromFileIndex) {
@@ -85,7 +85,7 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	processTable = (PCB *) malloc(PROCESSTABLEMAXSIZE*sizeof(PCB));
 
 	for(i = 0 ; i< NUMBEROFQUEUES; i++){
-		readyToRunQUEUE[i] = Heap_create(PROCESSTABLEMAXSIZE);
+		readyToRunQueue[i] = Heap_create(PROCESSTABLEMAXSIZE);
 		numberOfReadyToRunProcesses[i] = 0;
 	}
 	
@@ -272,9 +272,11 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 		processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
 	}else if(processTable[PID].processSize >= 30){
 		processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
-	}else if(programList[PID] -> type == DAEMONPROGRAM){
+	}else {
+		processTable[PID].queueID = DEAMONSQUEUE;
+	}
 	
-	processTable[PID].queueID=ALLPROCESSESQUEUE;
+	//processTable[PID].queueID=ALLPROCESSESQUEUE;
 	// Daemons run in protected mode and MMU use real address
 	if (programList[processPLIndex]->type == DAEMONPROGRAM) {
 		processTable[PID].copyOfPCRegister=initialPhysicalAddress;
@@ -479,10 +481,10 @@ void OperatingSystem_PrintReadyToRunQueue(){
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 103, SHORTTERMSCHEDULE);
 
 	//Recorremos las tres colas de programas 
-	for(i = 0; i < NUMBEROFQUEUES; i++){
+	for(int i = 0; i < NUMBEROFQUEUES; i++){
 		ComputerSystem_DebugMessage(TIMED_MESSAGE, 104, SHORTTERMSCHEDULE, queueNames[i]);
 		if(numberOfReadyToRunProcesses[i] > 0){
-			Head_print(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+			Heap_print(readyToRunQueue[i], QUEUE_PRIORITY, numberOfReadyToRunProcesses[i]);
 		}else{
 			printf("\n");
 		}
