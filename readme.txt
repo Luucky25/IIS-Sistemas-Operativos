@@ -125,3 +125,10 @@ Preparamos OperatingSystem.h para que podamos poseer tres colas, al igual que pr
     1. Asignamos a la cola oportuna cada proceso dependiendo de su tamaño 
     2. Enviamos el mensaje oportuno dependiendo de la cola en la que se encuentre cada proceso
     
+Ejercicio 14 ======================================================
+Creamos el nuevo SYSCALL_YIELD en OperatingSystem.h >> añadiendolo a 'SystemCallIdentifiers', 
+Ahora modificamos 'OperatingSystem_HandleSystemCall', añadiendo un nuevo caso en el que se llama al SYSCALL_YIELD (4) que hemos declarado 
+    Valoramos tres casos: 
+        1. No hay procesos con la misma prioridad >> Escribimos el mensaje 55 pasando parámetros el PID y el nombre del programa ejecutandose 
+        2. No hay procesos en la lista de programas >> Mismo que en el apartado 1 
+        3. Si que existe un proceso con la misma prioridad >> Pasamos el control a ese proceso (liberando de la CPU el anterior proceso ejecutandose)

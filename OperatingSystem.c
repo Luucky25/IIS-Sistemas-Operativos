@@ -458,6 +458,34 @@ void OperatingSystem_HandleSystemCall() {
 			ComputerSystem_DebugMessage(TIMED_MESSAGE,73,SYSPROC,executingProcessID,programList[processTable[executingProcessID].programListIndex]->executableName);
 			OperatingSystem_TerminateExecutingProcess();
 			break;
+		//Ejercicio 14, incluir llamada SYSCAL_YIELD - Give control to 
+		//		READY process with same prio - Make it the highest prio process in the READY queue
+		//		Call function DebugMessage with custom message 55, using SHORTERMSCHEDULER 
+		//		if there's not same prio process in the READY queue or not anymore process in the READY queue {
+		//			do nothing, the executing process don't leave the CPU 
+		//			show custom message 56, using SHORTERMSCHEDULER
+		//			}
+		case SYSCALL_YIELD: 
+			// Check
+			if(Heap_getFirst(readyToRunQueue[processTable[executingProcessID].queueID],QUEUE_PRIORITY) == processTable[executingProcessID].priority){
+				ComputerSystem_DebugMessage(TIMED_MESSAGE,56,SHORTTERMSCHEDULE, executingProcessID, programList[executingProcessID] -> executableName);
+				break;
+			}
+			//If not same prio process in the READY queue or not anymore process in the READY queue :
+			else if(numberOfReadyToRunProcesses[processTable[executingProcessID].queueID] == 0){
+				ComputerSystem_DebugMessage(TIMED_MESSAGE,56,SHORTTERMSCHEDULE, executingProcessID, programList[executingProcessID]->executableName);
+				break;
+			}
+			//Give control to READY process with same prio - Make it the highest prio process in the READY queue
+			else {
+				int selectedProcess=OperatingSystem_ShortTermScheduler();
+				ComputerSystem_DebugMessage(TIMED_MESSAGE,55,SHORTTERMSCHEDULE, executingProcessID, programList[executingProcessID]->executableName, selectedProcess, programList[selectedProcess]->executableName);
+				OperatingSystem_PreemptRunningProcess();
+				OperatingSystem_Dispatch(selectedProcess);
+			}
+			break;
+				
+
 	}
 }
 	
