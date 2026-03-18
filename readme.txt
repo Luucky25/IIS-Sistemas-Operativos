@@ -151,4 +151,17 @@ Ejericicio 15 ==================================================
         - Debemos inicializar los campos a 0 cuando se crea un proceso
 
     5) 
+    Para las modificaciones sugeridas: 
+        1. Declaramos en OperatingSystem.h las variables copias 
+        2. Inicalizamos las variables al crear un proceso en PCB_Initialitation()
+        3. Nos encargamos de que se guarden en el Método saveContext()
+        4. Nos encargamos de que se carguen en el método RestoreContext()
 Ejercicio 16 ======================================================
+
+    Apartado a) 
+        Para la implementación, hemos buscado en Processor.c los case de HALT, IRET y OS. 
+        Hemos metido las instrucciones originales dentro de una sentencia condicional, comprobando que se cumple la condición de que se está ejecutando en modo protegido
+        Para el caso alternativo de la sentencia condicional, hemos utilizado la sentencia Processor_RaiseInterrupt pasando como parámetro EXCEPTION_BIT para lanzar una interrupción de tipo excepción
+    Apartado b) 
+        El modo protegido se activa cuando ocurren interrupciones y/o exepciones, santes de saltar a la rutina del SO y al arrancar el simulador 
+        El modo protegido se desactiva cuando ocurren instrucciones IRET, que restaura la PSW. El programa de usuario tiene PSW con valor 0, volviendo al modo restringido
