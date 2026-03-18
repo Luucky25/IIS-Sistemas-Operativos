@@ -149,6 +149,7 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	OperatingSystem_Dispatch(selectedProcess);
 
 	// Initial operation for Operating System
+	Processor_SetPSW(Processor_GetPSW() | (1 << EXECUTION_MODE_BIT)); 
 	Processor_SetPC(OS_address_base);
 
 }
@@ -312,7 +313,7 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 // depending on processes priority, the STS just selects the process in front of the READY queue
 int OperatingSystem_ShortTermScheduler() {
 	
-	int selectedProcess;
+	int selectedProcess=NOPROCESS;
 	
 	for(int i= 0; i<NUMBEROFQUEUES; i++){
 		selectedProcess = OperatingSystem_ExtractFromReadyToRunQueue(i);
@@ -320,6 +321,7 @@ int OperatingSystem_ShortTermScheduler() {
 			return selectedProcess; 
 		}
 	}
+	return selectedProcess;
 
 	// selectedProcess=OperatingSystem_ExtractFromReadyToRunQueue(ALLPROCESSESQUEUE);
 	
@@ -350,7 +352,7 @@ void OperatingSystem_Dispatch(int PID) {
 	OperatingSystem_RestoreContext(PID);
 
 	//Print state change message - message 53-
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, statesNames[EXECUTING], programList[processTable[PID].programListIndex]->executableName, statesNames[READY], statesNames[EXECUTING]);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex] -> executableName, statesNames[EXECUTING], statesNames[READY]);
 	OperatingSystem_PrintReadyToRunQueue();
 }
 

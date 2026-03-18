@@ -1,0 +1,79 @@
+(La orden no ha escrito nada en este archivo) 
+(Se ha copiado y pegado el contenido de la orden ejecutada en el archivo a continuación) 
+
+41 messages loaded from file 'messagesTCH.txt'
+4 messages loaded from file 'messagesSTD.txt'
+Using asserts file: 'asserts_Ex14V1'
+Maximum number of asserts: 500
+222 Asserts Loaded
+[0] STARTING simulation
+ [0] User programs list:
+         Program [programV1-3a] with arrival time [0] 
+         Program [programV1-3b] with arrival time [0] 
+         Program [programV1-3c] with arrival time [0] 
+         Program [programV1-3d] with arrival time [0] 
+        [0] Arrival Time Queue:
+                [SystemIdleProcess, 0, DAEMON-PROGRAM]
+                [programV1-3a, 0, USER-PROGRAM]
+                [programV1-3b, 0, USER-PROGRAM]
+                [programV1-3c, 0, USER-PROGRAM]
+                [programV1-3d, 0, USER-PROGRAM]
+        [0] Process [5] created into the [NEW] state from program [SystemIdleProcess]
+        [0]  Ready-to-run processes queue: 
+        [0]      HIGHPRIOUSER: 
+ [5,100]
+        [0]      LOWPRIOUSER: 
+ 
+        [0]      DAEMONS: 
+ 
+        [0] Process [5 - READY] moving from the [SystemIdleProcess] state to the [NEW] state
+        [0] Process [0] created into the [NEW] state from program [programV1-3a]
+        [0]  Ready-to-run processes queue: 
+        [0]      HIGHPRIOUSER: 
+ [5,100]
+        [0]      LOWPRIOUSER: 
+ [0,10]
+        [0]      DAEMONS: 
+ 
+        [0] Process [0 - READY] moving from the [programV1-3a] state to the [NEW] state
+        [0] ERROR: Program [programV1-3b] is not valid [--- it does not exist ---]
+        [0] Process [1] created into the [NEW] state from program [programV1-3c]
+        [0]  Ready-to-run processes queue: 
+        [0]      HIGHPRIOUSER: 
+ [5,100]
+        [0]      LOWPRIOUSER: 
+ [0,10], [1,25]
+        [0]      DAEMONS: 
+ 
+        [0] Process [1 - READY] moving from the [programV1-3c] state to the [NEW] state
+        [0] Process [2] created into the [NEW] state from program [programV1-3d]
+        [0]  Ready-to-run processes queue: 
+        [0]      HIGHPRIOUSER: 
+ [2,10], [5,100]
+        [0]      LOWPRIOUSER: 
+ [0,10], [1,25]
+        [0]      DAEMONS: 
+ 
+        [0] Process [2 - READY] moving from the [programV1-3d] state to the [NEW] state
+        [0] Process [2 - EXECUTING] moving from the [programV1-3d] state to the [READY] state
+        [0]  Ready-to-run processes queue: 
+        [0]      HIGHPRIOUSER: 
+ [5,100]
+        [0]      LOWPRIOUSER: 
+ [0,10], [1,25]
+        [0]      DAEMONS: 
+ 
+[1] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 743723871, PSW: 0000 [----------------], IntLine: [0000])
+Assert failed. Time: 1; Element: Process Table - state (PCB_ST); Expected: 2; Real: -1
+Assert failed. Time: 1; Element: Process Table - state (PCB_ST); Expected: 1; Real: 2
+Assert failed. Time: 1; Element: eXecuting PID (XPID); Expected: 3; Real: 2
+[2] {01 00A 005} ADD 10 5 (PID: 2, PC: 1, Accumulator: 15, PSW: 0000 [----------------], IntLine: [0000])
+Assert failed. Time: 2; Element: Process Table - state (PCB_ST); Expected: 2; Real: -1
+Assert failed. Time: 2; Element: Process Table - state (PCB_ST); Expected: 1; Real: 2
+Assert failed. Time: 2; Element: eXecuting PID (XPID); Expected: 3; Real: 2
+[3] {04 004 000} TRAP 4 0 (PID: 2, PC: 2, Accumulator: 15, PSW: 0000 [----------------], IntLine: [0004])
+Assert failed. Time: 3; Element: Process Table - state (PCB_ST); Expected: 2; Real: -1
+Assert failed. Time: 3; Element: Process Table - state (PCB_ST); Expected: 1; Real: 2
+Assert failed. Time: 3; Element: eXecuting PID (XPID); Expected: 3; Real: 2
+[4] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 15, PSW: 0080 [--------X-------], IntLine: [0000])
+Segmentation fault (core dumped)
