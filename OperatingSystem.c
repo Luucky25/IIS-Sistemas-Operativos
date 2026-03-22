@@ -293,7 +293,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 // Move a process to the READY state: it will be inserted, depending on its priority, in
 // a queue of identifiers of READY processes
 void OperatingSystem_MoveToTheREADYState(int PID) {
-	
+	int previousState = processTable[PID].state;
 	int processQueueID = processTable[PID].queueID;
 
 	if (Heap_add(PID, readyToRunQueue[processQueueID],QUEUE_PRIORITY ,&(numberOfReadyToRunProcesses[processQueueID]))>=0) {
@@ -304,7 +304,7 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 	OperatingSystem_PrintReadyToRunQueue();
 
 	//Imprimir el mensaje de cambio de estado - message 53 - 
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex]-> executableName, statesNames[processTable[PID].state], statesNames[READY]);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex]-> executableName, statesNames[previousState], statesNames[READY]);
 }
 
 
@@ -343,7 +343,7 @@ int OperatingSystem_ExtractFromReadyToRunQueue(int queueID) {
 
 // Function that assigns the processor to a process
 void OperatingSystem_Dispatch(int PID) {
-
+	int previousState = processTable[PID].state;
 	// The process identified by PID becomes the current executing process
 	executingProcessID=PID;
 	// Change the process' state
@@ -352,7 +352,7 @@ void OperatingSystem_Dispatch(int PID) {
 	OperatingSystem_RestoreContext(PID);
 
 	//Print state change message - message 53-
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex] -> executableName, statesNames[processTable[PID].state], statesNames[EXECUTING]);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex] -> executableName, statesNames[previousState], statesNames[EXECUTING]);
 	OperatingSystem_PrintReadyToRunQueue();
 }
 
@@ -422,7 +422,7 @@ void OperatingSystem_TerminateExecutingProcess() {
 	processTable[executingProcessID].state=EXIT;
 
 	//Imprimir el mensaje de cambio de estado - message 53 - 
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, executingProcessID, statesNames[EXIT], programList[processTable[executingProcessID].programListIndex]->executableName, statesNames[EXECUTING], statesNames[EXIT]);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName);
 	
 	if (executingProcessID==sipID) {
 		// finishing sipID, change PC to address of OS HALT instruction
@@ -491,7 +491,7 @@ void OperatingSystem_HandleSystemCall() {
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 55, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName, 
 					selectedProcess, programList[processTable[selectedProcess].programListIndex]->executableName);
 				OperatingSystem_PreemptRunningProcess();
-				OperatinSystem_Dispatch(selectedProcess);
+				OperatingSystem_Dispatch(selectedProcess);
 				}
 				break;
 	}
