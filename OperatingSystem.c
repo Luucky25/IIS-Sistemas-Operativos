@@ -88,12 +88,6 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 		readyToRunQueue[i] = Heap_create(PROCESSTABLEMAXSIZE);
 		numberOfReadyToRunProcesses[i] = 0;
 	}
-	
-	// Space for the ready to run queues
-	for (int i=0; i<NUMBEROFQUEUES; i++) {
-		readyToRunQueue[i] = Heap_create(PROCESSTABLEMAXSIZE);
-		numberOfReadyToRunProcesses[i]=0;
-	}
 
 	// Load Operating System Code
 	OperatingSystem_LoadOperatingSystemCode(OPERATING_SYSTEM_CODE_FILE, OS_address_base);
