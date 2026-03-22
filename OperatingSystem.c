@@ -287,6 +287,11 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 		processTable[PID].copyOfPCRegister=0;
 		processTable[PID].copyOfPSWRegister=0;
 	}
+
+	//Inicializar variables de Restaurado 
+	processTable[PID].copyOfAccumulator = 0; 
+	processTable[PID].copyOfRegisterA = 0; 
+	processTable[PID].copyOfRegisterB = 0; 
 }
 
 
@@ -418,11 +423,11 @@ void OperatingSystem_HandleException() {
 
 // All tasks regarding the removal of the executing process
 void OperatingSystem_TerminateExecutingProcess() {
-
+	int previousState = processTable[executingProcessID].state;
 	processTable[executingProcessID].state=EXIT;
 
 	//Imprimir el mensaje de cambio de estado - message 53 - 
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName, statesNames[previousState], statesNames[EXIT]);
 	
 	if (executingProcessID==sipID) {
 		// finishing sipID, change PC to address of OS HALT instruction
