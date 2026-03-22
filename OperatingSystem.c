@@ -59,7 +59,7 @@ int MAINMEMORYSECTIONSIZE = 60;
 
 extern int MAINMEMORYSIZE;
 
-int PROCESSTABLEMAXSIZE = 6;
+int PROCESSTABLEMAXSIZE = 4;
 
 //Variables del ejercicio 11-14
 char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
@@ -262,23 +262,17 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].priority=priority;
 	processTable[PID].programListIndex=processPLIndex;
 	//Asignar correctamente el proceso 
-	if(programList[processPLIndex]->type == DAEMONPROGRAM){
+	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
 		processTable[PID].queueID = DEAMONSQUEUE;
-	}else if(processTable[PID].processSize < 30){
-		processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
-	}else if(processTable[PID].processSize >= 30){
-		processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
+	}else{
+		if(processSize < 30 ) processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
+		else processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
 	}
-	
-	//processTable[PID].queueID=ALLPROCESSESQUEUE;
-	// Daemons run in protected mode and MMU use real address
-	if (programList[processPLIndex]->type == DAEMONPROGRAM) {
-		processTable[PID].copyOfPCRegister=initialPhysicalAddress;
-		processTable[PID].copyOfPSWRegister= ((unsigned int) 1) << EXECUTION_MODE_BIT;
-	} 
-	else {
-		processTable[PID].copyOfPCRegister=0;
-		processTable[PID].copyOfPSWRegister=0;
+
+	//Los Daemons corren en modo protegido y la MMU usa direcciones físicas 
+	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
+		processTable[PID].copyOfPCRegister = initialPhysicalAddress;
+		processTable[PID].copyOfPSWRegister = ((unsigned int) 1) << EXECUTION_MODE_BIT;
 	}
 	
 	//Inicializar variables de Restaurado 
@@ -476,22 +470,29 @@ void OperatingSystem_HandleSystemCall() {
 		//			show custom message 56, using SHORTERMSCHEDULER
 		//			}
 		case SYSCALL_YIELD: 
-			int myQUEUEID = processTable[executingProcessID].queueID;
-			int myPriority = processTable[executingProcessID].priority;
-			int firstReadPID = Heap_getFirst(readyToRunQueue[myQUEUEID], numberOfReadyToRunProcesses[myQUEUEID] || firstReadPID < 0 );
+			int miQUEUEID = processTable[executingProcessID].queueID;
+			int miPriority = processTable[executingProcessID].priority;
+			
+			//Consultamos el siguiente proceso en cola
+			int siguiente = Heap_getFirst(readyToRunQueue[miQUEUEID], numberOfReadyToRunProcesses[miQUEUEID]);
 
-			//comprobar si hay procesos en cola y si tiene la misma prioridad
-			if(numberOfReadyToRunProcesses[myQUEUEID] == 0 || firstReadPID < 0 ||  processTable[firstReadPID].priority != myPriority){
-				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
-			}else{
+			//Comprobar si hay procesos del mismo tipo y prioridad -> Porducir cambio de contexto en caso correcto 
+			if(siguiente != NOPROCESS && processTable[siguiente].priority == miPriority){
 				//Hay proceso con la misma proridad -> Ceder el control 
-				int selectedProcess = OperatingSystem_ExtractFromReadyToRunQueue(myQUEUEID);
-				ComputerSystem_DebugMessage(TIMED_MESSAGE, 55, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName, 
-					selectedProcess, programList[processTable[selectedProcess].programListIndex]->executableName);
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 55, SHORTTERMSCHEDULE, 
+					executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName, 
+					siguiente, programList[processTable[siguiente].programListIndex]->executableName);
+				
+					//Sacamos el proceso actual de la CPU y lo devolvemos a la cola 
 				OperatingSystem_PreemptRunningProcess();
+
+				int selectedProcess = OperatingSystem_ShortTermScheduler();
+
 				OperatingSystem_Dispatch(selectedProcess);
-				}
-				break;
+			}else{
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
+			}
+			break;
 	}
 }
 	
