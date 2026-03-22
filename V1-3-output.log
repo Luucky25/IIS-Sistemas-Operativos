@@ -1,79 +1,200 @@
-(La orden no ha escrito nada en este archivo) 
-(Se ha copiado y pegado el contenido de la orden ejecutada en el archivo a continuación) 
-
 41 messages loaded from file 'messagesTCH.txt'
 4 messages loaded from file 'messagesSTD.txt'
-Using asserts file: 'asserts_Ex14V1'
-Maximum number of asserts: 500
-222 Asserts Loaded
+0 Asserts Loaded
 [0] STARTING simulation
  [0] User programs list:
-         Program [programV1-3a] with arrival time [0] 
-         Program [programV1-3b] with arrival time [0] 
-         Program [programV1-3c] with arrival time [0] 
-         Program [programV1-3d] with arrival time [0] 
-        [0] Arrival Time Queue:
-                [SystemIdleProcess, 0, DAEMON-PROGRAM]
-                [programV1-3a, 0, USER-PROGRAM]
-                [programV1-3b, 0, USER-PROGRAM]
-                [programV1-3c, 0, USER-PROGRAM]
-                [programV1-3d, 0, USER-PROGRAM]
-        [0] Process [5] created into the [NEW] state from program [SystemIdleProcess]
-        [0]  Ready-to-run processes queue: 
-        [0]      HIGHPRIOUSER: 
- [5,100]
-        [0]      LOWPRIOUSER: 
+  	 Program [programV1-3a] with arrival time [0] 
+ 	 Program [programV1-3b] with arrival time [0] 
+ 	 Program [programV1-3c] with arrival time [0] 
+ 	 Program [programV1-3d] with arrival time [0] 
+	[0] Arrival Time Queue:
+		[SystemIdleProcess, 0, DAEMON-PROGRAM]
+		[programV1-3a, 0, USER-PROGRAM]
+		[programV1-3b, 0, USER-PROGRAM]
+		[programV1-3c, 0, USER-PROGRAM]
+		[programV1-3d, 0, USER-PROGRAM]
+	[0] Process [3] created into the [NEW] state from program [SystemIdleProcess]
+	[0]  Ready-to-run processes queue: 
+ 	[0]  	 HIGHPRIOUSER: 
+ [3,100]
+	[0]  	 LOWPRIOUSER: 
  
-        [0]      DAEMONS: 
+	[0]  	 DAEMONS: 
  
-        [0] Process [5 - READY] moving from the [SystemIdleProcess] state to the [NEW] state
-        [0] Process [0] created into the [NEW] state from program [programV1-3a]
-        [0]  Ready-to-run processes queue: 
-        [0]      HIGHPRIOUSER: 
- [5,100]
-        [0]      LOWPRIOUSER: 
+	[0] Process [3 - READY] moving from the [SystemIdleProcess] state to the [NEW] state
+	[0] Process [0] created into the [NEW] state from program [programV1-3a]
+	[0]  Ready-to-run processes queue: 
+ 	[0]  	 HIGHPRIOUSER: 
+ [3,100]
+	[0]  	 LOWPRIOUSER: 
  [0,10]
-        [0]      DAEMONS: 
+	[0]  	 DAEMONS: 
  
-        [0] Process [0 - READY] moving from the [programV1-3a] state to the [NEW] state
-        [0] ERROR: Program [programV1-3b] is not valid [--- it does not exist ---]
-        [0] Process [1] created into the [NEW] state from program [programV1-3c]
-        [0]  Ready-to-run processes queue: 
-        [0]      HIGHPRIOUSER: 
- [5,100]
-        [0]      LOWPRIOUSER: 
+	[0] Process [0 - READY] moving from the [programV1-3a] state to the [NEW] state
+	[0] ERROR: Program [programV1-3b] is not valid [--- it does not exist ---]
+	[0] Process [1] created into the [NEW] state from program [programV1-3c]
+	[0]  Ready-to-run processes queue: 
+ 	[0]  	 HIGHPRIOUSER: 
+ [3,100]
+	[0]  	 LOWPRIOUSER: 
  [0,10], [1,25]
-        [0]      DAEMONS: 
+	[0]  	 DAEMONS: 
  
-        [0] Process [1 - READY] moving from the [programV1-3c] state to the [NEW] state
-        [0] Process [2] created into the [NEW] state from program [programV1-3d]
-        [0]  Ready-to-run processes queue: 
-        [0]      HIGHPRIOUSER: 
- [2,10], [5,100]
-        [0]      LOWPRIOUSER: 
+	[0] Process [1 - READY] moving from the [programV1-3c] state to the [NEW] state
+	[0] Process [2] created into the [NEW] state from program [programV1-3d]
+	[0]  Ready-to-run processes queue: 
+ 	[0]  	 HIGHPRIOUSER: 
+ [2,10], [3,100]
+	[0]  	 LOWPRIOUSER: 
  [0,10], [1,25]
-        [0]      DAEMONS: 
+	[0]  	 DAEMONS: 
  
-        [0] Process [2 - READY] moving from the [programV1-3d] state to the [NEW] state
-        [0] Process [2 - EXECUTING] moving from the [programV1-3d] state to the [READY] state
-        [0]  Ready-to-run processes queue: 
-        [0]      HIGHPRIOUSER: 
- [5,100]
-        [0]      LOWPRIOUSER: 
+	[0] Process [2 - READY] moving from the [programV1-3d] state to the [NEW] state
+	[0] Process [2 - EXECUTING] moving from the [programV1-3d] state to the [READY] state
+	[0]  Ready-to-run processes queue: 
+ 	[0]  	 HIGHPRIOUSER: 
+ [3,100]
+	[0]  	 LOWPRIOUSER: 
  [0,10], [1,25]
-        [0]      DAEMONS: 
+	[0]  	 DAEMONS: 
  
-[1] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 743723871, PSW: 0000 [----------------], IntLine: [0000])
-Assert failed. Time: 1; Element: Process Table - state (PCB_ST); Expected: 2; Real: -1
-Assert failed. Time: 1; Element: Process Table - state (PCB_ST); Expected: 1; Real: 2
-Assert failed. Time: 1; Element: eXecuting PID (XPID); Expected: 3; Real: 2
+[1] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
 [2] {01 00A 005} ADD 10 5 (PID: 2, PC: 1, Accumulator: 15, PSW: 0000 [----------------], IntLine: [0000])
-Assert failed. Time: 2; Element: Process Table - state (PCB_ST); Expected: 2; Real: -1
-Assert failed. Time: 2; Element: Process Table - state (PCB_ST); Expected: 1; Real: 2
-Assert failed. Time: 2; Element: eXecuting PID (XPID); Expected: 3; Real: 2
 [3] {04 004 000} TRAP 4 0 (PID: 2, PC: 2, Accumulator: 15, PSW: 0000 [----------------], IntLine: [0004])
-Assert failed. Time: 3; Element: Process Table - state (PCB_ST); Expected: 2; Real: -1
-Assert failed. Time: 3; Element: Process Table - state (PCB_ST); Expected: 1; Real: 2
-Assert failed. Time: 3; Element: eXecuting PID (XPID); Expected: 3; Real: 2
 [4] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 15, PSW: 0080 [--------X-------], IntLine: [0000])
-Segmentation fault (core dumped)
+	[5] Process [2 - programV1-3b] will transfer the control of the processor to process [3 - programV1-3c]
+	[5]  Ready-to-run processes queue: 
+ 	[5]  	 HIGHPRIOUSER: 
+ [2,10]
+	[5]  	 LOWPRIOUSER: 
+ [0,10], [1,25]
+	[5]  	 DAEMONS: 
+ 
+	[5] Process [2 - READY] moving from the [programV1-3d] state to the [NEW] state
+	[5] Process [3 - EXECUTING] moving from the [SystemIdleProcess] state to the [READY] state
+	[5]  Ready-to-run processes queue: 
+ 	[5]  	 HIGHPRIOUSER: 
+ [2,10]
+	[5]  	 LOWPRIOUSER: 
+ [0,10], [1,25]
+	[5]  	 DAEMONS: 
+ 
+ OS 2 0 (PID: 3, PC: 243, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+[6] {0D 000 000} IRET 0 0 (PID: 3, PC: 180, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+[7] {01 5E2 398} ADD 1506 920 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[8] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[9] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[10] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[11] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[12] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[13] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[14] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[15] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[16] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[17] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[18] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[19] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[20] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[21] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[22] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[23] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[24] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[25] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[26] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[27] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[28] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[29] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[30] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[31] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[32] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[33] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[34] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[35] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[36] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[37] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[38] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[39] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[40] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[41] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[42] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[43] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[44] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[45] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[46] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[47] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[48] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[49] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[50] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[51] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[52] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[53] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[54] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[55] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[56] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[57] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[58] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[59] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[60] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[61] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[62] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[63] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[64] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[65] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[66] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[67] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[68] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[69] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[70] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[71] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[72] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[73] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[74] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[75] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[76] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[77] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[78] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[79] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[80] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[81] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[82] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[83] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[84] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[85] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[86] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[87] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[88] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[89] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[90] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[91] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[92] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[93] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[94] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[95] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[96] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[97] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[98] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[99] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[100] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[101] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[102] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[103] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[104] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[105] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[106] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[107] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[108] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[109] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[110] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[111] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[112] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[113] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[114] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[115] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[116] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[117] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[118] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[119] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[120] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[121] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[122] {05 000 000} NOP 0 0 (PID: 3, PC: 182, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[123] {06 801 000} JUMP -1 0 (PID: 3, PC: 181, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
