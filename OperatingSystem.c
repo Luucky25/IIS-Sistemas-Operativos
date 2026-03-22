@@ -43,7 +43,7 @@ int executingProcessID=NOPROCESS;
 int sipID;
 
 // Initial PID for assignation (Not assigned)
-int initialPID=-1;
+int initialPID=3;
 
 // Begin indes for daemons in programList
 // int baseDaemonsInProgramList; 
@@ -482,7 +482,7 @@ void OperatingSystem_HandleSystemCall() {
 			int firstReadPID = Heap_getFirst(readyToRunQueue[myQUEUEID], numberOfReadyToRunProcesses[myQUEUEID]);
 
 			//comprobar si hay procesos en cola y si tiene la misma prioridad
-			if(firstReadPID == NOPROCESS || numberOfReadyToRunProcesses[myQUEUEID]== 0 || processTable[firstReadPID].priority != myPriority){
+			if(numberOfReadyToRunProcesses[myQUEUEID] == 0 || processTable[firstReadPID].priority != myPriority){
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
 			}else{
 				//Hay proceso con la misma proridad -> Ceder el control 
