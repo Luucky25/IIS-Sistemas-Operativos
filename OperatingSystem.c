@@ -43,7 +43,7 @@ int executingProcessID=NOPROCESS;
 int sipID;
 
 // Initial PID for assignation (Not assigned)
-int initialPID=3;
+int initialPID=-1;
 
 // Begin indes for daemons in programList
 // int baseDaemonsInProgramList; 
@@ -59,7 +59,7 @@ int MAINMEMORYSECTIONSIZE = 60;
 
 extern int MAINMEMORYSIZE;
 
-int PROCESSTABLEMAXSIZE = 4;
+int PROCESSTABLEMAXSIZE = 6;
 
 //Variables del ejercicio 11-14
 char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
@@ -261,7 +261,6 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].state=NEW;
 	processTable[PID].priority=priority;
 	processTable[PID].programListIndex=processPLIndex;
-
 	//Asignar correctamente el proceso 
 	if(programList[processPLIndex]->type == DAEMONPROGRAM){
 		processTable[PID].queueID = DEAMONSQUEUE;
@@ -281,7 +280,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 		processTable[PID].copyOfPCRegister=0;
 		processTable[PID].copyOfPSWRegister=0;
 	}
-
+	
 	//Inicializar variables de Restaurado 
 	processTable[PID].copyOfAccumulator = 0; 
 	processTable[PID].copyOfRegisterA = 0; 
