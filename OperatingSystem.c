@@ -269,12 +269,12 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].programListIndex=processPLIndex;
 
 	//Asignar correctamente el proceso 
-	if(processTable[PID].processSize < 30){
+	if(programList[processPLIndex]->type == DAEMONPROGRAM){
+		processTable[PID].queueID = DEAMONSQUEUE;
+	}else if(processTable[PID].processSize < 30){
 		processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
 	}else if(processTable[PID].processSize >= 30){
 		processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
-	}else {
-		processTable[PID].queueID = DEAMONSQUEUE;
 	}
 	
 	//processTable[PID].queueID=ALLPROCESSESQUEUE;
@@ -304,7 +304,7 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 	OperatingSystem_PrintReadyToRunQueue();
 
 	//Imprimir el mensaje de cambio de estado - message 53 - 
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, statesNames[READY], programList[processTable[PID].programListIndex]->executableName, statesNames[NEW], statesNames[READY]);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex]-> executableName, statesNames[processTable[PID].state], statesNames[READY]);
 }
 
 
@@ -352,7 +352,7 @@ void OperatingSystem_Dispatch(int PID) {
 	OperatingSystem_RestoreContext(PID);
 
 	//Print state change message - message 53-
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex] -> executableName, statesNames[EXECUTING], statesNames[READY]);
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex] -> executableName, statesNames[processTable[PID].state], statesNames[EXECUTING]);
 	OperatingSystem_PrintReadyToRunQueue();
 }
 
@@ -478,26 +478,22 @@ void OperatingSystem_HandleSystemCall() {
 		//			show custom message 56, using SHORTERMSCHEDULER
 		//			}
 		case SYSCALL_YIELD: 
-			// Check
-			if(Heap_getFirst(readyToRunQueue[processTable[executingProcessID].queueID],QUEUE_PRIORITY) == processTable[executingProcessID].priority){
-				ComputerSystem_DebugMessage(TIMED_MESSAGE,56,SHORTTERMSCHEDULE, executingProcessID, programList[executingProcessID] -> executableName);
-				break;
-			}
-			//If not same prio process in the READY queue or not anymore process in the READY queue :
-			else if(numberOfReadyToRunProcesses[processTable[executingProcessID].queueID] == 0){
-				ComputerSystem_DebugMessage(TIMED_MESSAGE,56,SHORTTERMSCHEDULE, executingProcessID, programList[executingProcessID]->executableName);
-				break;
-			}
-			//Give control to READY process with same prio - Make it the highest prio process in the READY queue
-			else {
-				int selectedProcess=OperatingSystem_ShortTermScheduler();
-				ComputerSystem_DebugMessage(TIMED_MESSAGE,55,SHORTTERMSCHEDULE, executingProcessID, programList[executingProcessID]->executableName, selectedProcess, programList[selectedProcess]->executableName);
-				OperatingSystem_PreemptRunningProcess();
-				OperatingSystem_Dispatch(selectedProcess);
-			}
-			break;
-				
+			int myQUEUEID = processTable[executingProcessID].queueID;
+			int myPriority = processTable[executingProcessID].priority;
+			int firstReadPID = Heap_getFirst(readyToRunQueue[myQUEUEID], numberOfReadyToRunProcesses[myQUEUEID]);
 
+			//comprobar si hay procesos en cola y si tiene la misma prioridad
+			if(firstReadPID == NOPROCESS || numberOfReadyToRunProcesses[myQUEUEID]== 0 || processTable[firstReadPID].priority != myPriority){
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
+			}else{
+				//Hay proceso con la misma proridad -> Ceder el control 
+				int selectedProcess = OperatingSystem_ExtractFromReadyToRunQueue(myQUEUEID);
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 55, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName, 
+					selectedProcess, programList[processTable[selectedProcess].programListIndex]->executableName);
+				OperatingSystem_PreemptRunningProcess();
+				OperatinSystem_Dispatch(selectedProcess);
+				}
+				break;
 	}
 }
 	
