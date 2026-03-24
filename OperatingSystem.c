@@ -150,6 +150,9 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	Processor_SetPSW(Processor_GetPSW() | (1 << EXECUTION_MODE_BIT)); 
 	Processor_SetPC(OS_address_base);
 
+	//Ejercicio 3-a Ultima sentencia 
+	OperatingSystem_PrintStatus();
+
 }
 
 // The LTS is responsible of the admission of new processes in the system.
@@ -188,6 +191,11 @@ int OperatingSystem_LongTermScheduler() {
 				OperatingSystem_MoveToTheREADYState(createdProcessPID);
 		}
 	}
+	//Ejercicio V2 - 3e
+	if(numberOfSuccessfullyCreatedProcesses > 0 ){
+		OperatingSystem_PrintStatus();
+	}
+
 	// Return the number of succesfully created processes
 	return numberOfSuccessfullyCreatedProcesses;
 }
@@ -302,7 +310,8 @@ void OperatingSystem_MoveToTheREADYState(int PID) {
 	} 
 
 	//Funcion creada PrintReadyToRunQueue
-	OperatingSystem_PrintReadyToRunQueue();
+	//Ejercicio V2 - 4.a - Comentar la llamada para evitar redundancia 
+	//OperatingSystem_PrintReadyToRunQueue();
 
 	//Imprimir el mensaje de cambio de estado - message 53 - 
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex]-> executableName, statesNames[previousState], statesNames[READY]);
@@ -354,7 +363,9 @@ void OperatingSystem_Dispatch(int PID) {
 
 	//Print state change message - message 53-
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex] -> executableName, statesNames[previousState], statesNames[EXECUTING]);
-	OperatingSystem_PrintReadyToRunQueue();
+	
+	//Ejercicio V2 - 4. Comentar la llamada y evitar redundancia 
+	//OperatingSystem_PrintReadyToRunQueue();
 }
 
 
@@ -415,6 +426,9 @@ void OperatingSystem_HandleException() {
 	ComputerSystem_DebugMessage(TIMED_MESSAGE,71,INTERRUPT,executingProcessID,programList[processTable[executingProcessID].programListIndex]->executableName);
 	
 	OperatingSystem_TerminateExecutingProcess();
+
+	//Ejercicio V2 - 3b 
+	OperatingSystem_PrintStatus();
 }
 
 // All tasks regarding the removal of the executing process
@@ -499,6 +513,9 @@ void OperatingSystem_HandleSystemCall() {
 				int selectedProcess = OperatingSystem_ShortTermScheduler();
 
 				OperatingSystem_Dispatch(selectedProcess);
+
+				//Ejercicio V2 - 3b
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName);
 			}else{
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
 			}
