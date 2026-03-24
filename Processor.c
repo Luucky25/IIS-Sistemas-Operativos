@@ -357,9 +357,10 @@ void Processor_DecodeAndExecuteInstruction() {
 	
 // Hardware interrupt processing
 void Processor_ManageInterrupts() {
-  
+	if(Processor_PSW_BitState(INTERRUPT_MASKED_BIT)){
+		return; 
+	}
 	int i;
-
 		for (i=0;i<INTERRUPTTYPES;i++)
 			// If an 'i'-type interrupt is pending
 			if (Processor_GetInterruptLineStatus(i)) {
@@ -389,6 +390,8 @@ char * Processor_ShowPSW(){
 		pswmask[tam-ZERO_BIT]='Z';
 	if (Processor_PSW_BitState(POWEROFF_BIT))
 		pswmask[tam-POWEROFF_BIT]='S';
+	if(Processor_PSW_BitState(INTERRUPT_MASKED_BIT))
+		pswmask[tam-INTERRUPT_MASKED_BIT] = 'M';
 	return pswmask;
 }
 
