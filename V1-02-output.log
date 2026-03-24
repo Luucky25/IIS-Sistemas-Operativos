@@ -1,0 +1,103 @@
+41 messages loaded from file 'messagesTCH.txt'
+2 messages loaded from file 'messagesSTD.txt'
+Using asserts file: 'asserts_Ex10V1'
+Maximum number of asserts: 500
+236 Asserts Loaded
+[0] STARTING simulation
+ [0] User programs list:
+  	 Program [programWhichDoesNotExist] with arrival time [0] 
+ 	 Program [programWithIncorrectPrio] with arrival time [0] 
+ 	 Program [programWithIncorrectSize] with arrival time [0] 
+ 	 Program [programTooBig] with arrival time [0] 
+ 	 Program [programWithTooManyInstructions] with arrival time [0] 
+ 	 Program [programWithSubroutine] with arrival time [0] 
+ 	 Program [programOnlyTrap3] with arrival time [0] 
+ 	 Program [programOnlyTrap3] with arrival time [0] 
+ 	 Program [programOnlyTrap3] with arrival time [0] 
+	[0] Arrival Time Queue:
+		[SystemIdleProcess, 0, DAEMON-PROGRAM]
+		[programWhichDoesNotExist, 0, USER-PROGRAM]
+		[programWithIncorrectPrio, 0, USER-PROGRAM]
+		[programWithIncorrectSize, 0, USER-PROGRAM]
+		[programTooBig, 0, USER-PROGRAM]
+		[programWithTooManyInstructions, 0, USER-PROGRAM]
+		[programWithSubroutine, 0, USER-PROGRAM]
+		[programOnlyTrap3, 0, USER-PROGRAM]
+		[programOnlyTrap3, 0, USER-PROGRAM]
+		[programOnlyTrap3, 0, USER-PROGRAM]
+	[0] Process [3] created from program [SystemIdleProcess]
+	[0] ERROR: Program [programWhichDoesNotExist] is not valid [--- it does not exist ---]
+	[0] ERROR: Program [programWithIncorrectPrio] is not valid [--- invalid priority or size ---]
+	[0] ERROR: Program [programWithIncorrectSize] is not valid [--- invalid priority or size ---]
+	[0] ERROR: Program [programTooBig] is not valid [--- it does not exist ---]
+	[0] ERROR: Program [programWithTooManyInstructions] is too big
+	[0] Process [0] created from program [programWithSubroutine]
+	[0] Process [1] created from program [programOnlyTrap3]
+	[0] Process [2] created from program [programOnlyTrap3]
+	[0] ERROR: There are not free entries in the process table for the program [programOnlyTrap3]
+[1] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[2] {01 064 000} ADD 100 0 (PID: 0, PC: 1, Accumulator: 100, PSW: 0000 [----------------], IntLine: [0000])
+[3] {08 01E 000} WRITE 30 0 (PID: 0, PC: 2, Accumulator: 100, PSW: 0000 [----------------], IntLine: [0000])
+[4] {10 007 000} CALL 7 0 (PID: 0, PC: 9, Accumulator: 100, PSW: 0000 [----------------], IntLine: [0000])
+[5] {01 002 000} ADD 2 0 (PID: 0, PC: 10, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[6] {11 01E 000} MEMADD 30 0 (PID: 0, PC: 11, Accumulator: 102, PSW: 0000 [----------------], IntLine: [0000])
+[7] {08 01E 000} WRITE 30 0 (PID: 0, PC: 12, Accumulator: 102, PSW: 0000 [----------------], IntLine: [0000])
+[8] {0F 000 000} RET 0 0 (PID: 0, PC: 3, Accumulator: 102, PSW: 0000 [----------------], IntLine: [0000])
+[9] {0A 86E 000} INC -110 0 (PID: 0, PC: 4, Accumulator: -8, PSW: 0004 [-------------N--], IntLine: [0000])
+[10] {07 003 000} ZJUMP 3 0 (PID: 0, PC: 5, Accumulator: -8, PSW: 0004 [-------------N--], IntLine: [0000])
+[11] {0A 02A 000} INC 42 0 (PID: 0, PC: 6, Accumulator: 34, PSW: 0000 [----------------], IntLine: [0000])
+[12] {06 804 000} JUMP -4 0 (PID: 0, PC: 2, Accumulator: 34, PSW: 0000 [----------------], IntLine: [0000])
+[13] {10 007 000} CALL 7 0 (PID: 0, PC: 9, Accumulator: 34, PSW: 0000 [----------------], IntLine: [0000])
+[14] {01 002 000} ADD 2 0 (PID: 0, PC: 10, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[15] {11 01E 000} MEMADD 30 0 (PID: 0, PC: 11, Accumulator: 104, PSW: 0000 [----------------], IntLine: [0000])
+[16] {08 01E 000} WRITE 30 0 (PID: 0, PC: 12, Accumulator: 104, PSW: 0000 [----------------], IntLine: [0000])
+[17] {0F 000 000} RET 0 0 (PID: 0, PC: 3, Accumulator: 104, PSW: 0000 [----------------], IntLine: [0000])
+[18] {0A 86E 000} INC -110 0 (PID: 0, PC: 4, Accumulator: -6, PSW: 0004 [-------------N--], IntLine: [0000])
+[19] {07 003 000} ZJUMP 3 0 (PID: 0, PC: 5, Accumulator: -6, PSW: 0004 [-------------N--], IntLine: [0000])
+[20] {0A 02A 000} INC 42 0 (PID: 0, PC: 6, Accumulator: 36, PSW: 0000 [----------------], IntLine: [0000])
+[21] {06 804 000} JUMP -4 0 (PID: 0, PC: 2, Accumulator: 36, PSW: 0000 [----------------], IntLine: [0000])
+[22] {10 007 000} CALL 7 0 (PID: 0, PC: 9, Accumulator: 36, PSW: 0000 [----------------], IntLine: [0000])
+[23] {01 002 000} ADD 2 0 (PID: 0, PC: 10, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[24] {11 01E 000} MEMADD 30 0 (PID: 0, PC: 11, Accumulator: 106, PSW: 0000 [----------------], IntLine: [0000])
+[25] {08 01E 000} WRITE 30 0 (PID: 0, PC: 12, Accumulator: 106, PSW: 0000 [----------------], IntLine: [0000])
+[26] {0F 000 000} RET 0 0 (PID: 0, PC: 3, Accumulator: 106, PSW: 0000 [----------------], IntLine: [0000])
+[27] {0A 86E 000} INC -110 0 (PID: 0, PC: 4, Accumulator: -4, PSW: 0004 [-------------N--], IntLine: [0000])
+[28] {07 003 000} ZJUMP 3 0 (PID: 0, PC: 5, Accumulator: -4, PSW: 0004 [-------------N--], IntLine: [0000])
+[29] {0A 02A 000} INC 42 0 (PID: 0, PC: 6, Accumulator: 38, PSW: 0000 [----------------], IntLine: [0000])
+[30] {06 804 000} JUMP -4 0 (PID: 0, PC: 2, Accumulator: 38, PSW: 0000 [----------------], IntLine: [0000])
+[31] {10 007 000} CALL 7 0 (PID: 0, PC: 9, Accumulator: 38, PSW: 0000 [----------------], IntLine: [0000])
+[32] {01 002 000} ADD 2 0 (PID: 0, PC: 10, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[33] {11 01E 000} MEMADD 30 0 (PID: 0, PC: 11, Accumulator: 108, PSW: 0000 [----------------], IntLine: [0000])
+[34] {08 01E 000} WRITE 30 0 (PID: 0, PC: 12, Accumulator: 108, PSW: 0000 [----------------], IntLine: [0000])
+[35] {0F 000 000} RET 0 0 (PID: 0, PC: 3, Accumulator: 108, PSW: 0000 [----------------], IntLine: [0000])
+[36] {0A 86E 000} INC -110 0 (PID: 0, PC: 4, Accumulator: -2, PSW: 0004 [-------------N--], IntLine: [0000])
+[37] {07 003 000} ZJUMP 3 0 (PID: 0, PC: 5, Accumulator: -2, PSW: 0004 [-------------N--], IntLine: [0000])
+[38] {0A 02A 000} INC 42 0 (PID: 0, PC: 6, Accumulator: 40, PSW: 0000 [----------------], IntLine: [0000])
+[39] {06 804 000} JUMP -4 0 (PID: 0, PC: 2, Accumulator: 40, PSW: 0000 [----------------], IntLine: [0000])
+[40] {10 007 000} CALL 7 0 (PID: 0, PC: 9, Accumulator: 40, PSW: 0000 [----------------], IntLine: [0000])
+[41] {01 002 000} ADD 2 0 (PID: 0, PC: 10, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[42] {11 01E 000} MEMADD 30 0 (PID: 0, PC: 11, Accumulator: 110, PSW: 0000 [----------------], IntLine: [0000])
+[43] {08 01E 000} WRITE 30 0 (PID: 0, PC: 12, Accumulator: 110, PSW: 0000 [----------------], IntLine: [0000])
+[44] {0F 000 000} RET 0 0 (PID: 0, PC: 3, Accumulator: 110, PSW: 0000 [----------------], IntLine: [0000])
+[45] {0A 86E 000} INC -110 0 (PID: 0, PC: 4, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[46] {07 003 000} ZJUMP 3 0 (PID: 0, PC: 7, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[47] {04 003 000} TRAP 3 0 (PID: 0, PC: 8, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0004])
+[48] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+	[49] Process [0 - programWithSubroutine] has requested to terminate
+[50] {0D 000 000} IRET 0 0 (PID: 1, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[51] {04 003 000} TRAP 3 0 (PID: 1, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0004])
+[52] {0C 002 000} OS 2 0 (PID: 1, PC: 242, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+	[53] Process [1 - programOnlyTrap3] has requested to terminate
+[54] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[55] {04 003 000} TRAP 3 0 (PID: 2, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0004])
+[56] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+	[57] Process [2 - programOnlyTrap3] has requested to terminate
+[57] The SystemIdleProcess is ready to shut down the simulator when dispatched...
+[58] {0D 000 000} IRET 0 0 (PID: 3, PC: 183, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+[59] {04 003 000} TRAP 3 0 (PID: 3, PC: 184, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0004])
+[60] {0C 002 000} OS 2 0 (PID: 3, PC: 242, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+	[61] Process [3 - SystemIdleProcess] has requested to terminate
+[61] The system will shut down now...
+[62] {0D 000 000} IRET 0 0 (PID: -1, PC: 241, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+[63] {0B 000 000} HALT 0 0 (PID: -1, PC: 241, Accumulator: 0, PSW: 0083 [--------X-----ZS], IntLine: [0000])
+[63] END of the simulation
