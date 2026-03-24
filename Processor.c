@@ -16,19 +16,20 @@ extern char *InstructionNames[];
 
 // Processor registers
 int registerPC_CPU; // Program counter
-int registerAccumulator_CPU; // Accumulator
+int registerAccumulator_CPU= 0 ; // Accumulator
 BUSDATACELL registerIR_CPU; // Instruction register
 unsigned int registerPSW_CPU = 128; // Processor state word, initially protected mode
 int registerMAR_CPU; // Memory Address Register
 BUSDATACELL registerMBR_CPU; // Memory Buffer Register
 int registerCTRL_CPU; // Control bus Register
 
-int registerA_CPU; // General purpose register
-int registerB_CPU; // General purpose register
+int registerA_CPU = 0; // General purpose register
+int registerB_CPU= 0; // General purpose register
 int registerC_CPU; // System purpose register
 
 int registerSP_CPU; // Stack pointer register
 int interruptLines_CPU; // Processor interrupt lines
+
 
 // interrupt vector table: an array of handle interrupt memory addresses routines  
 int interruptVectorTable[INTERRUPTTYPES];
@@ -46,6 +47,7 @@ void Processor_InitializeInterruptVectorTable(int interruptVectorInitialAddress)
 
 	interruptVectorTable[SYSCALL_BIT]=interruptVectorInitialAddress;  // SYSCALL_BIT=2
 	interruptVectorTable[EXCEPTION_BIT]=interruptVectorInitialAddress+NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // EXCEPTION_BIT=6
+	interruptVectorTable[CLOCKINT_BIT] = interruptVectorInitialAddress + 2 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // CLOCKINT_BIT = 9
 }
 
 // Fetch an instruction from main memory and put it in the IR register

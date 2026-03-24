@@ -26,6 +26,10 @@ int OperatingSystem_ShortTermScheduler();
 int OperatingSystem_ExtractFromReadyToRunQueue(int queueID);
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
+void OperatingSystem_HandleClockInterrupt();
+
+// Variables V2  ::::::::::::::::::::::::::::::::::
+int numberOfClockInterrupts = 0;
 
 // The process table
 PCB * processTable;
@@ -102,7 +106,7 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 		processTable[i].state=-1;
 		processTable[i].priority=-1;
 		processTable[i].copyOfPCRegister=-1;
-		processTable[i].copyOfPSWRegister=0;
+		processTable[i].copyOfPSWRegister=-1;
 		processTable[i].programListIndex=-1;
 	}
 	// Initialization of the interrupt vector table of the processor
@@ -273,12 +277,17 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
 		processTable[PID].copyOfPCRegister = initialPhysicalAddress;
 		processTable[PID].copyOfPSWRegister = ((unsigned int) 1) << EXECUTION_MODE_BIT;
+	}else{
+		processTable[PID].copyOfPCRegister = 0; 
+		processTable[PID].copyOfPSWRegister = 0;
 	}
 	
 	//Inicializar variables de Restaurado 
 	processTable[PID].copyOfAccumulator = 0; 
 	processTable[PID].copyOfRegisterA = 0; 
 	processTable[PID].copyOfRegisterB = 0; 
+
+	//Inicializar registro Acum, A y B a 0 
 }
 
 
@@ -470,6 +479,7 @@ void OperatingSystem_HandleSystemCall() {
 		//			show custom message 56, using SHORTERMSCHEDULER
 		//			}
 		case SYSCALL_YIELD: 
+		{
 			int miQUEUEID = processTable[executingProcessID].queueID;
 			int miPriority = processTable[executingProcessID].priority;
 			
@@ -493,6 +503,7 @@ void OperatingSystem_HandleSystemCall() {
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
 			}
 			break;
+		}
 	}
 }
 	
@@ -504,6 +515,9 @@ void OperatingSystem_InterruptLogic(int entryPoint){
 			break;
 		case EXCEPTION_BIT: // EXCEPTION_BIT=6
 			OperatingSystem_HandleException();
+			break;
+		case CLOCKINT_BIT: 
+			OperatingSystem_HandleClockInterrupt();
 			break;
 	}
 
@@ -525,6 +539,13 @@ void OperatingSystem_PrintReadyToRunQueue(){
 		}
 	}
 }
+
+
+// Adiciones del V2 ::::::::::::::::::::::::::::::::
+void OperatingSystem_HandleClockInterrupt() { 
+	numberOfClockInterrupts ++;
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
+ } 
 
 
 
