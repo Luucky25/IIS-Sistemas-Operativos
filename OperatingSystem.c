@@ -199,9 +199,9 @@ int OperatingSystem_LongTermScheduler() {
 		}
 	}
 	//Ejercicio V2 - 3e
-	if(numberOfSuccessfullyCreatedProcesses > 0 ){
+	/*if(numberOfSuccessfullyCreatedProcesses > 0 ){
 		OperatingSystem_PrintStatus();
-	}
+	}*/
 
 	// Return the number of succesfully created processes
 	return numberOfSuccessfullyCreatedProcesses;
@@ -523,7 +523,7 @@ void OperatingSystem_HandleSystemCall() {
 				OperatingSystem_Dispatch(selectedProcess);
 
 				//Ejercicio V2 - 3b
-				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName);
+				OperatingSystem_PrintStatus();
 			}else{
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 56, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex]-> executableName);
 			}
@@ -593,9 +593,9 @@ void OperatingSystem_PrintReadyToRunQueue(){
 void OperatingSystem_HandleClockInterrupt() { 
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
- } 
+} 
 
- void OperatingSystem_MoveToTheBLOCKEDState(int PID){
+void OperatingSystem_MoveToTheBLOCKEDState(int PID){
 	if(Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses)>= 0){
 		processTable[PID].state = BLOCKED;
 	}

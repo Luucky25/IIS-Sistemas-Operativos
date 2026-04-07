@@ -19,7 +19,7 @@
 
 // Number of queues of ready to run processes, initially one queue...
 #define NUMBEROFQUEUES 3
-enum TypeOfReadyToRunProcessQueues { HIGHPRIOUSERPROCQUEUE, LOWPRIOUSERPROCQUEUE, DEAMONSQUEUE};	; 
+enum TypeOfReadyToRunProcessQueues { HIGHPRIOUSERPROCQUEUE, LOWPRIOUSERPROCQUEUE, DEAMONSQUEUE};
 
 // Contains the possible type of programs
 enum ProgramTypes { USERPROGRAM=100, DAEMONPROGRAM }; 
