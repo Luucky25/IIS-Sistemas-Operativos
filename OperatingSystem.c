@@ -288,10 +288,8 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 		processTable[PID].queueID = DEAMONSQUEUE;
 	}else{
 		//Programa original >> Dividir entre HIGHPRIO y LOWPRIO
-			//if(processSize < 30 ) processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
-			//else processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
-		//Programa Trampeado >> Mandamos todos directamente a la HIGHPRIOUSERQUEUE
-		processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
+		if(processSize < 30 ) processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
+		else processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
 		}
 
 	//Los Daemons corren en modo protegido y la MMU usa direcciones físicas 
@@ -624,14 +622,9 @@ void OperatingSystem_HandleClockInterrupt() {
 			OperatingSystem_PrintStatus();
 		}else{
 			//No es mejor, lo devolvemos a su cola de listos 
-			
-			//PROGRAMA TRAMPEADO >> No es necesario devolverlo a la cola de listos porque no le hemos sacado
-			Heap_add(selectedProcess, readyToRunQueue[processTable[selectedProcess].queueID], QUEUE_PRIORITY, &numberOfReadyToRunProcesses[processTable[selectedProcess].queueID]);
-			
 			//Original >> Mover el proceso a READYSTATE
-				//OperatingSystem_MoveToTheREADYState(selectedProcess);
-			
-			
+			OperatingSystem_MoveToTheREADYState(selectedProcess);
+
 			//6e >> Si se despertó, alguien pero no cambió, mostrarmos el estado actualizado 
 			if(awakened > 0){
 				OperatingSystem_PrintStatus();
