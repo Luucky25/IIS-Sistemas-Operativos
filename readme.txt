@@ -30,4 +30,26 @@ Actualizamos la visualización para ver una M
 Ejercicio 3 y 4 ------------
 Incorporamos llamadas a PrintStatus, por lo que comentamos los mensajes de estado antiguos 
 
+Ejercicio 5 -----------------------------------
+Introducir el estado BLOCKED y permitir que un proceso ceda el procesador por un tiempo 
+
+    a) Añadir el campo whenToWakeUp al PCB y definir el marco SLEEPINGQUEUE en la cabecera de OperatingSysten
+
+    b/c) Se añade el registro fisico registerD_CPU. La instrucción TRAP ahora guarda su segundo operando en este registro antes de saltar al SO 
+
+    d/e) Creamos sleepingProcessQueue gestionada con un Heap e inicializarlo en OperatingSystem_Initialize 
+
+    f) Se implementa el case SYSCALL_SLEEP calculando whenToWakeUp = delay + numberOfClockInterrupts +1. Creamos la función MoveToTheBlockedState() para gestionar la inserción en la cola
+
+
+Ejercicio 6 ------------------------------------
+Permitir que los procesos bloqueados vuelvan a ser candidatos a ejecutar y aplicar preempción si son prioritarios 
+
+    a/b) En HandleClockInterrupt, el SO pasa a extraer de sleepingProcessesQueue a los procesos cuyo whenToWakeUp coincida con las interrupciones actuales y los mueve a READY
+
+    c,d,e) Tras despertar procesos, se invoca al scheduler
+            -Si tiene prioridad mayor >> Expulsa con el mensaje 58
+            -Si no hay cambio, el candidato se devuelve a su cola de listos 
+            -Se llama a PrintStatus si hubo algún despertar o cambio de proceso
+
 
