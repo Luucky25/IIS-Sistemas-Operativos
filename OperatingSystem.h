@@ -29,10 +29,10 @@ enum ProcessStates { NEW, READY, EXECUTING, BLOCKED, EXIT};
 
 // Enumerated type containing the list of system calls and their numeric identifiers
 enum SystemCallIdentifiers { 
-	SYSCALL_END=3,
+	SYSCALL_END=7,
 	SYSCALL_YIELD=4, 
-	SYSCALL_PRINTEXECINFO=5,
-	SYSCALL_SLEEP=7
+	SYSCALL_PRINTEXECINFO=1,
+	SYSCALL_SLEEP=5
 };
 
 // A PCB contains all of the information about a process that is needed by the OS
