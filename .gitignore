@@ -1,0 +1,6 @@
+# Archivos objeto 
+*.o
+
+# Binarios y ejecutables 
+*.out
+*.exe

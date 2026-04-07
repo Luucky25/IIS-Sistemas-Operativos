@@ -31,3 +31,7 @@ int Processor_GetCTRL();
 void Processor_SetCTRL(int);
 
 #endif
+
+//V2 - Ejercicio 5
+int Processor_GetRegisterD();
+void Processor_SetRegisterD(int);

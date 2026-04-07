@@ -26,6 +26,7 @@ int registerCTRL_CPU; // Control bus Register
 int registerA_CPU = 0; // General purpose register
 int registerB_CPU= 0; // General purpose register
 int registerC_CPU; // System purpose register
+int registerD_CPU; //V2 - Ejercicio 5
 
 int registerSP_CPU; // Stack pointer register
 int interruptLines_CPU; // Processor interrupt lines
@@ -36,7 +37,6 @@ int interruptVectorTable[INTERRUPTTYPES];
 
 // For PSW show "--------X---FNZS"
 char pswmask []="----------------"; 
-
 
 // Initialization of the interrupt vector table
 void Processor_InitializeInterruptVectorTable(int interruptVectorInitialAddress) {
@@ -128,6 +128,7 @@ void Processor_DecodeAndExecuteInstruction() {
 			  
 		// Instruction TRAP
 		case TRAP_INST: 
+			registerD_CPU = operand2;
 			Processor_RaiseInterrupt(SYSCALL_BIT);
 			registerC_CPU=operand1;
 			registerPC_CPU++;
@@ -403,3 +404,10 @@ char * Processor_ShowPSW(){
 
 /////////////////////////////////////////////////////////
 //  New functions below this line  //////////////////////
+
+int Processor_GetRegisterD(){
+	return registerD_CPU;
+}
+void Processor_SetRegisterD(int value){
+	registerD_CPU = value;
+}

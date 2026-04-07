@@ -27,9 +27,13 @@ int OperatingSystem_ExtractFromReadyToRunQueue(int queueID);
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
 void OperatingSystem_HandleClockInterrupt();
+void OperatingSystem_MoveToTheBLOCKEDState();
 
 // Variables V2  ::::::::::::::::::::::::::::::::::
 int numberOfClockInterrupts = 0;
+
+heapItem *sleepingProcessesQueue;
+int numberOfSleepingProcesses = 0;
 
 // The process table
 PCB * processTable;
@@ -92,6 +96,9 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 		readyToRunQueue[i] = Heap_create(PROCESSTABLEMAXSIZE);
 		numberOfReadyToRunProcesses[i] = 0;
 	}
+
+	//V2 - Ejercicio 5 >> Inicializar cola de dormidos 
+	sleepingProcessesQueue = Heap_create(PROCESSTABLEMAXSIZE);
 
 	// Load Operating System Code
 	OperatingSystem_LoadOperatingSystemCode(OPERATING_SYSTEM_CODE_FILE, OS_address_base);
@@ -247,7 +254,7 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 	
 	// PCB initialization
 	OperatingSystem_PCBInitialization(assignedPID, loadingPhysicalAddress, processSize, priority, indexOfExecutableProgram);
-	
+
 	return assignedPID;
 }
 
@@ -265,6 +272,9 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 
 // Assign initial values to all fields inside the PCB
 void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int processSize, int priority, int processPLIndex) {
+
+	//V2 - Ejercicio 5 >> Para cumplir con el ejercicio 0
+	processTable[PID].whenToWakeUp = -1;
 
 	processTable[PID].busy=1;
 	processTable[PID].initialPhysicalAddress=initialPhysicalAddress;
@@ -294,8 +304,6 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].copyOfAccumulator = 0; 
 	processTable[PID].copyOfRegisterA = 0; 
 	processTable[PID].copyOfRegisterB = 0; 
-
-	//Inicializar registro Acum, A y B a 0 
 }
 
 
@@ -521,6 +529,29 @@ void OperatingSystem_HandleSystemCall() {
 			}
 			break;
 		}
+		case SYSCALL_SLEEP:
+		{
+			int delay; 
+			//Segundo operando > 0 >> delay : abs del accum
+			if(Processor_GetRegisterD() >0)
+				delay = Processor_GetRegisterD();
+			else
+				delay = abs(Processor_GetAccumulator());
+			//5-f >> Calcular el despertar
+			processTable[executingProcessID].whenToWakeUp = delay + numberOfClockInterrupts +1;
+
+			//Bloquear el proceso 
+			OperatingSystem_SaveContext(executingProcessID);
+			OperatingSystem_MoveToTheBLOCKEDState(executingProcessID);
+
+			//Liberar CPU y despachar sigueinte
+			executingProcessID = NOPROCESS; 
+			OperatingSystem_Dispatch(OperatingSystem_ShortTermScheduler());
+
+			//5-g Mostrar estado actualizado del sistema 
+			OperatingSystem_PrintStatus();
+			break;
+		}
 	}
 }
 	
@@ -563,6 +594,12 @@ void OperatingSystem_HandleClockInterrupt() {
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
  } 
+
+ void OperatingSystem_MoveToTheBLOCKEDState(int PID){
+	if(Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses)>= 0){
+		processTable[PID].state = BLOCKED;
+	}
+ }
 
 
 

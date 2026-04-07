@@ -14,6 +14,9 @@
 
 #define NOPROCESS -1
 
+// Adiciones de la V2
+#define SLEEPINGQUEUE
+
 // Number of queues of ready to run processes, initially one queue...
 #define NUMBEROFQUEUES 3
 enum TypeOfReadyToRunProcessQueues { HIGHPRIOUSERPROCQUEUE, LOWPRIOUSERPROCQUEUE, DEAMONSQUEUE};	; 
@@ -25,7 +28,12 @@ enum ProgramTypes { USERPROGRAM=100, DAEMONPROGRAM };
 enum ProcessStates { NEW, READY, EXECUTING, BLOCKED, EXIT};
 
 // Enumerated type containing the list of system calls and their numeric identifiers
-enum SystemCallIdentifiers { SYSCALL_END=3,SYSCALL_YIELD=4,  SYSCALL_PRINTEXECINFO=5};
+enum SystemCallIdentifiers { 
+	SYSCALL_END=3,
+	SYSCALL_YIELD=4, 
+	SYSCALL_PRINTEXECINFO=5,
+	SYSCALL_SLEEP=7
+};
 
 // A PCB contains all of the information about a process that is needed by the OS
 typedef struct {
@@ -42,6 +50,8 @@ typedef struct {
 	int copyOfRegisterB;
 	int programListIndex;
 	int queueID;
+	// V2 - Ejercicio 5 
+	int whenToWakeUp;
 } PCB;
 
 // These "extern" declaration enables other source code files to gain access
@@ -55,3 +65,4 @@ int OperatingSystem_ShortTermScheduler();
 void OperatingSystem_Dispatch(int);
 void OperationSystem_HandleClockInterrupt();
 #endif
+
