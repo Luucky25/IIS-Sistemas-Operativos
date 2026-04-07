@@ -63,6 +63,6 @@ void OperatingSystem_Initialize(int);
 void OperatingSystem_InterruptLogic(int);
 int OperatingSystem_ShortTermScheduler();
 void OperatingSystem_Dispatch(int);
-void OperationSystem_HandleClockInterrupt();
+void OperatingSystem_HandleClockInterrupt();
 #endif
 

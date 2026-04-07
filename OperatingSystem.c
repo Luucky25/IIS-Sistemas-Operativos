@@ -593,6 +593,44 @@ void OperatingSystem_PrintReadyToRunQueue(){
 void OperatingSystem_HandleClockInterrupt() { 
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
+
+	int awakened = 0; 
+	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
+	//Si hay procesos y el tiempo de despertar del primero sea el actual 
+	while(numberOfSleepingProcesses > 0 && processTable[Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses)].whenToWakeUp == numberOfClockInterrupts){
+		int pid = Heap_poll(sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
+		OperatingSystem_MoveToTheREADYState(pid);
+		awakened++;
+	}
+
+	//6c >> Al despertar procesos, ver si hay que cambiar el proceso en ejecución
+	int selectedProcess = OperatingSystem_ShortTermScheduler();
+
+	if(selectedProcess != NOPROCESS){
+		//Expulsamos si el candidato tiene menor prioridad
+		if(processTable[selectedProcess].priority < processTable[executingProcessID].priority){
+			//6d >> Mensaje 58 de preempcion
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE,
+								executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName,
+								selectedProcess, programList[processTable[selectedProcess].programListIndex] -> executableName);
+							
+			OperatingSystem_PreemptRunningProcess();
+			OperatingSystem_Dispatch(selectedProcess);
+
+			//6e >> Mostrar estado actualizado 
+			OperatingSystem_PrintStatus();
+		}else{
+			//No es mejor, lo devolvemos a su cola de listos 
+			OperatingSystem_MoveToTheREADYState(selectedProcess);
+			//6e >> Si se despertó, alguien pero no cambió, mostrarmos el estado actualizado 
+			if(awakened > 0){
+				OperatingSystem_PrintStatus();
+			}
+		}
+	}else if(awakened > 0){
+		//Si hay candidatos nuevos pero se despertó alguien, mostrarmos estado
+		OperatingSystem_PrintStatus();
+	}
 } 
 
 void OperatingSystem_MoveToTheBLOCKEDState(int PID){

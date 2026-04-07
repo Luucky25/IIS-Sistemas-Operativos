@@ -128,7 +128,7 @@ void Processor_DecodeAndExecuteInstruction() {
 			  
 		// Instruction TRAP
 		case TRAP_INST: 
-			registerD_CPU = operand2;
+			registerD_CPU = operand2; //V2 - Ejercicio 5
 			Processor_RaiseInterrupt(SYSCALL_BIT);
 			registerC_CPU=operand1;
 			registerPC_CPU++;
