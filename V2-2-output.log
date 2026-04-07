@@ -24,12 +24,12 @@ Maximum number of asserts: 500
 	[0] Process [3 - programV2-fb] moving from the [NEW] state to the [READY] state
 	[0] Process [0] created into the [NEW] state, from program [programV2-fc]
 	[0] Process [0 - programV2-fc] moving from the [NEW] state to the [READY] state
-	[0] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
+	[0] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
 	[0] Running Process Information:
-		[PID: 2, Priority: 5, WakeUp: -1, Queue: HIGHPRIOUSER]
+		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
 	[0]  Ready-to-run processes queue: 
- 	[0]  	 HIGHPRIOUSER:  [0,5], [3,999]
-	[0]  	 LOWPRIOUSER:  
+ 	[0]  	 HIGHPRIOUSER:  
+	[0]  	 LOWPRIOUSER:  [2,5], [0,5]
 	[0]  	 DAEMONS:  [1,100]
 	[0] SLEEPING Queue:
 		[--- empty queue ---]
@@ -38,252 +38,306 @@ Maximum number of asserts: 500
 		PID: 1 -> SystemIdleProcess
 		PID: 2 -> programV2-fa
 		PID: 3 -> programV2-fb
-[1] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
-[2] {05 000 000} NOP 0 0 (PID: 2, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
-[3] {01 005 032} ADD 5 50 (PID: 2, PC: 2, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
-[4] {04 005 007} TRAP 5 7 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0004])
-[5] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[6] Process [2 - programV2-fa] has the processor assigned.	Processor general registers [A: 0] [B: 0]
- OS 2 0 (PID: 2, PC: 243, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
-Assert failed. Time: 6; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
-Assert failed. Time: 6; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
-Assert failed. Time: 6; Element: eXecuting PID; Expected: 0; Real: 2
-[7] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+[1] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+Assert failed. Time: 1; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
+Assert failed. Time: 1; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 1; Element: eXecuting PID; Expected: 2; Real: 3
+[2] {01 002 000} ADD 2 0 (PID: 3, PC: 1, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+Assert failed. Time: 2; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
+Assert failed. Time: 2; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 2; Element: eXecuting PID; Expected: 2; Real: 3
+[3] {0A 801 000} INC -1 0 (PID: 3, PC: 2, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+Assert failed. Time: 3; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
+Assert failed. Time: 3; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 3; Element: eXecuting PID; Expected: 2; Real: 3
+[4] {07 002 000} ZJUMP 2 0 (PID: 3, PC: 3, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+Assert failed. Time: 4; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
+Assert failed. Time: 4; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 4; Element: eXecuting PID; Expected: 2; Real: 3
+[5] {06 802 000} JUMP -2 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+[6] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[7] Clock interrupt number [1] has occurred
+	[7] Process [3 - programV2-fb] will be thrown out of the processor by process [2 - programV2-fa]
+	[7] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [READY] state
+	[7] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
+	[7] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[7]  Ready-to-run processes queue: 
+ 	[7]  	 HIGHPRIOUSER:  [3,999]
+	[7]  	 LOWPRIOUSER:  [0,5]
+	[7]  	 DAEMONS:  [1,100]
+	[7] SLEEPING Queue:
+		[--- empty queue ---]
+	[7] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+Assert warning. Unchecked assert (Time: 6, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 6, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 6, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 6, Element: XPID)
 Assert failed. Time: 7; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
 Assert failed. Time: 7; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
 Assert failed. Time: 7; Element: eXecuting PID; Expected: 0; Real: 2
-[8] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[9] Clock interrupt number [1] has occurred
-	[9] Process [0 - programV2-fc] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+[8] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[9] {05 000 000} NOP 0 0 (PID: 2, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
 Assert failed. Time: 9; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
 Assert failed. Time: 9; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
 Assert failed. Time: 9; Element: eXecuting PID; Expected: 0; Real: 2
-[10] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+[10] {01 005 032} ADD 5 50 (PID: 2, PC: 2, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
 Assert failed. Time: 10; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
 Assert failed. Time: 10; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
 Assert failed. Time: 10; Element: eXecuting PID; Expected: 0; Real: 2
 [11] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[12] Clock interrupt number [2] has occurred
-	[12] Process [0 - programV2-fc] moving from the [READY] state to the [READY] state
+	[12] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
  OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert failed. Time: 12; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
 Assert failed. Time: 12; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
 Assert failed. Time: 12; Element: eXecuting PID; Expected: 0; Real: 2
-[13] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
+[13] {0D 000 000} IRET 0 0 (PID: 2, PC: 2, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
 Assert failed. Time: 13; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
 Assert failed. Time: 13; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
 Assert failed. Time: 13; Element: eXecuting PID; Expected: 0; Real: 2
-[14] {04 004 000} TRAP 4 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0004])
+[14] {04 005 007} TRAP 5 7 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0004])
 Assert failed. Time: 14; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
 Assert failed. Time: 14; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
 Assert failed. Time: 14; Element: eXecuting PID; Expected: 0; Real: 2
 [15] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[16] Process [2 - programV2-fa] will transfer the control of the processor to process [0 - programV2-fc]
-	[16] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
-	[16] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
-	[16] Running Process Information:
-		[PID: 0, Priority: 5, WakeUp: -1, Queue: HIGHPRIOUSER]
-	[16]  Ready-to-run processes queue: 
- 	[16]  	 HIGHPRIOUSER:  [2,5], [3,999]
-	[16]  	 LOWPRIOUSER:  
-	[16]  	 DAEMONS:  [1,100]
-	[16] SLEEPING Queue:
-		[--- empty queue ---]
-	[16] PID association with program's name:
-		PID: 0 -> programV2-fc
-		PID: 1 -> SystemIdleProcess
-		PID: 2 -> programV2-fa
-		PID: 3 -> programV2-fb
- OS 2 0 (PID: 0, PC: 243, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[16] Process [2 - programV2-fa] has the processor assigned.	Processor general registers [A: 0] [B: 0]
+ OS 2 0 (PID: 2, PC: 243, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
 Assert warning. Unchecked assert (Time: 15, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 15, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 15, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 15, Element: XPID)
-[17] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
-Assert failed. Time: 17; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-[18] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[17] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+Assert failed. Time: 17; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
+Assert failed. Time: 17; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
+Assert failed. Time: 17; Element: eXecuting PID; Expected: 0; Real: 2
+[18] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[19] Clock interrupt number [3] has occurred
-	[19] Process [2 - programV2-fa] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 0, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[19] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 18, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 18, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 18, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 18, Element: XPID)
-Assert failed. Time: 19; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-[20] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
-[21] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+Assert failed. Time: 19; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
+Assert failed. Time: 19; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
+Assert failed. Time: 19; Element: eXecuting PID; Expected: 0; Real: 2
+[20] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+[21] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[22] Clock interrupt number [4] has occurred
-	[22] Process [2 - programV2-fa] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 0, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[22] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 21, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 21, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 21, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 21, Element: XPID)
 Assert failed. Time: 22; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 22; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-Assert failed. Time: 22; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
-Assert failed. Time: 22; Element: eXecuting PID; Expected: 3; Real: 0
-[23] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
-[24] {05 000 000} NOP 0 0 (PID: 0, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+Assert failed. Time: 22; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
+Assert failed. Time: 22; Element: Process Table - state; PID: 0; Expected: 3; Real: 1
+Assert failed. Time: 22; Element: eXecuting PID; Expected: 3; Real: 2
+[23] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
+[24] {04 004 000} TRAP 4 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0004])
 Assert failed. Time: 24; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 24; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-Assert failed. Time: 24; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
-Assert failed. Time: 24; Element: eXecuting PID; Expected: 3; Real: 0
-[25] {01 002 000} ADD 2 0 (PID: 0, PC: 2, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
-Assert failed. Time: 25; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 25; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-Assert failed. Time: 25; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
-Assert failed. Time: 25; Element: eXecuting PID; Expected: 3; Real: 0
-[26] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[27] Clock interrupt number [5] has occurred
-	[27] Process [2 - programV2-fa] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert failed. Time: 27; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 27; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-Assert failed. Time: 27; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
-Assert failed. Time: 27; Element: eXecuting PID; Expected: 3; Real: 0
-[28] {0D 000 000} IRET 0 0 (PID: 0, PC: 2, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
-Assert failed. Time: 28; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 28; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-Assert failed. Time: 28; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
-Assert failed. Time: 28; Element: eXecuting PID; Expected: 3; Real: 0
-[29] {04 007 863} TRAP 7 -99 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0004])
-Assert failed. Time: 29; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 29; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
-Assert failed. Time: 29; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
-Assert failed. Time: 29; Element: eXecuting PID; Expected: 3; Real: 0
-[30] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[31] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
-	[31] Running Process Information:
-		[PID: 2, Priority: 5, WakeUp: -1, Queue: HIGHPRIOUSER]
-	[31]  Ready-to-run processes queue: 
- 	[31]  	 HIGHPRIOUSER:  [3,999]
-	[31]  	 LOWPRIOUSER:  
-	[31]  	 DAEMONS:  [1,100]
-	[31] SLEEPING Queue:
-		[0, 5, 8]
-	[31] PID association with program's name:
+Assert failed. Time: 24; Element: Process Table - state; PID: 2; Expected: 3; Real: 2
+Assert failed. Time: 24; Element: Process Table - state; PID: 0; Expected: 3; Real: 1
+Assert failed. Time: 24; Element: eXecuting PID; Expected: 3; Real: 2
+[25] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[26] Process [2 - programV2-fa] will transfer the control of the processor to process [0 - programV2-fc]
+	[26] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
+	[26] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
+	[26] Running Process Information:
+		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
+	[26]  Ready-to-run processes queue: 
+ 	[26]  	 HIGHPRIOUSER:  
+	[26]  	 LOWPRIOUSER:  [0,5], [2,5]
+	[26]  	 DAEMONS:  [1,100]
+	[26] SLEEPING Queue:
+		[--- empty queue ---]
+	[26] PID association with program's name:
 		PID: 0 -> programV2-fc
 		PID: 1 -> SystemIdleProcess
 		PID: 2 -> programV2-fa
 		PID: 3 -> programV2-fb
- OS 2 0 (PID: 2, PC: 243, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
-Assert warning. Unchecked assert (Time: 30, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 30, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 30, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 30, Element: XPID)
-[32] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
-Assert failed. Time: 32; Element: Process Table - state; PID: 0; Expected: 1; Real: 3
-[33] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[34] Clock interrupt number [6] has occurred
-	[34] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert warning. Unchecked assert (Time: 33, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 33, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 33, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 33, Element: XPID)
-Assert failed. Time: 34; Element: Process Table - state; PID: 0; Expected: 1; Real: 3
-[35] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
-[36] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+ OS 2 0 (PID: 3, PC: 243, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
+Assert warning. Unchecked assert (Time: 25, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 25, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 25, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 25, Element: XPID)
+[27] {0D 000 000} IRET 0 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+Assert failed. Time: 27; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
+Assert failed. Time: 27; Element: Process Table - state; PID: 0; Expected: 3; Real: 1
+[28] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[29] Clock interrupt number [5] has occurred
+	[29] Process [3 - programV2-fb] will be thrown out of the processor by process [0 - programV2-fc]
+	[29] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [READY] state
+	[29] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[29] Running Process Information:
+		[PID: 0, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[29]  Ready-to-run processes queue: 
+ 	[29]  	 HIGHPRIOUSER:  [3,999]
+	[29]  	 LOWPRIOUSER:  [2,5]
+	[29]  	 DAEMONS:  [1,100]
+	[29] SLEEPING Queue:
+		[--- empty queue ---]
+	[29] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+Assert warning. Unchecked assert (Time: 28, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 28, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 28, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 28, Element: XPID)
+Assert failed. Time: 29; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
+Assert failed. Time: 29; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
+Assert failed. Time: 29; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
+Assert failed. Time: 29; Element: eXecuting PID; Expected: 3; Real: 0
+[30] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+Assert failed. Time: 30; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
+Assert failed. Time: 30; Element: Process Table - state; PID: 2; Expected: 3; Real: 1
+Assert failed. Time: 30; Element: Process Table - state; PID: 0; Expected: 3; Real: 2
+Assert failed. Time: 30; Element: eXecuting PID; Expected: 3; Real: 0
+[31] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[32] Clock interrupt number [6] has occurred
+	[32] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+Assert failed. Time: 32; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 32; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
+Assert failed. Time: 32; Element: eXecuting PID; Expected: 2; Real: 0
+[33] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+Assert failed. Time: 33; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 33; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
+Assert failed. Time: 33; Element: eXecuting PID; Expected: 2; Real: 0
+[34] {05 000 000} NOP 0 0 (PID: 0, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+Assert failed. Time: 34; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 34; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
+Assert failed. Time: 34; Element: eXecuting PID; Expected: 2; Real: 0
+[35] {01 002 000} ADD 2 0 (PID: 0, PC: 2, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[36] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[37] Clock interrupt number [7] has occurred
 	[37] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: XPID)
-Assert failed. Time: 37; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
-Assert failed. Time: 37; Element: Process Table - state; PID: 0; Expected: 2; Real: 3
-Assert failed. Time: 37; Element: eXecuting PID; Expected: 0; Real: 2
-[38] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
-[39] {0C 14D 000} OS 333 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0040])
-Assert failed. Time: 39; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
-Assert failed. Time: 39; Element: Process Table - state; PID: 0; Expected: 2; Real: 3
-Assert failed. Time: 39; Element: eXecuting PID; Expected: 0; Real: 2
-[40] {0C 006 000} OS 6 0 (PID: 2, PC: 244, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[41] Process [2 - programV2-fa] has generated an exception and is terminating
-	[41] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [EXIT] state
+[38] {0D 000 000} IRET 0 0 (PID: 0, PC: 2, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[39] {04 007 863} TRAP 7 -99 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0004])
+[40] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
 	[41] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
 	[41] Running Process Information:
 		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
 	[41]  Ready-to-run processes queue: 
  	[41]  	 HIGHPRIOUSER:  
-	[41]  	 LOWPRIOUSER:  
+	[41]  	 LOWPRIOUSER:  [2,5]
 	[41]  	 DAEMONS:  [1,100]
 	[41] SLEEPING Queue:
-		[0, 5, 8]
+		[0, 5, 10]
 	[41] PID association with program's name:
 		PID: 0 -> programV2-fc
 		PID: 1 -> SystemIdleProcess
 		PID: 2 -> programV2-fa
 		PID: 3 -> programV2-fb
- OS 6 0 (PID: 3, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+ OS 2 0 (PID: 3, PC: 243, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
 Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 40, Element: XPID)
-[42] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[42] {0D 000 000} IRET 0 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
 Assert failed. Time: 42; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
-Assert failed. Time: 42; Element: Process Table - state; PID: 2; Expected: 1; Real: 4
 Assert failed. Time: 42; Element: Process Table - state; PID: 0; Expected: 2; Real: 3
 Assert failed. Time: 42; Element: eXecuting PID; Expected: 0; Real: 3
-[43] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[43] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[44] Clock interrupt number [8] has occurred
-	[44] Process [0 - programV2-fc] moving from the [BLOCKED] state to the [READY] state
-	[44] Process [3 - programV2-fb] will be thrown out of the processor by process [0 - programV2-fc]
+	[44] Process [3 - programV2-fb] will be thrown out of the processor by process [2 - programV2-fa]
 	[44] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [READY] state
-	[44] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[44] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
 	[44] Running Process Information:
-		[PID: 0, Priority: 5, WakeUp: 8, Queue: HIGHPRIOUSER]
+		[PID: 2, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
 	[44]  Ready-to-run processes queue: 
  	[44]  	 HIGHPRIOUSER:  [3,999]
 	[44]  	 LOWPRIOUSER:  
 	[44]  	 DAEMONS:  [1,100]
 	[44] SLEEPING Queue:
-		[--- empty queue ---]
+		[0, 5, 10]
 	[44] PID association with program's name:
 		PID: 0 -> programV2-fc
 		PID: 1 -> SystemIdleProcess
 		PID: 2 -> programV2-fa
 		PID: 3 -> programV2-fb
- OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 43, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 43, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 43, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 43, Element: XPID)
-Assert failed. Time: 44; Element: Process Table - state; PID: 2; Expected: 1; Real: 4
-[45] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
-[46] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+Assert failed. Time: 44; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
+Assert failed. Time: 44; Element: Process Table - state; PID: 0; Expected: 2; Real: 3
+Assert failed. Time: 44; Element: eXecuting PID; Expected: 0; Real: 2
+[45] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+[46] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[47] Clock interrupt number [9] has occurred
 	[47] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 46, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 46, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 46, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 46, Element: XPID)
-Assert failed. Time: 47; Element: Process Table - state; PID: 2; Expected: 2; Real: 4
-Assert failed. Time: 47; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
-Assert failed. Time: 47; Element: eXecuting PID; Expected: 2; Real: 0
-[48] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
-[49] {04 004 000} TRAP 4 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0004])
-Assert failed. Time: 49; Element: Process Table - state; PID: 2; Expected: 2; Real: 4
-Assert failed. Time: 49; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
-Assert failed. Time: 49; Element: eXecuting PID; Expected: 2; Real: 0
-[50] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[51] Process [0 - programV2-fc] cannot transfer the control of the processor to any process
- OS 2 0 (PID: 0, PC: 243, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+Assert failed. Time: 47; Element: Process Table - state; PID: 0; Expected: 1; Real: 3
+[48] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
+[49] {0C 14D 000} OS 333 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0040])
+Assert failed. Time: 49; Element: Process Table - state; PID: 0; Expected: 1; Real: 3
+[50] {0C 006 000} OS 6 0 (PID: 2, PC: 244, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[51] Process [2 - programV2-fa] has generated an exception and is terminating
+	[51] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [EXIT] state
+	[51] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
+	[51] Running Process Information:
+		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
+	[51]  Ready-to-run processes queue: 
+ 	[51]  	 HIGHPRIOUSER:  
+	[51]  	 LOWPRIOUSER:  
+	[51]  	 DAEMONS:  [1,100]
+	[51] SLEEPING Queue:
+		[0, 5, 10]
+	[51] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 6 0 (PID: 3, PC: 245, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
 Assert warning. Unchecked assert (Time: 50, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 50, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 50, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 50, Element: XPID)
-[52] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[52] {0D 000 000} IRET 0 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+Assert failed. Time: 52; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
 Assert failed. Time: 52; Element: Process Table - state; PID: 2; Expected: 2; Real: 4
-Assert failed. Time: 52; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
-Assert failed. Time: 52; Element: eXecuting PID; Expected: 2; Real: 0
-[53] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+Assert failed. Time: 52; Element: Process Table - state; PID: 0; Expected: 1; Real: 3
+Assert failed. Time: 52; Element: eXecuting PID; Expected: 2; Real: 3
+[53] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[54] Clock interrupt number [10] has occurred
-	[54] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
+	[54] Process [0 - programV2-fc] moving from the [BLOCKED] state to the [READY] state
+	[54] Process [3 - programV2-fb] will be thrown out of the processor by process [0 - programV2-fc]
+	[54] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [READY] state
+	[54] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[54] Running Process Information:
+		[PID: 0, Priority: 5, WakeUp: 10, Queue: LOWPRIOUSER]
+	[54]  Ready-to-run processes queue: 
+ 	[54]  	 HIGHPRIOUSER:  [3,999]
+	[54]  	 LOWPRIOUSER:  
+	[54]  	 DAEMONS:  [1,100]
+	[54] SLEEPING Queue:
+		[--- empty queue ---]
+	[54] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
  OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 53, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 53, Element: PCB_ST)
@@ -292,7 +346,7 @@ Assert warning. Unchecked assert (Time: 53, Element: XPID)
 Assert failed. Time: 54; Element: Process Table - state; PID: 2; Expected: 2; Real: 4
 Assert failed. Time: 54; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
 Assert failed. Time: 54; Element: eXecuting PID; Expected: 2; Real: 0
-[55] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[55] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
 [56] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[57] Clock interrupt number [11] has occurred
 	[57] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
@@ -301,102 +355,102 @@ Assert warning. Unchecked assert (Time: 56, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 56, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 56, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 56, Element: XPID)
-[58] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
-[59] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0040])
-[60] {0C 006 000} OS 6 0 (PID: 0, PC: 244, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[61] Process [0 - programV2-fc] has generated an exception and is terminating
-	[61] Process [0 - programV2-fc] moving from the [EXECUTING] state to the [EXIT] state
-	[61] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
-	[61] Running Process Information:
-		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
-	[61]  Ready-to-run processes queue: 
- 	[61]  	 HIGHPRIOUSER:  
-	[61]  	 LOWPRIOUSER:  
-	[61]  	 DAEMONS:  [1,100]
-	[61] SLEEPING Queue:
-		[--- empty queue ---]
-	[61] PID association with program's name:
-		PID: 0 -> programV2-fc
-		PID: 1 -> SystemIdleProcess
-		PID: 2 -> programV2-fa
-		PID: 3 -> programV2-fb
- OS 6 0 (PID: 3, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[58] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[59] {04 004 000} TRAP 4 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0004])
+[60] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[61] Process [0 - programV2-fc] cannot transfer the control of the processor to any process
+ OS 2 0 (PID: 0, PC: 243, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
 Assert warning. Unchecked assert (Time: 60, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 60, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 60, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 60, Element: XPID)
-[62] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
-Assert failed. Time: 62; Element: Process Table - state; PID: 3; Expected: 1; Real: 2
-Assert failed. Time: 62; Element: Process Table - state; PID: 0; Expected: 2; Real: 4
-Assert failed. Time: 62; Element: eXecuting PID; Expected: 0; Real: 3
-[63] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[62] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[63] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[64] Clock interrupt number [12] has occurred
-	[64] Process [3 - programV2-fb] will be thrown out of the processor by process [1 - SystemIdleProcess]
-	[64] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [READY] state
-	[64] Process [1 - SystemIdleProcess] moving from the [READY] state to the [EXECUTING] state
-	[64] Running Process Information:
-		[PID: 1, Priority: 100, WakeUp: -1, Queue: DAEMONS]
-	[64]  Ready-to-run processes queue: 
- 	[64]  	 HIGHPRIOUSER:  [3,999]
-	[64]  	 LOWPRIOUSER:  
-	[64]  	 DAEMONS:  
-	[64] SLEEPING Queue:
-		[--- empty queue ---]
-	[64] PID association with program's name:
-		PID: 0 -> programV2-fc
-		PID: 1 -> SystemIdleProcess
-		PID: 2 -> programV2-fa
-		PID: 3 -> programV2-fb
- OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[64] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 63, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 63, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 63, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 63, Element: XPID)
-Assert failed. Time: 64; Element: Process Table - state; PID: 0; Expected: 2; Real: 4
-Assert failed. Time: 64; Element: eXecuting PID; Expected: 0; Real: 1
-[65] {0D 000 000} IRET 0 0 (PID: 1, PC: 60, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
-[66] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[65] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[66] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[67] Clock interrupt number [13] has occurred
 	[67] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 66, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 66, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 66, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 66, Element: XPID)
 Assert failed. Time: 67; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 67; Element: eXecuting PID; Expected: 3; Real: 1
-[68] {0D 000 000} IRET 0 0 (PID: 1, PC: 60, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
-[69] {01 5E2 398} ADD 1506 920 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+Assert failed. Time: 67; Element: Process Table - state; PID: 0; Expected: 4; Real: 2
+Assert failed. Time: 67; Element: eXecuting PID; Expected: 3; Real: 0
+[68] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[69] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0040])
 Assert failed. Time: 69; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 69; Element: eXecuting PID; Expected: 3; Real: 1
-[70] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
-Assert failed. Time: 70; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 70; Element: eXecuting PID; Expected: 3; Real: 1
-[71] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[72] Clock interrupt number [14] has occurred
-	[72] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert failed. Time: 72; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 72; Element: eXecuting PID; Expected: 3; Real: 1
-[73] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-Assert failed. Time: 73; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
-Assert failed. Time: 73; Element: eXecuting PID; Expected: 3; Real: 1
-[74] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+Assert failed. Time: 69; Element: Process Table - state; PID: 0; Expected: 4; Real: 2
+Assert failed. Time: 69; Element: eXecuting PID; Expected: 3; Real: 0
+[70] {0C 006 000} OS 6 0 (PID: 0, PC: 244, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[71] Process [0 - programV2-fc] has generated an exception and is terminating
+	[71] Process [0 - programV2-fc] moving from the [EXECUTING] state to the [EXIT] state
+	[71] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
+	[71] Running Process Information:
+		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
+	[71]  Ready-to-run processes queue: 
+ 	[71]  	 HIGHPRIOUSER:  
+	[71]  	 LOWPRIOUSER:  
+	[71]  	 DAEMONS:  [1,100]
+	[71] SLEEPING Queue:
+		[--- empty queue ---]
+	[71] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 6 0 (PID: 3, PC: 245, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
+Assert warning. Unchecked assert (Time: 70, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 70, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 70, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 70, Element: XPID)
+[72] {0D 000 000} IRET 0 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+[73] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[74] Clock interrupt number [14] has occurred
+	[74] Process [3 - programV2-fb] will be thrown out of the processor by process [1 - SystemIdleProcess]
+	[74] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [READY] state
+	[74] Process [1 - SystemIdleProcess] moving from the [READY] state to the [EXECUTING] state
+	[74] Running Process Information:
+		[PID: 1, Priority: 100, WakeUp: -1, Queue: DAEMONS]
+	[74]  Ready-to-run processes queue: 
+ 	[74]  	 HIGHPRIOUSER:  [3,999]
+	[74]  	 LOWPRIOUSER:  
+	[74]  	 DAEMONS:  
+	[74] SLEEPING Queue:
+		[--- empty queue ---]
+	[74] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+Assert warning. Unchecked assert (Time: 73, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 73, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 73, Element: PCB_ST)
+Assert warning. Unchecked assert (Time: 73, Element: XPID)
 Assert failed. Time: 74; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
 Assert failed. Time: 74; Element: eXecuting PID; Expected: 3; Real: 1
-[75] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
+[75] {0D 000 000} IRET 0 0 (PID: 1, PC: 60, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
 Assert failed. Time: 75; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
 Assert failed. Time: 75; Element: eXecuting PID; Expected: 3; Real: 1
-[76] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+[76] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
 	[77] Clock interrupt number [15] has occurred
 	[77] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+ OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
 Assert failed. Time: 77; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
 Assert failed. Time: 77; Element: eXecuting PID; Expected: 3; Real: 1
-[78] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[78] {0D 000 000} IRET 0 0 (PID: 1, PC: 60, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
 Assert failed. Time: 78; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
 Assert failed. Time: 78; Element: eXecuting PID; Expected: 3; Real: 1
-[79] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[79] {01 5E2 398} ADD 1506 920 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
 Assert failed. Time: 79; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
 Assert failed. Time: 79; Element: eXecuting PID; Expected: 3; Real: 1
 [80] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
@@ -444,57 +498,3 @@ Assert failed. Time: 94; Element: eXecuting PID; Expected: 3; Real: 1
 [95] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
 Assert failed. Time: 95; Element: Process Table - state; PID: 3; Expected: 2; Real: 1
 Assert failed. Time: 95; Element: eXecuting PID; Expected: 3; Real: 1
-[96] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[97] Clock interrupt number [19] has occurred
-	[97] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert failed. Time: 97; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-[98] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-Assert failed. Time: 98; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-[99] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-[100] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
-Assert failed. Time: 100; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-[101] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[102] Clock interrupt number [20] has occurred
-	[102] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert warning. Unchecked assert (Time: 101, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 101, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 101, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 101, Element: XPID)
-[103] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-Assert failed. Time: 103; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-[104] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-Assert failed. Time: 104; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-[105] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
-Assert failed. Time: 105; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-[106] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[107] Clock interrupt number [21] has occurred
-	[107] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert failed. Time: 107; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-Assert failed. Time: 107; Element: eXecuting PID; Expected: -1; Real: 1
-[108] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-Assert failed. Time: 108; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-Assert failed. Time: 108; Element: eXecuting PID; Expected: -1; Real: 1
-[109] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-Assert failed. Time: 109; Element: Process Table - state; PID: 3; Expected: 4; Real: 1
-Assert failed. Time: 109; Element: eXecuting PID; Expected: -1; Real: 1
-[110] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
-[111] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[112] Clock interrupt number [22] has occurred
-	[112] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-[113] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-[114] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-[115] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
-[116] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[117] Clock interrupt number [23] has occurred
-	[117] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
- OS 9 0 (PID: 1, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-[118] {0D 000 000} IRET 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-[119] {06 801 000} JUMP -1 0 (PID: 1, PC: 61, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
-[120] {05 000 000} NOP 0 0 (PID: 1, PC: 62, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
-[121] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[122] Clock interrupt number [24] has occurred
-	[122] Process [3 - programV2-fb] moving from the [READY] state to the [READY] state
