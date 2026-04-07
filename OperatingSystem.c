@@ -608,7 +608,7 @@ void OperatingSystem_HandleClockInterrupt() {
 
 	if(selectedProcess != NOPROCESS){
 		//Expulsamos si el candidato tiene menor prioridad
-		if(processTable[selectedProcess].priority < processTable[executingProcessID].priority){
+		if(processTable[selectedProcess].priority <= processTable[executingProcessID].priority){
 			//6d >> Mensaje 58 de preempcion
 			ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE,
 								executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName,
