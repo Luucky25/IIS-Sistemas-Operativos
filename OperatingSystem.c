@@ -14,6 +14,7 @@
 void OperatingSystem_PCBInitialization(int, int, int, int, int);
 void OperatingSystem_PrintReadyToRunQueue();
 void OperatingSystem_MoveToTheREADYState(int);
+void OperatingSystem_MoveToTheSLEEPINGState();
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_RestoreContext(int);
 void OperatingSystem_SaveContext(int);
@@ -24,10 +25,10 @@ int OperatingSystem_CreateProcess(int);
 int OperatingSystem_ObtainMainMemory(int, int);
 int OperatingSystem_ShortTermScheduler();
 int OperatingSystem_ExtractFromReadyToRunQueue(int queueID);
+int OperatingSystem_ExtractFromSleepingProcessesQueue();
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
 void OperatingSystem_HandleClockInterrupt();
-void OperatingSystem_MoveToTheBLOCKEDState();
 
 // Variables V2  ::::::::::::::::::::::::::::::::::
 int numberOfClockInterrupts = 0;
@@ -273,9 +274,7 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 // Assign initial values to all fields inside the PCB
 void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int processSize, int priority, int processPLIndex) {
 
-	//V2 - Ejercicio 5 >> Para cumplir con el ejercicio 0
-	processTable[PID].whenToWakeUp = -1;
-
+	
 	processTable[PID].busy=1;
 	processTable[PID].initialPhysicalAddress=initialPhysicalAddress;
 	processTable[PID].processSize=processSize;
@@ -283,14 +282,26 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].state=NEW;
 	processTable[PID].priority=priority;
 	processTable[PID].programListIndex=processPLIndex;
+	
+	
+	//Inicializar variables de Restaurado 
+	processTable[PID].copyOfAccumulator = 0; 
+	processTable[PID].copyOfRegisterA = 0; 
+	processTable[PID].copyOfRegisterB = 0; 
+	
+	//V2 - Ejercicio 5 >> Para cumplir con el ejercicio 0
+	processTable[PID].whenToWakeUp = -1;
+	
 	//Asignar correctamente el proceso 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
 		processTable[PID].queueID = DEAMONSQUEUE;
 	}else{
-		//Programa original >> Dividir entre HIGHPRIO y LOWPRIO
-		if(processSize < 30 ) processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
-		else processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
+		if(processSize <= 30){
+			processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
+		}else{
+			processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
 		}
+	}
 
 	//Los Daemons corren en modo protegido y la MMU usa direcciones físicas 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
@@ -301,10 +312,6 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 		processTable[PID].copyOfPSWRegister = 0;
 	}
 	
-	//Inicializar variables de Restaurado 
-	processTable[PID].copyOfAccumulator = 0; 
-	processTable[PID].copyOfRegisterA = 0; 
-	processTable[PID].copyOfRegisterB = 0; 
 }
 
 
@@ -357,6 +364,14 @@ int OperatingSystem_ExtractFromReadyToRunQueue(int queueID) {
 
 	// Return highest priority process or NOPROCESS if empty queue
 	return selectedProcess; 
+}
+
+int OperatingSystem_ExtractFromSleepingProcessesQueue(){
+	int selectedProcess = NOPROCESS;
+
+	selectedProcess = Heap_poll(sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
+
+	return selectedProcess;
 }
 
 
@@ -595,51 +610,60 @@ void OperatingSystem_HandleClockInterrupt() {
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
+	//Candidato_PID es el PID del proceso con menor tiempo para levanttarse
+	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	int awakened = 0; 
+
 	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
 	//Si hay procesos y el tiempo de despertar del primero sea el actual 
-	while(numberOfSleepingProcesses > 0 && processTable[Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses)].whenToWakeUp == numberOfClockInterrupts){
-		int pid = Heap_poll(sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
+	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp == numberOfClockInterrupts){
+		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
 		OperatingSystem_MoveToTheREADYState(pid);
 		awakened++;
-	}
+		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+	} 
 
-	//6c >> Al despertar procesos, ver si hay que cambiar el proceso en ejecución
-	int selectedProcess = OperatingSystem_ShortTermScheduler();
+	if(awakened > 0){
+		OperatingSystem_PrintStatus();
+		int nuevoCandidato_PID = NOPROCESS; 
+		int nuevoCandidato_Queue = -1; 
+		for(size_t i = 0; i < NUMBEROFQUEUES; i++){
+			nuevoCandidato_PID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+			if(nuevoCandidato_PID != NOPROCESS){
+				nuevoCandidato_Queue = i;
+				break;
+			}
+		}
 
-	if(selectedProcess != NOPROCESS){
-		//Expulsamos si el candidato tiene menor prioridad
-		if(processTable[selectedProcess].priority <= processTable[executingProcessID].priority){
-			//6d >> Mensaje 58 de preempcion
-			ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE,
-								executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName,
-								selectedProcess, programList[processTable[selectedProcess].programListIndex] -> executableName);
-							
-			OperatingSystem_PreemptRunningProcess();
-			OperatingSystem_Dispatch(selectedProcess);
+		if(nuevoCandidato_PID != NOPROCESS){
+			int actualQueue = processTable[executingProcessID].queueID;
+			int mustPreempt = 0; 
 
-			//6e >> Mostrar estado actualizado 
-			OperatingSystem_PrintStatus();
-		}else{
-			//No es mejor, lo devolvemos a su cola de listos 
-			//Original >> Mover el proceso a READYSTATE
-			OperatingSystem_MoveToTheREADYState(selectedProcess);
+			if(nuevoCandidato_Queue < actualQueue){
+				mustPreempt = 1; 
+			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority < processTable[executingProcessID].priority){
+				mustPreempt = 1; 
+			}
 
-			//6e >> Si se despertó, alguien pero no cambió, mostrarmos el estado actualizado 
-			if(awakened > 0){
+			if(mustPreempt){
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName, 
+						nuevoCandidato_PID, programList[processTable[nuevoCandidato_PID].programListIndex]-> executableName);
+				OperatingSystem_PreemptRunningProcess();
+				int selectedProcess = OperatingSystem_ShortTermScheduler();
+				OperatingSystem_Dispatch(selectedProcess);
 				OperatingSystem_PrintStatus();
 			}
 		}
-	}else if(awakened > 0){
-		//Si hay candidatos nuevos pero se despertó alguien, mostrarmos estado
-		OperatingSystem_PrintStatus();
 	}
+	return;
 } 
 
-void OperatingSystem_MoveToTheBLOCKEDState(int PID){
-	if(Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses)>= 0){
-		processTable[PID].state = BLOCKED;
-	}
+void OperatingSystem_MoveToTheSLEEPINGState(int PID){
+	OperatingSystem_SaveContext(PID);
+	int previous = processTable[PID].state;
+	processTable[PID].state = BLOCKED; 
+	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
+	executingProcessID = NOPROCESS;
  }
 
 
