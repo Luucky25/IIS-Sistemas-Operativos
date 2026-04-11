@@ -22,14 +22,17 @@ Entorno: Recomendado Unix/Linux o WSL.
 ## 📖 Guía de Uso
 Compilar:
 
-Bash
+```Bash
 make
+```
 Ejecutar:
 
-Bash
+```Bash
 ./Simulator
+```
 Limpiar:
 
-Bash
+```Bash
 make clean
+```
 Autor: Lucas Álvarez Pérez
