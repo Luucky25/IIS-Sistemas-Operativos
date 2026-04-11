@@ -1,7 +1,14 @@
 {
+<<<<<<< HEAD
     "debug.inlineValues": true,
     "files.associations": {
         "*.def": "c"
     },
 
+=======
+    "files.associations": {
+        "processorProp.C": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "enabled"
+>>>>>>> fuente2/main
 }
