@@ -558,10 +558,9 @@ void OperatingSystem_HandleSystemCall() {
 
 			//Bloquear el proceso 
 			OperatingSystem_SaveContext(executingProcessID);
-			OperatingSystem_MoveToTheBLOCKEDState(executingProcessID);
+			OperatingSystem_MoveToTheSLEEPINGState(executingProcessID);
 
-			//Liberar CPU y despachar sigueinte
-			executingProcessID = NOPROCESS; 
+			//Liberar CPU y despachar sigueinte 
 			OperatingSystem_Dispatch(OperatingSystem_ShortTermScheduler());
 
 			//5-g Mostrar estado actualizado del sistema 
@@ -662,6 +661,8 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 	OperatingSystem_SaveContext(PID);
 	int previous = processTable[PID].state;
 	processTable[PID].state = BLOCKED; 
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex]-> executableName, 
+			statesNames[previous], statesNames[BLOCKED]);
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
  }
