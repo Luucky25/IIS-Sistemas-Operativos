@@ -142,43 +142,28 @@ Maximum number of asserts: 500
 [35] {01 005 032} ADD 5 50 (PID: 2, PC: 2, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
 [36] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
 	[37] Clock interrupt number [7] has occurred
- OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[37] Process [2 - programV2-fa] will be thrown out of the processor by process [0 - programV2-fc]
+	[37] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
+	[37] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[37] Running Process Information:
+		[PID: 0, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[37]  Ready-to-run processes queue: 
+ 	[37]  	 HIGHPRIOUSER:  [2,5], [3,999]
+	[37]  	 LOWPRIOUSER:  
+	[37]  	 DAEMONS:  [1,100]
+	[37] SLEEPING Queue:
+		[--- empty queue ---]
+	[37] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
 Assert warning. Unchecked assert (Time: 36, Element: XPID)
-Assert failed. Time: 37; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
-Assert failed. Time: 37; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
-Assert failed. Time: 37; Element: eXecuting PID; Expected: 0; Real: 2
-[38] {0D 000 000} IRET 0 0 (PID: 2, PC: 2, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
-[39] {04 007 005} TRAP 7 5 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0004])
-Assert failed. Time: 39; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
-Assert failed. Time: 39; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
-Assert failed. Time: 39; Element: eXecuting PID; Expected: 0; Real: 2
-[40] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
-	[41] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [BLOCKED] state
-	[41] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
-	[41] Running Process Information:
-		[PID: 0, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
-	[41]  Ready-to-run processes queue: 
- 	[41]  	 HIGHPRIOUSER:  [3,999]
-	[41]  	 LOWPRIOUSER:  
-	[41]  	 DAEMONS:  [1,100]
-	[41] SLEEPING Queue:
-		[2, 5, 13]
-	[41] PID association with program's name:
-		PID: 0 -> programV2-fc
-		PID: 1 -> SystemIdleProcess
-		PID: 2 -> programV2-fa
-		PID: 3 -> programV2-fb
- OS 2 0 (PID: 0, PC: 243, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
-Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 40, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 40, Element: XPID)
-[42] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 2, PSW: 01E1 [--------X------S], IntLine: [0200])
-Assert failed. Time: 42; Element: Process Table - state; PID: 2; Expected: 1; Real: 3
-Warning, 245 unchecked asserts in Asserts queue !!!
-[42] END of the simulation
+[38] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 2, PSW: 01E1 [--------X------S], IntLine: [0000])
+Warning, 260 unchecked asserts in Asserts queue !!!
+[38] END of the simulation
