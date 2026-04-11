@@ -2,6 +2,7 @@
     "tasks": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             "type": "shell",
             "label": "Build Simulator with make",
             "command": "/usr/bin/make",
@@ -11,6 +12,8 @@
             "options": {
                 "cwd": "${workspaceFolder}"
 =======
+=======
+>>>>>>> fuente/main
             "type": "cppbuild",
             "label": "C/C++: gcc-7 compilar archivo activo",
             "command": "/usr/bin/gcc-7",
@@ -23,7 +26,10 @@
             ],
             "options": {
                 "cwd": "${fileDirname}"
+<<<<<<< HEAD
 >>>>>>> fuente2/main
+=======
+>>>>>>> fuente/main
             },
             "problemMatcher": [
                 "$gcc"
@@ -32,6 +38,7 @@
                 "kind": "build",
                 "isDefault": true
             },
+<<<<<<< HEAD
 <<<<<<< HEAD
             "detail": "Build Simulator with make"
         },
@@ -50,6 +57,9 @@
 =======
             "detail": "Tarea generada por el depurador."
 >>>>>>> fuente2/main
+=======
+            "detail": "Tarea generada por el depurador."
+>>>>>>> fuente/main
         }
     ],
     "version": "2.0.0"
