@@ -5,7 +5,7 @@ Autor : Lucas Álvarez Pérez
 Descripción : Segunda fase de las prácticas de sistema operativos - Se utiliza como base la práctica del Simulador V1
 
 
-EJERCICIOS :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+EJERCICIOS a realizar :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Ejercicio 0 ---------
 Configuramos OperatingSystem_Initialize para limpiar la tabla de procesos poniendo casi todos
