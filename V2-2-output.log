@@ -137,33 +137,299 @@ Maximum number of asserts: 500
 		PID: 2 -> programV2-fa
 		PID: 3 -> programV2-fb
  OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
-[33] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
-[34] {05 000 000} NOP 0 0 (PID: 2, PC: 1, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
-[35] {01 005 032} ADD 5 50 (PID: 2, PC: 2, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
-[36] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
-	[37] Clock interrupt number [7] has occurred
-	[37] Process [2 - programV2-fa] will be thrown out of the processor by process [0 - programV2-fc]
-	[37] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
-	[37] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
-	[37] Running Process Information:
+[33] {0D 000 000} IRET 0 0 (PID: 2, PC: 3, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
+[34] {04 004 000} TRAP 4 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0004])
+[35] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[36] Process [2 - programV2-fa] will transfer the control of the processor to process [0 - programV2-fc]
+	[36] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
+	[36] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[36] Running Process Information:
 		[PID: 0, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
-	[37]  Ready-to-run processes queue: 
- 	[37]  	 HIGHPRIOUSER:  [2,5], [3,999]
-	[37]  	 LOWPRIOUSER:  
-	[37]  	 DAEMONS:  [1,100]
-	[37] SLEEPING Queue:
+	[36]  Ready-to-run processes queue: 
+ 	[36]  	 HIGHPRIOUSER:  [2,5], [3,999]
+	[36]  	 LOWPRIOUSER:  
+	[36]  	 DAEMONS:  [1,100]
+	[36] SLEEPING Queue:
 		[--- empty queue ---]
-	[37] PID association with program's name:
+	[36] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 2 0 (PID: 0, PC: 243, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+[37] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[38] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[39] Clock interrupt number [7] has occurred
+	[39] Process [0 - programV2-fc] will be thrown out of the processor by process [2 - programV2-fa]
+	[39] Process [0 - programV2-fc] moving from the [EXECUTING] state to the [READY] state
+	[39] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
+	[39] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[39]  Ready-to-run processes queue: 
+ 	[39]  	 HIGHPRIOUSER:  [0,5], [3,999]
+	[39]  	 LOWPRIOUSER:  
+	[39]  	 DAEMONS:  [1,100]
+	[39] SLEEPING Queue:
+		[--- empty queue ---]
+	[39] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+Assert failed. Time: 39; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
+Assert failed. Time: 39; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
+Assert failed. Time: 39; Element: eXecuting PID; Expected: 0; Real: 2
+[40] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+Assert failed. Time: 40; Element: Process Table - state; PID: 2; Expected: 1; Real: 2
+Assert failed. Time: 40; Element: Process Table - state; PID: 0; Expected: 2; Real: 1
+Assert failed. Time: 40; Element: eXecuting PID; Expected: 0; Real: 2
+[41] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[42] Clock interrupt number [8] has occurred
+	[42] Process [2 - programV2-fa] will be thrown out of the processor by process [0 - programV2-fc]
+	[42] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
+	[42] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[42] Running Process Information:
+		[PID: 0, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[42]  Ready-to-run processes queue: 
+ 	[42]  	 HIGHPRIOUSER:  [2,5], [3,999]
+	[42]  	 LOWPRIOUSER:  
+	[42]  	 DAEMONS:  [1,100]
+	[42] SLEEPING Queue:
+		[--- empty queue ---]
+	[42] PID association with program's name:
 		PID: 0 -> programV2-fc
 		PID: 1 -> SystemIdleProcess
 		PID: 2 -> programV2-fa
 		PID: 3 -> programV2-fb
  OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
-Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 36, Element: PCB_ST)
-Assert warning. Unchecked assert (Time: 36, Element: XPID)
-[38] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 2, PSW: 01E1 [--------X------S], IntLine: [0000])
-Warning, 260 unchecked asserts in Asserts queue !!!
-[38] END of the simulation
+[43] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[44] {04 004 000} TRAP 4 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0004])
+[45] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[46] Process [0 - programV2-fc] will transfer the control of the processor to process [2 - programV2-fa]
+	[46] Process [0 - programV2-fc] moving from the [EXECUTING] state to the [READY] state
+	[46] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
+	[46] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[46]  Ready-to-run processes queue: 
+ 	[46]  	 HIGHPRIOUSER:  [0,5], [3,999]
+	[46]  	 LOWPRIOUSER:  
+	[46]  	 DAEMONS:  [1,100]
+	[46] SLEEPING Queue:
+		[--- empty queue ---]
+	[46] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 2 0 (PID: 2, PC: 243, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
+[47] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0200])
+[48] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[49] Clock interrupt number [9] has occurred
+	[49] Process [2 - programV2-fa] will be thrown out of the processor by process [0 - programV2-fc]
+	[49] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [READY] state
+	[49] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[49] Running Process Information:
+		[PID: 0, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[49]  Ready-to-run processes queue: 
+ 	[49]  	 HIGHPRIOUSER:  [2,5], [3,999]
+	[49]  	 LOWPRIOUSER:  
+	[49]  	 DAEMONS:  [1,100]
+	[49] SLEEPING Queue:
+		[--- empty queue ---]
+	[49] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+Assert failed. Time: 49; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 49; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
+Assert failed. Time: 49; Element: eXecuting PID; Expected: 2; Real: 0
+[50] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+Assert failed. Time: 50; Element: Process Table - state; PID: 2; Expected: 2; Real: 1
+Assert failed. Time: 50; Element: Process Table - state; PID: 0; Expected: 1; Real: 2
+Assert failed. Time: 50; Element: eXecuting PID; Expected: 2; Real: 0
+[51] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[52] Clock interrupt number [10] has occurred
+	[52] Process [0 - programV2-fc] will be thrown out of the processor by process [2 - programV2-fa]
+	[52] Process [0 - programV2-fc] moving from the [EXECUTING] state to the [READY] state
+	[52] Process [2 - programV2-fa] moving from the [READY] state to the [EXECUTING] state
+	[52] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[52]  Ready-to-run processes queue: 
+ 	[52]  	 HIGHPRIOUSER:  [0,5], [3,999]
+	[52]  	 LOWPRIOUSER:  
+	[52]  	 DAEMONS:  [1,100]
+	[52] SLEEPING Queue:
+		[--- empty queue ---]
+	[52] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0000])
+[53] {0D 000 000} IRET 0 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0000])
+[54] {0C 14D 000} OS 333 0 (PID: 2, PC: 4, Accumulator: 55, PSW: 0000 [----------------], IntLine: [0040])
+[55] {0C 006 000} OS 6 0 (PID: 2, PC: 244, Accumulator: 55, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[56] Process [2 - programV2-fa] has generated an exception and is terminating
+	[56] Process [2 - programV2-fa] moving from the [EXECUTING] state to the [EXIT] state
+	[56] Process [0 - programV2-fc] moving from the [READY] state to the [EXECUTING] state
+	[56] Running Process Information:
+		[PID: 0, Priority: 5, WakeUp: 6, Queue: HIGHPRIOUSER]
+	[56]  Ready-to-run processes queue: 
+ 	[56]  	 HIGHPRIOUSER:  [3,999]
+	[56]  	 LOWPRIOUSER:  
+	[56]  	 DAEMONS:  [1,100]
+	[56] SLEEPING Queue:
+		[--- empty queue ---]
+	[56] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 6 0 (PID: 0, PC: 245, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+[57] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[58] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[59] Clock interrupt number [11] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+[60] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0200])
+[61] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[62] Clock interrupt number [12] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0000])
+[63] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0000])
+[64] {0D 000 000} IRET 0 0 (PID: 0, PC: 4, Accumulator: 2, PSW: 0000 [----------------], IntLine: [0040])
+[65] {0C 006 000} OS 6 0 (PID: 0, PC: 244, Accumulator: 2, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[66] Process [0 - programV2-fc] has generated an exception and is terminating
+	[66] Process [0 - programV2-fc] moving from the [EXECUTING] state to the [EXIT] state
+	[66] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
+	[66] Running Process Information:
+		[PID: 3, Priority: 999, WakeUp: -1, Queue: HIGHPRIOUSER]
+	[66]  Ready-to-run processes queue: 
+ 	[66]  	 HIGHPRIOUSER:  
+	[66]  	 LOWPRIOUSER:  
+	[66]  	 DAEMONS:  [1,100]
+	[66] SLEEPING Queue:
+		[--- empty queue ---]
+	[66] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 6 0 (PID: 3, PC: 245, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
+[67] {0D 000 000} IRET 0 0 (PID: 3, PC: 2, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+[68] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[69] Clock interrupt number [13] has occurred
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+[70] {0D 000 000} IRET 0 0 (PID: 3, PC: 2, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+[71] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[72] Clock interrupt number [14] has occurred
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+[73] {0D 000 000} IRET 0 0 (PID: 3, PC: 2, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+[74] {07 002 000} ZJUMP 2 0 (PID: 3, PC: 3, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+[75] {06 802 000} JUMP -2 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0200])
+[76] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[77] Clock interrupt number [15] has occurred
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+[78] {0D 000 000} IRET 0 0 (PID: 3, PC: 1, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+[79] {0A 801 000} INC -1 0 (PID: 3, PC: 2, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[80] {07 002 000} ZJUMP 2 0 (PID: 3, PC: 4, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[81] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[82] Clock interrupt number [16] has occurred
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[83] {0D 000 000} IRET 0 0 (PID: 3, PC: 4, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[84] {0A 001 000} INC 1 0 (PID: 3, PC: 5, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+[85] {04 007 000} TRAP 7 0 (PID: 3, PC: 6, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0204])
+[86] {0C 002 000} OS 2 0 (PID: 3, PC: 242, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[87] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [BLOCKED] state
+	[87] Process [1 - SystemIdleProcess] moving from the [READY] state to the [EXECUTING] state
+	[87] Running Process Information:
+		[PID: 1, Priority: 100, WakeUp: -1, Queue: DAEMONS]
+	[87]  Ready-to-run processes queue: 
+ 	[87]  	 HIGHPRIOUSER:  
+	[87]  	 LOWPRIOUSER:  
+	[87]  	 DAEMONS:  
+	[87] SLEEPING Queue:
+		[3, 999, 18]
+	[87] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 2 0 (PID: 1, PC: 243, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[88] {0D 000 000} IRET 0 0 (PID: 1, PC: 60, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
+[89] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[90] Clock interrupt number [17] has occurred
+ OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[91] {0D 000 000} IRET 0 0 (PID: 1, PC: 60, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
+[92] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[93] Clock interrupt number [18] has occurred
+	[93] Process [3 - programV2-fb] moving from the [BLOCKED] state to the [READY] state
+	[93] Running Process Information:
+		[PID: 1, Priority: 100, WakeUp: -1, Queue: DAEMONS]
+	[93]  Ready-to-run processes queue: 
+ 	[93]  	 HIGHPRIOUSER:  [3,999]
+	[93]  	 LOWPRIOUSER:  
+	[93]  	 DAEMONS:  
+	[93] SLEEPING Queue:
+		[--- empty queue ---]
+	[93] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+	[93] Process [1 - SystemIdleProcess] will be thrown out of the processor by process [3 - programV2-fb]
+	[93] Process [1 - SystemIdleProcess] moving from the [EXECUTING] state to the [READY] state
+	[93] Process [3 - programV2-fb] moving from the [READY] state to the [EXECUTING] state
+	[93] Running Process Information:
+		[PID: 3, Priority: 999, WakeUp: 18, Queue: HIGHPRIOUSER]
+	[93]  Ready-to-run processes queue: 
+ 	[93]  	 HIGHPRIOUSER:  
+	[93]  	 LOWPRIOUSER:  
+	[93]  	 DAEMONS:  [1,100]
+	[93] SLEEPING Queue:
+		[--- empty queue ---]
+	[93] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0000])
+[94] {0D 000 000} IRET 0 0 (PID: 3, PC: 6, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0000])
+[95] {0B 000 000} HALT 0 0 (PID: 3, PC: 6, Accumulator: 1, PSW: 0000 [----------------], IntLine: [0240])
+[96] {0C 006 000} OS 6 0 (PID: 3, PC: 244, Accumulator: 1, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[97] Process [3 - programV2-fb] has generated an exception and is terminating
+	[97] Process [3 - programV2-fb] moving from the [EXECUTING] state to the [EXIT] state
+	[97] Process [1 - SystemIdleProcess] moving from the [READY] state to the [EXECUTING] state
+	[97] Running Process Information:
+		[PID: 1, Priority: 100, WakeUp: -1, Queue: DAEMONS]
+	[97]  Ready-to-run processes queue: 
+ 	[97]  	 HIGHPRIOUSER:  
+	[97]  	 LOWPRIOUSER:  
+	[97]  	 DAEMONS:  
+	[97] SLEEPING Queue:
+		[--- empty queue ---]
+	[97] PID association with program's name:
+		PID: 0 -> programV2-fc
+		PID: 1 -> SystemIdleProcess
+		PID: 2 -> programV2-fa
+		PID: 3 -> programV2-fb
+ OS 6 0 (PID: 1, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[98] {0D 000 000} IRET 0 0 (PID: 1, PC: 63, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
+[99] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[100] Clock interrupt number [19] has occurred
+ OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[101] {0D 000 000} IRET 0 0 (PID: 1, PC: 63, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
+[102] {0C 009 000} OS 9 0 (PID: 1, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[103] Clock interrupt number [20] has occurred
+ OS 9 0 (PID: 1, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[104] {0D 000 000} IRET 0 0 (PID: 1, PC: 63, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+[105] {04 003 000} TRAP 3 0 (PID: 1, PC: 64, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0204])
+[106] {0C 002 000} OS 2 0 (PID: 1, PC: 242, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[107] Process [1 - SystemIdleProcess] has requested to terminate
+	[107] Process [1 - SystemIdleProcess] moving from the [EXECUTING] state to the [EXIT] state
+[107] The system will shut down now...
+ OS 2 0 (PID: -1, PC: 243, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[108] {0D 000 000} IRET 0 0 (PID: -1, PC: 241, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[109] {0B 000 000} HALT 0 0 (PID: -1, PC: 241, Accumulator: 0, PSW: 8083 [M-------X-----ZS], IntLine: [0200])
+[109] END of the simulation

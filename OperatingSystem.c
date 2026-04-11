@@ -557,7 +557,6 @@ void OperatingSystem_HandleSystemCall() {
 			processTable[executingProcessID].whenToWakeUp = delay + numberOfClockInterrupts +1;
 
 			//Bloquear el proceso 
-			OperatingSystem_SaveContext(executingProcessID);
 			OperatingSystem_MoveToTheSLEEPINGState(executingProcessID);
 
 			//Liberar CPU y despachar sigueinte 
