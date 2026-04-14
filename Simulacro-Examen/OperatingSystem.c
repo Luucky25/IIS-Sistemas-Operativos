@@ -283,6 +283,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].state=NEW;
 	processTable[PID].priority=priority;
 	processTable[PID].programListIndex=processPLIndex;
+	processTable[PID].sleepTics = -1;
 	
 	
 	//Inicializar variables de Restaurado 
@@ -612,6 +613,9 @@ void OperatingSystem_HandleClockInterrupt() {
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
+	//Guardar en todos los procesos dormidos/bloqueados el contador de tics dormidos actualizados
+
+
 	//Candidato_PID es el PID del proceso con menor tiempo para levanttarse
 	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	int awakened = 0; 
@@ -619,8 +623,11 @@ void OperatingSystem_HandleClockInterrupt() {
 	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
 	//Si hay procesos y el tiempo de despertar del primero sea el actual 
 	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp == numberOfClockInterrupts){
+		// SIMULACRO DE EXAMEN ACTUALIZAR 
+
 		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
 		OperatingSystem_MoveToTheREADYState(pid);
+
 		awakened++;
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
@@ -670,6 +677,7 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 			statesNames[previous], statesNames[BLOCKED]);
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
+	processTable[PID].sleepTics = 0; //Inicializar el conteo 
  }
 
 

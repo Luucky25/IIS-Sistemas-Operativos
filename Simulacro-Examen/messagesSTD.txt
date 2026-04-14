@@ -9,3 +9,4 @@
 103, Ready-to-run processes queue: \n 
 104, \t @G%s@@:  
 105, \t @M User process [%d - %s] has caused a privileged instruction interrupt and is being terminated.@@ \n 
+106, Mensaje de ejercicio 2
