@@ -276,7 +276,6 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 
 // Assign initial values to all fields inside the PCB
 void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int processSize, int priority, int processPLIndex) {
-
 	
 	processTable[PID].busy=1;
 	processTable[PID].initialPhysicalAddress=initialPhysicalAddress;
@@ -482,7 +481,8 @@ void OperatingSystem_TerminateExecutingProcess() {
 		// One more user process that has terminated
 		numberOfNotTerminatedUserProcesses--;
 	
-	if (numberOfNotTerminatedUserProcesses==0) {
+	
+	if (numberOfNotTerminatedUserProcesses==0 && numberOfProgramsInArrivalTimeQueue == 0) {
 		// Simulation must finish, telling sipID to finish
 		OperatingSystem_ReadyToShutdown();
 	}
@@ -655,6 +655,11 @@ void OperatingSystem_HandleClockInterrupt() {
 				int selectedProcess = OperatingSystem_ShortTermScheduler();
 				OperatingSystem_Dispatch(selectedProcess);
 				OperatingSystem_PrintStatus();
+			}
+		}else{
+			// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
+			if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
+				OperatingSystem_ReadyToShutdown();
 			}
 		}
 	}
