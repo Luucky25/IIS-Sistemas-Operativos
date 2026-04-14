@@ -46,8 +46,9 @@ void Processor_InitializeInterruptVectorTable(int interruptVectorInitialAddress)
 	}
 
 	interruptVectorTable[SYSCALL_BIT]=interruptVectorInitialAddress;  // SYSCALL_BIT=2
-	interruptVectorTable[EXCEPTION_BIT]=interruptVectorInitialAddress+NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // EXCEPTION_BIT=6
-	interruptVectorTable[CLOCKINT_BIT] = interruptVectorInitialAddress + 2 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // CLOCKINT_BIT = 9
+	interruptVectorTable[MODEEXCEPTION]=interruptVectorInitialAddress + NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT;  // ModeException = 4 
+	interruptVectorTable[EXCEPTION_BIT]=interruptVectorInitialAddress + 2 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // EXCEPTION_BIT=6
+	interruptVectorTable[CLOCKINT_BIT] = interruptVectorInitialAddress + 3 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // CLOCKINT_BIT = 9
 }
 
 // Fetch an instruction from main memory and put it in the IR register
@@ -266,7 +267,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				Processor_ActivatePSW_Bit(POWEROFF_BIT);
 			//Else raise exception
 			} else{
-				Processor_RaiseInterrupt(EXCEPTION_BIT);
+				Processor_RaiseInterrupt(MODEEXCEPTION);
 			}
 			break;
 			  
@@ -283,7 +284,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				// Update PSW bits (ZERO_BIT, NEGATIVE_BIT, ...)
 				Processor_UpdatePSW();
 			}else{
-				Processor_RaiseInterrupt(EXCEPTION_BIT);
+				Processor_RaiseInterrupt(MODEEXCEPTION);
 			}
 			break; // Note: message show before... for operating system messages after...
 
@@ -293,7 +294,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				registerPSW_CPU=Processor_PopFromSystemStack();
 				registerPC_CPU=Processor_PopFromSystemStack();
 			}else{
-				Processor_RaiseInterrupt(EXCEPTION_BIT);
+				Processor_RaiseInterrupt(MODEEXCEPTION);
 			}
 			break;		
 

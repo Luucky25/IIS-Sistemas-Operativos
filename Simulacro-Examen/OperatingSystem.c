@@ -29,6 +29,7 @@ int OperatingSystem_ExtractFromSleepingProcessesQueue();
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
 void OperatingSystem_HandleClockInterrupt();
+void OperatingSystem_HandlePrivilegedInstructionInterrupt();
 
 // Variables V2  ::::::::::::::::::::::::::::::::::
 int numberOfClockInterrupts = 0;
@@ -575,6 +576,9 @@ void OperatingSystem_InterruptLogic(int entryPoint){
 		case SYSCALL_BIT: // SYSCALL_BIT=2
 			OperatingSystem_HandleSystemCall();
 			break;
+		case MODEEXCEPTION: // MODEEXCEPTION=4
+			OperatingSystem_HandlePrivilegedInstructionInterrupt();
+			break;
 		case EXCEPTION_BIT: // EXCEPTION_BIT=6
 			OperatingSystem_HandleException();
 			break;
@@ -666,6 +670,15 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 			statesNames[previous], statesNames[BLOCKED]);
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
+ }
+
+
+ void OperatingSystem_HandlePrivilegedInstructionInterrupt(){
+	// Show message "Process [executingProcessID] has generated an exception and is terminating\n"
+	ComputerSystem_DebugMessage(TIMED_MESSAGE,105,EXAM, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName);
+	
+	OperatingSystem_TerminateExecutingProcess();
+	OperatingSystem_PrintStatus();
  }
 
 
