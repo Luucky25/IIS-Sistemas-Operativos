@@ -21,3 +21,4 @@ Ejercicio 3
 
     b) Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada en HandleClockInterrupt
 
+    c) Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto o proponer el shutdown del sistema

@@ -624,6 +624,7 @@ void OperatingSystem_HandleClockInterrupt() {
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
 
+	//V3-c >> Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto o proponer el shutdown del sistema
 	if(awakened > 0 || (OperatingSystem_LongTermScheduler() > 0 )){
 		OperatingSystem_PrintStatus();
 
