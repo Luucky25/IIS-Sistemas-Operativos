@@ -171,7 +171,7 @@ int OperatingSystem_LongTermScheduler() {
 	int createdProcessPID, i,
 		numberOfSuccessfullyCreatedProcesses=0;
 	
-	while (OperatingSystem_IsThereANewProgram()!=EMPTYQUEUE) {
+	while (OperatingSystem_IsThereANewProgram() == YES) {
 		i=Heap_poll(arrivalTimeQueue,QUEUE_ARRIVAL,&numberOfProgramsInArrivalTimeQueue);
 		createdProcessPID=OperatingSystem_CreateProcess(i);
 		switch (createdProcessPID) {
@@ -185,6 +185,7 @@ int OperatingSystem_LongTermScheduler() {
 				ComputerSystem_DebugMessage(TIMED_MESSAGE,51, ERROR, programList[i] -> executableName, "invalid priority or size");
 				break;
 			case TOOBIGPROCESS: 
+				//Ejercicio V3 - 1 >> Llamadas a IsThereANewProgram 
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 52, ERROR, programList[i] -> executableName);
 				break;
 			default:
@@ -203,6 +204,8 @@ int OperatingSystem_LongTermScheduler() {
 	/*if(numberOfSuccessfullyCreatedProcesses > 0 ){
 		OperatingSystem_PrintStatus();
 	}*/
+
+
 
 	// Return the number of succesfully created processes
 	return numberOfSuccessfullyCreatedProcesses;
@@ -621,38 +624,40 @@ void OperatingSystem_HandleClockInterrupt() {
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
 
-	if(awakened > 0){
+	if(awakened > 0 || (OperatingSystem_LongTermScheduler() > 0 )){
 		OperatingSystem_PrintStatus();
-	}
-	int nuevoCandidato_PID = NOPROCESS; 
-	int nuevoCandidato_Queue = -1; 
-	for(size_t i = 0; i < NUMBEROFQUEUES; i++){
-		nuevoCandidato_PID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+
+		int nuevoCandidato_PID = NOPROCESS; 
+		int nuevoCandidato_Queue = -1; 
+
+		for(size_t i = 0; i < NUMBEROFQUEUES; i++){
+			nuevoCandidato_PID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+			if(nuevoCandidato_PID != NOPROCESS){
+				nuevoCandidato_Queue = i;
+				break;
+			}
+		}
+	
 		if(nuevoCandidato_PID != NOPROCESS){
-			nuevoCandidato_Queue = i;
-			break;
+			int actualQueue = processTable[executingProcessID].queueID;
+			int mustPreempt = 0; 
+	
+			if(nuevoCandidato_Queue < actualQueue){
+				mustPreempt = 1; 
+			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority <= processTable[executingProcessID].priority){
+				mustPreempt = 1; 
+			}
+	
+			if(mustPreempt){
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName, 
+						nuevoCandidato_PID, programList[processTable[nuevoCandidato_PID].programListIndex]-> executableName);
+				OperatingSystem_PreemptRunningProcess();
+				int selectedProcess = OperatingSystem_ShortTermScheduler();
+				OperatingSystem_Dispatch(selectedProcess);
+				OperatingSystem_PrintStatus();
+			}
 		}
 	}
-
-	if(nuevoCandidato_PID != NOPROCESS){
-		int actualQueue = processTable[executingProcessID].queueID;
-		int mustPreempt = 0; 
-
-		if(nuevoCandidato_Queue < actualQueue){
-			mustPreempt = 1; 
-		}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority <= processTable[executingProcessID].priority){
-			mustPreempt = 1; 
-		}
-
-		if(mustPreempt){
-			ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName, 
-					nuevoCandidato_PID, programList[processTable[nuevoCandidato_PID].programListIndex]-> executableName);
-			OperatingSystem_PreemptRunningProcess();
-			int selectedProcess = OperatingSystem_ShortTermScheduler();
-			OperatingSystem_Dispatch(selectedProcess);
-			OperatingSystem_PrintStatus();
-		}
-		}
 	return;
 } 
 
