@@ -198,7 +198,7 @@ void ComputerSystem_DebugMessage(int timed, int msgNo, char section, ...) {
 							printf("%d",va_arg(lp, int));
 							break;
 						case 'f':
-							printf("%f",va_arg(lp, double));
+							printf("%.2f",va_arg(lp, double));
 							break;
 						case 'c':
 							c = (char) va_arg(lp, int);

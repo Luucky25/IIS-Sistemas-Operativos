@@ -29,6 +29,7 @@ char SYSTEM_IDLE_PROCESS[MAXFILENAMELENGTH]="SystemIdleProcess";
 
 char OPERATING_SYSTEM_CODE_FILE[MAXFILENAMELENGTH]="OperatingSystemCode";
 
+statistics stats; // V3-studentsCode
 
 // Load Operating System Code
 void OperatingSystem_LoadOperatingSystemCode(char * fileWithOSCode, int OS_address_base) {
@@ -62,7 +63,18 @@ int OperatingSystem_ObtainAnEntryInTheProcessTable() {
 		if (processTable[entry].busy==0){
 			return entry;
 		} else {
-			index++;
+			if (++index==PROCESSTABLEMAXSIZE) { // if no entries are free, remove zombie proceses  // V3-studentsCode
+				int i;
+				for (i=0;i<PROCESSTABLEMAXSIZE;i++)
+					if (processTable[i].busy && (processTable[i].state==EXIT)) {
+						ComputerSystem_DebugMessage(TIMED_MESSAGE,79,SYSPROC
+							,i,programList[processTable[i].programListIndex]->executableName
+							,processTable[i].processSize
+							,processTable[i].initialPhysicalAddress);
+						processTable[i].busy=0;
+						index=0; // New search after freeing PCB
+					}
+			}
 		}
 	}
 	return NOFREEENTRY;
@@ -221,7 +233,7 @@ void OperatingSystem_PrintStatus(){   // V2-studentsCode
 	OperatingSystem_PrintReadyToRunQueue();  // Show Ready to run queues implemented for students
 	OperatingSystem_PrintSleepingProcessQueue(); // Show Sleeping process queue
 	OperatingSystem_PrintProcessTableAssociation(); // Show PID-Program's name association
-
+	ComputerSystem_PrintArrivalTimeQueue(); // Show arrival queue of programs  // V3-studentsCode
 }
 
  // Show Executing process information
@@ -271,15 +283,23 @@ void OperatingSystem_PrintSleepingProcessQueue(){   // V2-studentsCode
 }
 
 void OperatingSystem_PrintProcessTableAssociation() {  // V2-studentsCode
-  int i;
-//   OperatingSystem_ShowTime(SHORTTERMSCHEDULE);
+  int i,count=0;
+												 
   //  Show message "Process table association with program's name:");
   ComputerSystem_DebugMessage(TIMED_MESSAGE,100,SHORTTERMSCHEDULE,"PID association with program's name:\n");
   for (i=0; i< PROCESSTABLEMAXSIZE; i++) {
   	if (processTable[i].busy) {
   		// Show message PID -> program's name\n
+		count++;
   		ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,76,SHORTTERMSCHEDULE,i,programList[processTable[i].programListIndex]->executableName);
+		if (processTable[i].state==EXIT) 
+			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,99,SHORTTERMSCHEDULE," Zombie process!");
+		ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,100,SHORTTERMSCHEDULE,"\n");
   	}
+  }
+  if (count==0){
+  	ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,100,SHORTTERMSCHEDULE,"\t\t[--- NO process association ---]");
+	ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,100,SHORTTERMSCHEDULE,"\n");
   }
 }
 
@@ -310,3 +330,30 @@ int OperatingSystem_IsThereANewProgram() {
 		return YES;  //  There'is new program to start
 	return NO;  //  No program in current time
 }
+
+
+// V3-ex4-begin
+
+void OperatingSystem_InitializeStatistics(statistics *a, size_t initialSize) {
+  a->load = malloc(initialSize * sizeof(int));
+  a->used = 0;
+  a->size = initialSize;
+}
+
+void OperatingSystem_InsertStatistics(statistics *a, int element) {
+  // a->used is the number of used entries, because a->load[a->used++] updates a->used only *after* the array has been accessed.
+  // Therefore a->used can go up to a->size 
+  if (a->used == a->size) {
+    a->size *= 2;
+    a->load = realloc(a->load, a->size * sizeof(int));
+  }
+  a->load[a->used++] = element;
+}
+
+void OperatingSystem_FreeStatistics(statistics *a) {
+  free(a->load);
+  a->load = NULL;
+  a->used = a->size = 0;
+}
+
+// V3-ex4-begin

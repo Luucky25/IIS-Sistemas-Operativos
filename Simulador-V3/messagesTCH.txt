@@ -30,9 +30,10 @@
 73,@RProcess [%d - %s] has requested to terminate@@\n
 74,Running Process Information:\n\t\t[PID: @G%d@@, Priority: %d, WakeUp: @R%d@@, Queue: %s]\n
 75,[@G%d@@, %d, @R%d@@]
-76,\t\tPID: @G%d@@ -> %s\n
+76,\t\tPID: @G%d@@ -> %s
 77,%d %s programs loaded from file %s\n
 78,Running Process Information:\n\t\t[PID: @G%d@@, Priority: %d, Queue: %s]\n
+79,Zombie process [@R%d@@ -> @R%s@@], with size [@R%d@@] and initial address [@R%d@@] is removed from system\n
 
 // Assert system messages
 81,Using asserts file: %s\nMaximum number of asserts: %d\n
@@ -62,3 +63,6 @@
 // Queues
 40,[@G%d@@,%d], 
 41,[@G%d@@,%d]\n
+
+// Statistics
+30,System load average: %f, %f, %f\n
