@@ -116,6 +116,9 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 		processTable[i].copyOfPCRegister=-1;
 		processTable[i].copyOfPSWRegister=-1;
 		processTable[i].programListIndex=-1;
+
+		//Simulacro de Examen v2 - Ejercicio 2 >> Inicializar variable de tics dormidos 
+		processTable[i].sleepingTics = -1;
 	}
 	// Initialization of the interrupt vector table of the processor
 	Processor_InitializeInterruptVectorTable(OS_address_base+2);
@@ -608,14 +611,34 @@ void OperatingSystem_HandleClockInterrupt() {
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
+	//Simulacro V2 - Ejercicio 2 >> Añadir tics dormidos a los procesos dormidos 
+	for(int i = 0; i < numberOfSleepingProcesses; i++){
+		int pid = sleepingProcessesQueue[i].info; 
+		processTable[pid].sleepingTics++;
+	}
+
 	//Candidato_PID es el PID del proceso con menor tiempo para levanttarse
 	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	int awakened = 0; 
 
 	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
 	//Si hay procesos y el tiempo de despertar del primero sea el actual 
-	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp <= numberOfClockInterrupts){
+	while(candidato_PID != NOPROCESS && (processTable[candidato_PID].whenToWakeUp <= numberOfClockInterrupts)){
 		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
+		
+		// Simualcro V2 - Ejercicio 2 >> Si el proceso despierta con tres o más tics, lo subimos a la cola de alta prioridad 
+		if (processTable[pid].sleepingTics >= 3) {
+			processTable[pid].queueID = HIGHPRIOUSERPROCQUEUE;
+
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 105, EXAM,
+			pid, 
+			programList[processTable[pid].programListIndex] -> executableName, 
+			processTable[pid].sleepingTics);
+		}
+		
+		processTable[pid].sleepingTics = -1; // Reset sleepingTics
+		processTable[pid].whenToWakeUp = -1; // Reiniciar variable de despertar
+		
 		OperatingSystem_MoveToTheREADYState(pid);
 		awakened++;
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
@@ -638,7 +661,7 @@ void OperatingSystem_HandleClockInterrupt() {
 		}
 	
 		if(nuevoCandidato_PID != NOPROCESS){
-			int actualQueue = processTable[executingProcessID].queueID;
+			int actualQueue = processTable[executingProcessID].queueID;		
 			int mustPreempt = 0; 
 	
 			if(nuevoCandidato_Queue < actualQueue){
@@ -664,6 +687,7 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 	OperatingSystem_SaveContext(PID);
 	int previous = processTable[PID].state;
 	processTable[PID].state = BLOCKED; 
+	processTable[PID].sleepingTics = 0; //Inicializar variable de tics dormidos a 0 una vez se duerme/bloquea el proceos
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, PID, programList[processTable[PID].programListIndex]-> executableName, 
 			statesNames[previous], statesNames[BLOCKED]);
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);

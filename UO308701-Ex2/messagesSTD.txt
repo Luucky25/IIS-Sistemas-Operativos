@@ -8,3 +8,5 @@
 102, \t Program @B[%s]@@ with arrival time @B[%d]@@ \n
 103, Ready-to-run processes queue: \n 
 104, \t @G%s@@:  
+
+105, @MProcess [%d - %s] promoted to HIGHPRIOUSERPROCQUEUE beacuse it slept for [%d] clock interrupts @@

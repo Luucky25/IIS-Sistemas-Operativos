@@ -52,6 +52,8 @@ typedef struct {
 	int queueID;
 	// V2 - Ejercicio 5 
 	int whenToWakeUp;
+	//Simulacro V2 - Ejercicio 2 
+	int sleepingTics; 
 } PCB;
 
 // These "extern" declaration enables other source code files to gain access
