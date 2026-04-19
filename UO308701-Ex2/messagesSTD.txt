@@ -1,0 +1,10 @@
+// Students created messages
+// Format: numberOfMessage,textPrintfFormatedWithColourCodes
+// 
+// numbers of messages greather than 100 for students
+//
+
+101, [0] User programs list:\n 
+102, \t Program @B[%s]@@ with arrival time @B[%d]@@ \n
+103, Ready-to-run processes queue: \n 
+104, \t @G%s@@:  
