@@ -28,6 +28,7 @@ int OperatingSystem_ExtractFromReadyToRunQueue(int queueID);
 int OperatingSystem_ExtractFromSleepingProcessesQueue();
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
+void OperatingSystem_HandlePrivilegedInstruction();
 void OperatingSystem_HandleClockInterrupt();
 
 // Variables V2  ::::::::::::::::::::::::::::::::::
@@ -575,6 +576,9 @@ void OperatingSystem_InterruptLogic(int entryPoint){
 		case SYSCALL_BIT: // SYSCALL_BIT=2
 			OperatingSystem_HandleSystemCall();
 			break;
+		case MODEEXCEPCION_BIT:	// MODEEXCEPCION_BIT=4
+			OperatingSystem_HandlePrivilegedInstruction();
+			break;
 		case EXCEPTION_BIT: // EXCEPTION_BIT=6
 			OperatingSystem_HandleException();
 			break;
@@ -669,3 +673,13 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
  }
+
+void OperatingSystem_HandlePrivilegedInstruction(){
+	//Mostrar por pantalla el mensaje indicado 
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 105, EXAM, executingProcessID, 
+			programList[processTable[executingProcessID].programListIndex] -> executableName);
+	//Abortar la ejecución del proceso
+	OperatingSystem_TerminateExecutingProcess();
+	//Invocar a la función printStatus para mostrar el estado actual del sistema. 
+	OperatingSystem_PrintStatus();
+}

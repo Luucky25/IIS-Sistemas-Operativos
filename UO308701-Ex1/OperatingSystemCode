@@ -4,6 +4,8 @@ HALT // Shutdown the System
 // Here interrupt vector
 OS 2 // SysCall Interrupt
 IRET
+OS 4 // ModeException Interrup 
+IRET 
 OS 6 // Exception Interrupt
 IRET
 OS 9 // CLOCKINT Interrupt

@@ -8,3 +8,6 @@
 102, \t Program @B[%s]@@ with arrival time @B[%d]@@ \n
 103, Ready-to-run processes queue: \n 
 104, \t @G%s@@:  
+
+//Nuevo formato del examen 
+105, @M User process [%d - %s] has caused a privileged instruction interrupt and is being terminated@@
