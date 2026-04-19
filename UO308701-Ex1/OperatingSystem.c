@@ -14,7 +14,7 @@
 void OperatingSystem_PCBInitialization(int, int, int, int, int);
 void OperatingSystem_PrintReadyToRunQueue();
 void OperatingSystem_MoveToTheREADYState(int);
-void OperatingSystem_MoveToTheSLEEPINGState();
+void OperatingSystem_MoveToTheSLEEPINGState(int);
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_RestoreContext(int);
 void OperatingSystem_SaveContext(int);
@@ -29,7 +29,6 @@ int OperatingSystem_ExtractFromSleepingProcessesQueue();
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
 void OperatingSystem_HandleClockInterrupt();
-void OperatingSystem_HandlePrivilegedInstructionInterrupt();
 
 // Variables V2  ::::::::::::::::::::::::::::::::::
 int numberOfClockInterrupts = 0;
@@ -141,7 +140,7 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	}
 
 	// Check if at least one user process has been created
-	if (numberOfNotTerminatedUserProcesses == 0) {
+	if (numberOfNotTerminatedUserProcesses == 0 && OperatingSystem_IsThereANewProgram() == EMPTYQUEUE) {
 		// Simulation must finish 
 		OperatingSystem_ReadyToShutdown();
 	}
@@ -172,7 +171,7 @@ int OperatingSystem_LongTermScheduler() {
 	int createdProcessPID, i,
 		numberOfSuccessfullyCreatedProcesses=0;
 	
-	while (OperatingSystem_IsThereANewProgram()!=EMPTYQUEUE) {
+	while (OperatingSystem_IsThereANewProgram() == YES) {
 		i=Heap_poll(arrivalTimeQueue,QUEUE_ARRIVAL,&numberOfProgramsInArrivalTimeQueue);
 		createdProcessPID=OperatingSystem_CreateProcess(i);
 		switch (createdProcessPID) {
@@ -283,7 +282,6 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	processTable[PID].state=NEW;
 	processTable[PID].priority=priority;
 	processTable[PID].programListIndex=processPLIndex;
-	processTable[PID].sleepTics = -1;
 	
 	
 	//Inicializar variables de Restaurado 
@@ -296,7 +294,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	
 	//Asignar correctamente el proceso 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
-		processTable[PID].queueID = DEAMONSQUEUE;
+		processTable[PID].queueID = DAEMONSQUEUE;
 	}else{
 		if(processSize <= 30){
 			processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
@@ -481,7 +479,7 @@ void OperatingSystem_TerminateExecutingProcess() {
 		// One more user process that has terminated
 		numberOfNotTerminatedUserProcesses--;
 	
-	if (numberOfNotTerminatedUserProcesses==0) {
+	if (numberOfNotTerminatedUserProcesses==0 && OperatingSystem_IsThereANewProgram() == EMPTYQUEUE) {
 		// Simulation must finish, telling sipID to finish
 		OperatingSystem_ReadyToShutdown();
 	}
@@ -577,9 +575,6 @@ void OperatingSystem_InterruptLogic(int entryPoint){
 		case SYSCALL_BIT: // SYSCALL_BIT=2
 			OperatingSystem_HandleSystemCall();
 			break;
-		case MODEEXCEPTION: // MODEEXCEPTION=4
-			OperatingSystem_HandlePrivilegedInstructionInterrupt();
-			break;
 		case EXCEPTION_BIT: // EXCEPTION_BIT=6
 			OperatingSystem_HandleException();
 			break;
@@ -613,26 +608,22 @@ void OperatingSystem_HandleClockInterrupt() {
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
-	//Guardar en todos los procesos dormidos/bloqueados el contador de tics dormidos actualizados
-
-
 	//Candidato_PID es el PID del proceso con menor tiempo para levanttarse
 	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	int awakened = 0; 
 
 	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
 	//Si hay procesos y el tiempo de despertar del primero sea el actual 
-	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp == numberOfClockInterrupts){
-		// SIMULACRO DE EXAMEN ACTUALIZAR 
-
+	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp <= numberOfClockInterrupts){
 		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
 		OperatingSystem_MoveToTheREADYState(pid);
-
 		awakened++;
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
 
-	if(awakened > 0){
+	int newProcesses = OperatingSystem_LongTermScheduler();
+
+	if(awakened > 0 || newProcesses > 0){
 		OperatingSystem_PrintStatus();
 
 		int nuevoCandidato_PID = NOPROCESS; 
@@ -652,7 +643,7 @@ void OperatingSystem_HandleClockInterrupt() {
 	
 			if(nuevoCandidato_Queue < actualQueue){
 				mustPreempt = 1; 
-			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority <= processTable[executingProcessID].priority){
+			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority < processTable[executingProcessID].priority){
 				mustPreempt = 1; 
 			}
 	
@@ -677,17 +668,4 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 			statesNames[previous], statesNames[BLOCKED]);
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
-	processTable[PID].sleepTics = 0; //Inicializar el conteo 
  }
-
-
- void OperatingSystem_HandlePrivilegedInstructionInterrupt(){
-	// Show message "Process [executingProcessID] has generated an exception and is terminating\n"
-	ComputerSystem_DebugMessage(TIMED_MESSAGE,105,EXAM, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName);
-	
-	OperatingSystem_TerminateExecutingProcess();
-	OperatingSystem_PrintStatus();
- }
-
-
-

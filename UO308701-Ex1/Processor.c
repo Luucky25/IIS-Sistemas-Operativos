@@ -46,9 +46,8 @@ void Processor_InitializeInterruptVectorTable(int interruptVectorInitialAddress)
 	}
 
 	interruptVectorTable[SYSCALL_BIT]=interruptVectorInitialAddress;  // SYSCALL_BIT=2
-	interruptVectorTable[MODEEXCEPTION]=interruptVectorInitialAddress + NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT;  // ModeException = 4 
-	interruptVectorTable[EXCEPTION_BIT]=interruptVectorInitialAddress + 2 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // EXCEPTION_BIT=6
-	interruptVectorTable[CLOCKINT_BIT] = interruptVectorInitialAddress + 3 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // CLOCKINT_BIT = 9
+	interruptVectorTable[EXCEPTION_BIT]=interruptVectorInitialAddress+NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // EXCEPTION_BIT=6
+	interruptVectorTable[CLOCKINT_BIT] = interruptVectorInitialAddress + 2 * NUMBER_OF_CPU_INSTRUCTIONS_PER_INTERRUPT; // CLOCKINT_BIT = 9
 }
 
 // Fetch an instruction from main memory and put it in the IR register
@@ -222,17 +221,17 @@ void Processor_DecodeAndExecuteInstruction() {
 					break;
 				case REGISTERA_CPU:
 					tempAcc = registerA_CPU;
-					registerAccumulator_CPU = valorMemoria  + registerB_CPU;	
+					registerA_CPU += valorMemoria;	
 					break;
 				case REGISTERB_CPU:
 					tempAcc = registerB_CPU; 
-					registerAccumulator_CPU = valorMemoria + registerB_CPU;
+					registerB_CPU += valorMemoria;
 					break;
 				default:
 					tempAcc = registerAccumulator_CPU; 
 					registerAccumulator_CPU += valorMemoria;
 			}
-			Processor_CheckOverflow(valorMemoria, tempAcc, REGISTERACCUMULATOR_CPU);
+			Processor_CheckOverflow(valorMemoria, tempAcc, operand2);
 			registerPC_CPU++;
 			break;
 
@@ -267,7 +266,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				Processor_ActivatePSW_Bit(POWEROFF_BIT);
 			//Else raise exception
 			} else{
-				Processor_RaiseInterrupt(MODEEXCEPTION);
+				Processor_RaiseInterrupt(EXCEPTION_BIT);
 			}
 			break;
 			  
@@ -284,7 +283,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				// Update PSW bits (ZERO_BIT, NEGATIVE_BIT, ...)
 				Processor_UpdatePSW();
 			}else{
-				Processor_RaiseInterrupt(MODEEXCEPTION);
+				Processor_RaiseInterrupt(EXCEPTION_BIT);
 			}
 			break; // Note: message show before... for operating system messages after...
 
@@ -294,7 +293,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				registerPSW_CPU=Processor_PopFromSystemStack();
 				registerPC_CPU=Processor_PopFromSystemStack();
 			}else{
-				Processor_RaiseInterrupt(MODEEXCEPTION);
+				Processor_RaiseInterrupt(EXCEPTION_BIT);
 			}
 			break;		
 
@@ -359,13 +358,15 @@ void Processor_DecodeAndExecuteInstruction() {
 	
 // Hardware interrupt processing
 void Processor_ManageInterrupts() {
-	if(Processor_PSW_BitState(INTERRUPT_MASKED_BIT)){
-		return; 
-	}
 	int i;
 		for (i=0;i<INTERRUPTTYPES;i++)
 			// If an 'i'-type interrupt is pending
 			if (Processor_GetInterruptLineStatus(i)) {
+				// If interrupts are masked, prevent hardware interrupts from executing
+				if (Processor_PSW_BitState(INTERRUPT_MASKED_BIT) && i == CLOCKINT_BIT) {
+					continue;
+				}
+
 				// Deactivate interrupt
 				Processor_ACKInterrupt(i);
 				// Copy PC and PSW registers in the system stack

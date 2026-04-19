@@ -19,7 +19,7 @@
 
 // Number of queues of ready to run processes, initially one queue...
 #define NUMBEROFQUEUES 3
-enum TypeOfReadyToRunProcessQueues { HIGHPRIOUSERPROCQUEUE, LOWPRIOUSERPROCQUEUE, DEAMONSQUEUE};
+enum TypeOfReadyToRunProcessQueues { HIGHPRIOUSERPROCQUEUE, LOWPRIOUSERPROCQUEUE, DAEMONSQUEUE};
 
 // Contains the possible type of programs
 enum ProgramTypes { USERPROGRAM=100, DAEMONPROGRAM }; 
@@ -52,10 +52,6 @@ typedef struct {
 	int queueID;
 	// V2 - Ejercicio 5 
 	int whenToWakeUp;
-	//Simulacro de examen >> Cambio de cola SLEEPINGQUEUE > HIGHPRIO
-	int sleepTics;
-
-
 } PCB;
 
 // These "extern" declaration enables other source code files to gain access
@@ -69,4 +65,3 @@ int OperatingSystem_ShortTermScheduler();
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_HandleClockInterrupt();
 #endif
-
