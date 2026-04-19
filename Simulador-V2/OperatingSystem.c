@@ -140,7 +140,7 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	}
 
 	// Check if at least one user process has been created
-	if (numberOfNotTerminatedUserProcesses == 0) {
+	if (numberOfNotTerminatedUserProcesses == 0 && OperatingSystem_IsThereANewProgram() == EMPTYQUEUE) {
 		// Simulation must finish 
 		OperatingSystem_ReadyToShutdown();
 	}
@@ -171,7 +171,7 @@ int OperatingSystem_LongTermScheduler() {
 	int createdProcessPID, i,
 		numberOfSuccessfullyCreatedProcesses=0;
 	
-	while (OperatingSystem_IsThereANewProgram()!=EMPTYQUEUE) {
+	while (OperatingSystem_IsThereANewProgram() == YES) {
 		i=Heap_poll(arrivalTimeQueue,QUEUE_ARRIVAL,&numberOfProgramsInArrivalTimeQueue);
 		createdProcessPID=OperatingSystem_CreateProcess(i);
 		switch (createdProcessPID) {
@@ -479,7 +479,7 @@ void OperatingSystem_TerminateExecutingProcess() {
 		// One more user process that has terminated
 		numberOfNotTerminatedUserProcesses--;
 	
-	if (numberOfNotTerminatedUserProcesses==0) {
+	if (numberOfNotTerminatedUserProcesses==0 && OperatingSystem_IsThereANewProgram() == EMPTYQUEUE) {
 		// Simulation must finish, telling sipID to finish
 		OperatingSystem_ReadyToShutdown();
 	}
