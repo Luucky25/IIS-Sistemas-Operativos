@@ -30,6 +30,14 @@ void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
 void OperatingSystem_HandleClockInterrupt();
 
+void OperatingSystem_PrintPorcentageOfCPUIdle();
+	
+
+//Simulacro 2 >> Ejercicio 2-3 
+	//Variable para almacenar TODOS LOS TICS de reloj del sistema 
+float totalCockTics = 0;
+
+
 // Variables V2  ::::::::::::::::::::::::::::::::::
 int numberOfClockInterrupts = 0;
 
@@ -292,6 +300,11 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	//V2 - Ejercicio 5 >> Para cumplir con el ejercicio 0
 	processTable[PID].whenToWakeUp = -1;
 	
+	//Simulacro 1 >> Ejercicio 2 y 3 : Inicializar los contadores de tics
+	processTable[PID].clockTics_ReadyQueue = 0;
+	processTable[PID].clockTics_ExecutingQueue = 0;
+	processTable[PID].clockTics_BlockedQueue = 0;
+
 	//Asignar correctamente el proceso 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
 		processTable[PID].queueID = DAEMONSQUEUE;
@@ -463,12 +476,23 @@ void OperatingSystem_TerminateExecutingProcess() {
 	//Imprimir el mensaje de cambio de estado - message 53 - 
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 53, SYSPROC, executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName, statesNames[previousState], statesNames[EXIT]);
 	
+	//Simulacro V2 >> Ejercicio 3 - Imprimir el numero de tics de reloj que ha tenido el proceso en cada estado 
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 105, EXAM, 
+		executingProcessID, programList[processTable[executingProcessID].programListIndex] -> executableName, 
+		processTable[executingProcessID].clockTics_ReadyQueue, 
+		processTable[executingProcessID].clockTics_ExecutingQueue, 
+		processTable[executingProcessID].clockTics_BlockedQueue
+	); 
+
 	if (executingProcessID==sipID) {
 		// finishing sipID, change PC to address of OS HALT instruction
 		Processor_SetSSP(MAINMEMORYSIZE-1);
 		Processor_PushInSystemStack(OS_address_base+1);
 		Processor_PushInSystemStack(Processor_GetPSW());
 		executingProcessID=NOPROCESS;
+		
+		OperatingSystem_PrintPorcentageOfCPUIdle();
+		
 		ComputerSystem_DebugMessage(TIMED_MESSAGE,99,SHUTDOWN,"The system will shut down now...\n");
 		return; // Don't dispatch any process
 	}
@@ -612,6 +636,26 @@ void OperatingSystem_HandleClockInterrupt() {
 	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	int awakened = 0; 
 
+	//Actualizar el valor de tics de reloj del sistema 
+	totalCockTics++;
+	//Simulacro 1 >> Ejercicio 2 y 3 : Actualizar los contadores de tics 
+	for (int i = 0; i < PROCESSTABLEMAXSIZE; i++) {
+		if (processTable[i].busy) {
+			switch (processTable[i].state) {
+				case EXECUTING:
+					processTable[i].clockTics_ExecutingQueue++;
+					break;
+				case READY:
+					processTable[i].clockTics_ReadyQueue++;
+					break;
+				case BLOCKED:
+					processTable[i].clockTics_BlockedQueue++;
+					break;
+			}
+		}
+	}
+
+
 	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
 	//Si hay procesos y el tiempo de despertar del primero sea el actual 
 	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp <= numberOfClockInterrupts){
@@ -669,3 +713,19 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
  }
+
+//Print for each finished process, the percentage of CPU used base on the total tics of clock in each state and the total tics of the clock int the system
+void OperatingSystem_PrintPorcentageOfCPUIdle(){
+	float totalTics = totalCockTics;
+	for (int i = 0; i < PROCESSTABLEMAXSIZE; i++) {
+		if (processTable[i].busy) {
+			// CPU Usage is the time the process spent EXECUTING divided by the total system time
+			float processExecutingTics = processTable[i].clockTics_ExecutingQueue;
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 106, EXAM, i, 
+				programList[processTable[i].programListIndex]->executableName, 
+				(processExecutingTics / totalTics) * 100.0
+			);
+		}
+	}
+
+}

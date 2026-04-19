@@ -8,3 +8,8 @@
 102, \t Program @B[%s]@@ with arrival time @B[%d]@@ \n
 103, Ready-to-run processes queue: \n 
 104, \t @G%s@@:  
+
+
+//Simulacro V2 
+105, @M Process [%d - %s] ticks in states: READY >> %d , EXECUTING >> %d , BLOCKED >> %d \n
+106, @M Process [%d - %s] executing time rate: %f \n

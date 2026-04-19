@@ -52,6 +52,12 @@ typedef struct {
 	int queueID;
 	// V2 - Ejercicio 5 
 	int whenToWakeUp;
+
+	//Simulacro 1 >> Ejercicio 2 y 3
+		//Variables para almacenar los tics de reloj de cada proceso en cada cola 
+	int clockTics_ReadyQueue; 
+	int clockTics_ExecutingQueue; 
+	int clockTics_BlockedQueue;
 } PCB;
 
 // These "extern" declaration enables other source code files to gain access
