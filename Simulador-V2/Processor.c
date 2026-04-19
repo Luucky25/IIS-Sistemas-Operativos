@@ -221,17 +221,17 @@ void Processor_DecodeAndExecuteInstruction() {
 					break;
 				case REGISTERA_CPU:
 					tempAcc = registerA_CPU;
-					registerAccumulator_CPU = valorMemoria  + registerB_CPU;	
+					registerA_CPU += valorMemoria;	
 					break;
 				case REGISTERB_CPU:
 					tempAcc = registerB_CPU; 
-					registerAccumulator_CPU = valorMemoria + registerB_CPU;
+					registerB_CPU += valorMemoria;
 					break;
 				default:
 					tempAcc = registerAccumulator_CPU; 
 					registerAccumulator_CPU += valorMemoria;
 			}
-			Processor_CheckOverflow(valorMemoria, tempAcc, REGISTERACCUMULATOR_CPU);
+			Processor_CheckOverflow(valorMemoria, tempAcc, operand2);
 			registerPC_CPU++;
 			break;
 
@@ -358,13 +358,15 @@ void Processor_DecodeAndExecuteInstruction() {
 	
 // Hardware interrupt processing
 void Processor_ManageInterrupts() {
-	if(Processor_PSW_BitState(INTERRUPT_MASKED_BIT)){
-		return; 
-	}
 	int i;
 		for (i=0;i<INTERRUPTTYPES;i++)
 			// If an 'i'-type interrupt is pending
 			if (Processor_GetInterruptLineStatus(i)) {
+				// If interrupts are masked, prevent hardware interrupts from executing
+				if (Processor_PSW_BitState(INTERRUPT_MASKED_BIT) && i == CLOCKINT_BIT) {
+					continue;
+				}
+
 				// Deactivate interrupt
 				Processor_ACKInterrupt(i);
 				// Copy PC and PSW registers in the system stack

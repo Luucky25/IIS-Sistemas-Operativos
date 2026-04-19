@@ -14,7 +14,7 @@
 void OperatingSystem_PCBInitialization(int, int, int, int, int);
 void OperatingSystem_PrintReadyToRunQueue();
 void OperatingSystem_MoveToTheREADYState(int);
-void OperatingSystem_MoveToTheSLEEPINGState();
+void OperatingSystem_MoveToTheSLEEPINGState(int);
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_RestoreContext(int);
 void OperatingSystem_SaveContext(int);
@@ -294,7 +294,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	
 	//Asignar correctamente el proceso 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
-		processTable[PID].queueID = DEAMONSQUEUE;
+		processTable[PID].queueID = DAEMONSQUEUE;
 	}else{
 		if(processSize <= 30){
 			processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
@@ -614,14 +614,16 @@ void OperatingSystem_HandleClockInterrupt() {
 
 	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
 	//Si hay procesos y el tiempo de despertar del primero sea el actual 
-	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp == numberOfClockInterrupts){
+	while(candidato_PID != NOPROCESS && processTable[candidato_PID].whenToWakeUp <= numberOfClockInterrupts){
 		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
 		OperatingSystem_MoveToTheREADYState(pid);
 		awakened++;
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
 
-	if(awakened > 0){
+	int newProcesses = OperatingSystem_LongTermScheduler();
+
+	if(awakened > 0 || newProcesses > 0){
 		OperatingSystem_PrintStatus();
 
 		int nuevoCandidato_PID = NOPROCESS; 
@@ -641,7 +643,7 @@ void OperatingSystem_HandleClockInterrupt() {
 	
 			if(nuevoCandidato_Queue < actualQueue){
 				mustPreempt = 1; 
-			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority <= processTable[executingProcessID].priority){
+			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority < processTable[executingProcessID].priority){
 				mustPreempt = 1; 
 			}
 	
@@ -667,6 +669,3 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 	Heap_add(PID, sleepingProcessesQueue, QUEUE_WAKEUP, &numberOfSleepingProcesses);
 	executingProcessID = NOPROCESS;
  }
-
-
-
