@@ -548,11 +548,26 @@ void OperatingSystem_HandleSystemCall() {
 		case SYSCALL_SLEEP:
 		{
 			int delay; 
-			//Segundo operando > 0 >> delay : abs del accum
+			//Segundo operando > 0 ? delay : abs del accum
 			if(Processor_GetRegisterD() >0)
 				delay = Processor_GetRegisterD();
-			else
+			//Para los casos donde el segundo registro es 0
+			else if(Processor_GetRegisterD() == 0){
+					//Calculamos el valor de whenToWakeUp con el mayor valor de los registros dormidos solo si el tipo de proceso coincide con el del proceso a dormir
+				int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+				while(candidato_PID != NOPROCESS){
+					if(processTable[candidato_PID].queueID == processTable[executingProcessID].queueID){
+						delay = processTable[candidato_PID].whenToWakeUp;
+						break;
+					}
+					candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+				}
+				//Si no hay procesos dormidos del mismo tipo, el whenToWakeUp se calcula con el absoluto del accumulador
+				if(candidato_PID == NOPROCESS) 
+					delay = abs(Processor_GetAccumulator());
+			}else{
 				delay = abs(Processor_GetAccumulator());
+			}
 			//5-f >> Calcular el despertar
 			processTable[executingProcessID].whenToWakeUp = delay + numberOfClockInterrupts +1;
 
