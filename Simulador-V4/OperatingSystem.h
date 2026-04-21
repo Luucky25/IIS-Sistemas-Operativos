@@ -69,4 +69,7 @@ void OperatingSystem_InterruptLogic(int);
 int OperatingSystem_ShortTermScheduler();
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_HandleClockInterrupt();
+
+void OperatingSystem_ReleaseMainMemory();
+void OperatingSystem_CoalesceHoles();
 #endif

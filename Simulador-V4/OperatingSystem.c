@@ -330,7 +330,7 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 	}
 
 	// Show table AFTER allocation
-	OperatingSystem_ShowPartitionsAndHoleTable("after allocating memory");
+	OperatingSystem_ShowPartitionsAndHolesTable("after allocating memory");
 
 	return bestFitIndex;
 }
@@ -539,6 +539,8 @@ void OperatingSystem_TerminateExecutingProcess() {
 		OperatingSystem_PrintStatus();
 		return; // Don't dispatch any process
 	}
+
+	OperatingSystem_ReleaseMainMemory();
 
 	Processor_SetSSP(Processor_GetSSP()+2); // unstack PC and PSW stacked
 
@@ -787,4 +789,50 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
 	}
 	media = media / n;
 	return media;
+}
+
+// Libera la memoria de la partición del proceso en ejecución
+void OperatingSystem_ReleaseMainMemory() {
+	int i;
+	int partitionIndex = -1;
+	
+	// Buscar la partición que pertenece al proceso
+	for (i = 0; i < numberOfPartitionsAndHoles; i++) {
+		if (partitionsAndHolesTable[i].PID == executingProcessID) {
+			partitionIndex = i;
+			break;
+		}
+	}
+	
+	if (partitionIndex != -1) {
+		OperatingSystem_ShowPartitionsAndHolesTable("before releasing memory");
+		
+		ComputerSystem_DebugMessage(TIMED_MESSAGE, 45, SYSMEM, partitionIndex, partitionsAndHolesTable[partitionIndex].initAddress, partitionsAndHolesTable[partitionIndex].size, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName);
+		
+		partitionsAndHolesTable[partitionIndex].PID = NOPROCESS; // NOPROCESS representa un HOLE
+		
+		OperatingSystem_CoalesceHoles();
+		
+		OperatingSystem_ShowPartitionsAndHolesTable("after releasing memory");
+	}
+}
+
+// Condensa los huecos adyacentes en uno solo
+void OperatingSystem_CoalesceHoles() {
+	int coalesced = 0;
+	int i = 0;
+	
+	while (i < numberOfPartitionsAndHoles - 1) {
+		if (partitionsAndHolesTable[i].PID == NOPROCESS && partitionsAndHolesTable[i+1].PID == NOPROCESS) {
+			partitionsAndHolesTable[i].size += partitionsAndHolesTable[i+1].size;
+			OperatingSystem_RemovePartitionOrHole(i+1);
+			coalesced = 1;
+		} else {
+			i++;
+		}
+	}
+	
+	if (coalesced) {
+		ComputerSystem_DebugMessage(TIMED_MESSAGE, 114, SYSMEM);
+	}
 }
