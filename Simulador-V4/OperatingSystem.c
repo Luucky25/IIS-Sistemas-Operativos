@@ -597,6 +597,11 @@ void OperatingSystem_HandleSystemCall() {
 			ComputerSystem_DebugMessage(TIMED_MESSAGE, 30, SHORTTERMSCHEDULE, last_charged_value, media_last_five_charged_values, media_all_charged_values);
 			break;
 		}
+		default:
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 33, INTERRUPT, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName, systemCallID);
+			OperatingSystem_TerminateExecutingProcess();
+			OperatingSystem_PrintStatus();
+			break;
 	}
 }
 	
