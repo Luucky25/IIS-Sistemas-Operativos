@@ -665,8 +665,10 @@ void OperatingSystem_HandleClockInterrupt() {
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
 
+	int numberOfCreatedProcesses = OperatingSystem_LongTermScheduler();
+
 	//V3-c >> Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto o proponer el shutdown del sistema
-	if(awakened > 0 || (OperatingSystem_LongTermScheduler() > 0 )){
+	if(awakened > 0 || numberOfCreatedProcesses > 0){
 		OperatingSystem_PrintStatus();
 
 		int nuevoCandidato_PID = NOPROCESS; 
@@ -698,11 +700,11 @@ void OperatingSystem_HandleClockInterrupt() {
 				OperatingSystem_Dispatch(selectedProcess);
 				OperatingSystem_PrintStatus();
 			}
-		}else{
-			// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
-			if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
-				OperatingSystem_ReadyToShutdown();
-			}
+		}
+	}else{
+		// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
+		if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
+			OperatingSystem_ReadyToShutdown();
 		}
 	}
 	return;
