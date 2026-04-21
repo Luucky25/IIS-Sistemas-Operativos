@@ -35,3 +35,9 @@ void Processor_SetCTRL(int);
 //V2 - Ejercicio 5
 int Processor_GetRegisterD();
 void Processor_SetRegisterD(int);
+
+
+//V4 - 1 >> Añadir el Enum 
+enum EXCEPTIONS {DIVISIONBYZERO, INVALIDPROCESSORMODE, INVALIDADDRESS, INVALIDINSTRUCTION};
+
+void Processor_RaiseException(int);

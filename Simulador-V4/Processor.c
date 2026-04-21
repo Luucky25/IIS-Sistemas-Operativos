@@ -119,7 +119,7 @@ void Processor_DecodeAndExecuteInstruction() {
 		// Instruction DIV
 		case DIV_INST: 
 			if (operand2 == 0)
-				Processor_RaiseInterrupt(EXCEPTION_BIT); 
+				Processor_RaiseException(DIVISIONBYZERO); 
 			else {
 				registerAccumulator_CPU=operand1 / operand2;
 				registerPC_CPU++;
@@ -266,7 +266,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				Processor_ActivatePSW_Bit(POWEROFF_BIT);
 			//Else raise exception
 			} else{
-				Processor_RaiseInterrupt(EXCEPTION_BIT);
+				Processor_RaiseException(INVALIDPROCESSORMODE);
 			}
 			break;
 			  
@@ -283,7 +283,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				// Update PSW bits (ZERO_BIT, NEGATIVE_BIT, ...)
 				Processor_UpdatePSW();
 			}else{
-				Processor_RaiseInterrupt(EXCEPTION_BIT);
+				Processor_RaiseException(INVALIDPROCESSORMODE);
 			}
 			break; // Note: message show before... for operating system messages after...
 
@@ -293,7 +293,7 @@ void Processor_DecodeAndExecuteInstruction() {
 				registerPSW_CPU=Processor_PopFromSystemStack();
 				registerPC_CPU=Processor_PopFromSystemStack();
 			}else{
-				Processor_RaiseInterrupt(EXCEPTION_BIT);
+				Processor_RaiseException(INVALIDPROCESSORMODE);
 			}
 			break;		
 
@@ -344,6 +344,7 @@ void Processor_DecodeAndExecuteInstruction() {
 		default : 
 			operationCode=NONEXISTING_INST;
 			registerPC_CPU++;
+			Processor_RaiseException(INVALIDINSTRUCTION);
 			break;
 	}
 	
@@ -410,4 +411,10 @@ int Processor_GetRegisterD(){
 }
 void Processor_SetRegisterD(int value){
 	registerD_CPU = value;
+}
+
+// Function to raise an exception.
+void Processor_RaiseException(int typeOfException) {
+	Processor_RaiseInterrupt(EXCEPTION_BIT);
+	registerD_CPU=typeOfException;
 }
