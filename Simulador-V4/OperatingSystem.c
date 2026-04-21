@@ -135,6 +135,9 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	//V3 - 4 >> Inicializar Statistics de OperatingSystebase
 	OperatingSystem_InitializeStatistics(&stats, 10);
 
+	// Inicializar la tabla de particiones y huecos del Sistema Operativo
+	OperatingSystem_InitializePartitionsAndHolesTable(OS_address_base);
+
 	// Create all user processes from the information given in the command line
 	OperatingSystem_LongTermScheduler();
 	
