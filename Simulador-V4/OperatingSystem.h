@@ -11,10 +11,6 @@
 
 #define NOFREEENTRY -3
 #define TOOBIGPROCESS -4
-#define MEMORYFULL -5
-
-// V4 - 5 >> Partitions and holes configuration definition
-#define MEMCONFIG // in OperatingSystem.h
 
 #define NOPROCESS -1
 
@@ -69,7 +65,4 @@ void OperatingSystem_InterruptLogic(int);
 int OperatingSystem_ShortTermScheduler();
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_HandleClockInterrupt();
-
-void OperatingSystem_ReleaseMainMemory();
-void OperatingSystem_CoalesceHoles();
 #endif
