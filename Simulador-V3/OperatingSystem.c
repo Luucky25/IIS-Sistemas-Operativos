@@ -29,6 +29,8 @@ int OperatingSystem_ExtractFromSleepingProcessesQueue();
 void OperatingSystem_HandleException();
 void OperatingSystem_HandleSystemCall();
 void OperatingSystem_HandleClockInterrupt();
+//V3 - 4 >> Función para calcular la media 
+float calcular_media_movil(int *load, int used, int n);
 
 // Variables V2  ::::::::::::::::::::::::::::::::::
 int numberOfClockInterrupts = 0;
@@ -129,6 +131,9 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 
 	ComputerSystem_PrintArrivalTimeQueue();
 	
+	//V3 - 4 >> Inicializar Statistics de OperatingSystebase
+	OperatingSystem_InitializeStatistics(&stats, 10);
+
 	// Create all user processes from the information given in the command line
 	OperatingSystem_LongTermScheduler();
 	
@@ -140,8 +145,8 @@ void OperatingSystem_Initialize(int programsFromFileIndex) {
 	}
 
 	// Check if at least one user process has been created
-	if (numberOfNotTerminatedUserProcesses == 0) {
-		// Simulation must finish 
+	if (numberOfNotTerminatedUserProcesses == 0 && numberOfProgramsInArrivalTimeQueue == 0) {
+		// Simulation must finish if there are no user processes and no more programs to arrive
 		OperatingSystem_ReadyToShutdown();
 	}
 
@@ -569,6 +574,25 @@ void OperatingSystem_HandleSystemCall() {
 			OperatingSystem_PrintStatus();
 			break;
 		}
+		case SYSCALL_LOAD:
+		{
+			float last_charged_value = 0;
+			float media_last_five_charged_values = 0;
+			float media_all_charged_values = 0;
+
+			if (stats.used > 0) {
+				last_charged_value = stats.load[stats.used-1];
+			}
+			if (stats.used >= 5) {
+				media_last_five_charged_values = calcular_media_movil(stats.load, stats.used, 5);
+			}
+			if (stats.used >= 6) {
+				media_all_charged_values = calcular_media_movil(stats.load, stats.used, stats.used);
+			}
+
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 30, SHORTTERMSCHEDULE, last_charged_value, media_last_five_charged_values, media_all_charged_values);
+			break;
+		}
 	}
 }
 	
@@ -608,6 +632,14 @@ void OperatingSystem_PrintReadyToRunQueue(){
 
 // Adiciones del V2 ::::::::::::::::::::::::::::::::
 void OperatingSystem_HandleClockInterrupt() { 
+
+	//V3 - 4 >> Insertar estadistica con el numero de procesos listoos 
+	int totalReadyProcesses = 0;
+	for (int i = 0; i < NUMBEROFQUEUES; i++) {
+		totalReadyProcesses += numberOfReadyToRunProcesses[i];
+	}
+	OperatingSystem_InsertStatistics(&stats, totalReadyProcesses);
+
 	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
@@ -678,4 +710,16 @@ void OperatingSystem_MoveToTheSLEEPINGState(int PID){
  }
 
 
-
+ // V3 -4 >> Calcular la media de las ultimas n cargas
+ float calcular_media_movil(int *load, int used, int n){
+	float media = 0;
+	int start = used - n;
+	if(start < 0){			
+		start = 0;
+	}
+	for(int i = start; i < used; i++){
+		media += load[i];
+	}
+	media = media / n;
+	return media;
+}
