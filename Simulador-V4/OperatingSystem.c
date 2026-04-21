@@ -311,6 +311,9 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 		return MEMORYFULL;
 	}
 
+	// Show table BEFORE allocation
+	OperatingSystem_ShowPartitionsAndHolesTable("before allocating memory");
+
 	int holeInitAddress = partitionsAndHolesTable[bestFitIndex].initAddress;
 	int holeSize = partitionsAndHolesTable[bestFitIndex].size;
 
@@ -325,6 +328,9 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 		OperatingSystem_InsertIntopartitionsAndHolesTable(bestFitIndex + 1, NOPROCESS, newHoleInitAddress, newHoleSize);
 		ComputerSystem_DebugMessage(TIMED_MESSAGE, 44, SYSMEM, bestFitIndex + 1, newHoleInitAddress, newHoleSize, PID, programList[processTable[PID].programListIndex]->executableName);
 	}
+
+	// Show table AFTER allocation
+	OperatingSystem_ShowPartitionsAndHoleTable("after allocating memory");
 
 	return bestFitIndex;
 }
