@@ -30,6 +30,12 @@ void OperatingSystem_PrintReadyToRunQueue();  // V2-studentsCode
 void OperatingSystem_InitializeStatistics(statistics *, size_t); // V3-studentsCode
 void OperatingSystem_InsertStatistics(statistics *, int); // V3-studentsCode
 void OperatingSystem_FreeStatistics(statistics *); // V3-studentsCode
+#ifdef MEMCONFIG
+void OperatingSystem_InitializePartitionsAndHolesTable(int);	// V4-studentsCode
+void OperatingSystem_ShowPartitionsAndHolesTable(char *);	// V4-studentsCode
+int OperatingSystem_InsertIntopartitionsAndHolesTable(int, int, int, int); // V4-studentsCode
+int OperatingSystem_RemovePartitionOrHole(int) ; // V4-studentsCode
+#endif	  
 
 #define EMPTYQUEUE -1
 #define NO 0
@@ -55,5 +61,21 @@ extern int numberOfSleepingProcesses;   // V2-studentsCode
 #endif
 
 extern statistics stats; // V3-studentsCode
+
+#ifdef MEMCONFIG // V4-studentsCode
+
+#define HOLE -100   // V4-studentsCode
+
+typedef struct {	// V4-studentsCode
+     int initAddress; // Lowest physical address of the partition
+     int size; // Size of the partition in memory positions
+     int PID; // PID of the process using the partition, or HOLE if it's free
+} PARTITIONDATA;
+
+extern int PARTITIONSANDHOLESTABLEMAXSIZE;        // V4-studentsCode
+extern PARTITIONDATA *partitionsAndHolesTable;	// V4-studentsCode
+extern int numberOfPartitionsAndHoles;            // V4-studentsCode
+#endif    // V4-studentsCode
+
 
 #endif

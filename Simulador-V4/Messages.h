@@ -1,7 +1,7 @@
 #ifndef MESSAGES_H
 #define MESSAGES_H
 
-#define NUMBEROFMSGS 100
+#define NUMBEROFMSGS 131
 #define MSGMAXIMUMLENGTH 132
 
 #define TEACHER_MESSAGES_FILE "messagesTCH.txt"

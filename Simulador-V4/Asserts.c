@@ -126,6 +126,8 @@ int GEN_ASSERTS=0;
 
 char ASSERTS_FILE[MAXFILENAMELENGTH]="asserts";  // Default asserts file name
 
+char * processStatesNames[6]={"NEW","READY","EXECUTING","BLOCKED","EXIT","__NO_STATE__"};
+
 // Search assert element linearly into the array
 int elementNumber(char *cmp) {
  int n=0;
@@ -321,12 +323,18 @@ void assertMsg(int time, int ele, int expectedValue, int realValue, int addr) {
 	  	// printf("Expected: '%s'; Real: '%s'", expectedValue, realValue);
 	  	ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,89,ERROR, InstructionNames[expectedValue], InstructionNames[realValue]);
 	else
-		if ((en==PCB_ST) || (en==PCB_PC) || (en==PCB_PR) || (en==PCB_SP))
-		// printf("PID '%d'; Expected: '%s'; Real: '%s'", expectedValue, realValue);
-		ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,96,ERROR, addr, expectedValue, realValue);
+		if ((en==PCB_PC) || (en==PCB_PR) || (en==PCB_SP))
+		  // printf("PID '%d'; Expected: '%d'; Real: '%d'", expectedValue, realValue);
+		  ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,96,ERROR, addr, expectedValue, realValue);
 		else
-			// printf("Expected: %d; Real: %d", expectedValue, realValue);		
-			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,90,ERROR, expectedValue, realValue);
+      if (en==PCB_ST) {
+        if (realValue<0 || realValue>4) realValue=5;
+   		  // printf("PID '%d'; Expected: '%s'; Real: '%s'", expectedValue, realValue);
+	    	ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,97,ERROR, addr, processStatesNames[expectedValue], processStatesNames[realValue]);
+      }
+      else
+			  // printf("Expected: %d; Real: %d", expectedValue, realValue);		
+			  ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,90,ERROR, expectedValue, realValue);
 	
 	if ((en==RMEM_OP) || (en==RMEM_O1) || (en==RMEM_O2) || (en==AMEM_OP) || (en==AMEM_O1) || (en==AMEM_O2) || (en==RMEM) || (en==AMEM)) 
 		// printf("; Memory address: %d", addr);
@@ -346,9 +354,6 @@ void Asserts_CheckAsserts(){
 		na=Heap_poll(assertsQueue,QUEUE_ASSERTS,&numOfElementsInAssertsQueue);
 		if (asserts[na].time==globalCounter) {
             Asserts_CheckOneAssert(na);
-		}
-		else {
-			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,93,ERROR,asserts[na].time,asserts[na].element); 
 		}
 	}
 

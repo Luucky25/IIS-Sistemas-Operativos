@@ -161,6 +161,18 @@ int main(int argc, char *argv[]) {
 					if (optionValue==NULL || sscanf(optionValue,"%d",&intervalBetweenInterrupts)<1 || intervalBetweenInterrupts<5)
 						intervalBetweenInterrupts=numericDefaultValue;
 					break;
+#ifdef MEMCONFIG
+				// case PARTITIONSANDHOLESTABLEMAXSIZE:
+				case partitionsAndHolesTableSize_OPT:	// V4-studentsCode
+					if (optionValue==NULL) 
+						PARTITIONSANDHOLESTABLEMAXSIZE=numericDefaultValue;
+					else {
+						rc=sscanf(optionValue,"%d",&PARTITIONSANDHOLESTABLEMAXSIZE);
+						if (rc<=0 || PARTITIONSANDHOLESTABLEMAXSIZE<=(2*PROCESSTABLEMAXSIZE))
+							PARTITIONSANDHOLESTABLEMAXSIZE=numericDefaultValue;
+					}
+					break;
+#endif					
 				default :
 					printf("Invalid option: %s\n", option);
 					break;

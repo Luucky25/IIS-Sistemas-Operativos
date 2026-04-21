@@ -17,6 +17,11 @@ void OperatingSystem_PrintSleepingProcessQueue();  // V2-studentsCode
 void OperatingSystem_PrintExecutingProcessInformation();  // V2-studentsCode
 void OperatingSystem_PrintProcessTableAssociation();  // V2-studentsCode
 
+#ifdef MEMCONFIG	// V4-studentsCode
+int PARTITIONSANDHOLESTABLEMAXSIZE=-1;		// V4-studentsCode 
+PARTITIONDATA * partitionsAndHolesTable;	// V4-studentsCode
+int numberOfPartitionsAndHoles=0;			// V4-studentsCode
+#endif				// V4-studentsCode								   
 extern int initialPID;
 extern int executingProcessID;	
 extern int MAINMEMORYSIZE;
@@ -332,8 +337,6 @@ int OperatingSystem_IsThereANewProgram() {
 }
 
 
-// V3-ex4-begin
-
 void OperatingSystem_InitializeStatistics(statistics *a, size_t initialSize) {
   a->load = malloc(initialSize * sizeof(int));
   a->used = 0;
@@ -356,4 +359,84 @@ void OperatingSystem_FreeStatistics(statistics *a) {
   a->used = a->size = 0;
 }
 
-// V3-ex4-begin
+// Function to initialize the partition table
+#ifdef MEMCONFIG
+void OperatingSystem_InitializePartitionsAndHolesTable(int maxSize) {  // V4-studentsCode
+	
+	if (PARTITIONSANDHOLESTABLEMAXSIZE==-1)
+		PARTITIONSANDHOLESTABLEMAXSIZE=PROCESSTABLEMAXSIZE*2;
+	partitionsAndHolesTable = (PARTITIONDATA *) malloc(PARTITIONSANDHOLESTABLEMAXSIZE*sizeof(PARTITIONDATA));	
+
+	int currentPartition;
+	for (currentPartition=0;currentPartition< PARTITIONSANDHOLESTABLEMAXSIZE;currentPartition++) {
+		partitionsAndHolesTable[currentPartition].size=-1;
+		partitionsAndHolesTable[currentPartition].initAddress=-1;
+		partitionsAndHolesTable[currentPartition].PID=NOPROCESS;
+	}
+
+	numberOfPartitionsAndHoles=0;
+
+	OperatingSystem_InsertIntopartitionsAndHolesTable(0,HOLE,0, maxSize);
+	OperatingSystem_ShowPartitionsAndHolesTable("during system initialization");
+
+	return;						
+}
+	
+// Show partition table
+void OperatingSystem_ShowPartitionsAndHolesTable(char *mensaje) {  // V4-studentsCode
+	int i;
+	
+	ComputerSystem_DebugMessage(TIMED_MESSAGE,46,SYSMEM, mensaje);
+	for (i=0;i<numberOfPartitionsAndHoles;i++) {
+		ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,47,SYSMEM,i,partitionsAndHolesTable[i].initAddress,partitionsAndHolesTable[i].size);
+		if (partitionsAndHolesTable[i].PID>=0)
+			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,48,SYSMEM,partitionsAndHolesTable[i].PID,programList[processTable[partitionsAndHolesTable[i].PID].programListIndex]->executableName );
+		else
+			ComputerSystem_DebugMessage(NO_TIMED_MESSAGE,49,SYSMEM,"HOLE");
+	}
+}
+
+// Insert a partition or hole into the table
+// index: position of insertion
+// PID: PID of the process or HOLE
+// address_base: initial position of the memory
+// size: size of the partition
+// return: number of partitions an holes after insertion or negative if error
+int OperatingSystem_InsertIntopartitionsAndHolesTable(int index, int PID, int address_base,int size) { // V4-studentsCode
+	if (index<0 || index > numberOfPartitionsAndHoles || numberOfPartitionsAndHoles == PARTITIONSANDHOLESTABLEMAXSIZE)
+		return -1;
+	
+	int i;
+	for (i=numberOfPartitionsAndHoles; i>index; i--) {
+		// partitionsAndHolesTable[i].size=partitionsAndHolesTable[i-1].size;
+		// partitionsAndHolesTable[i].initAddress=partitionsAndHolesTable[i-1].initAddress;
+		// partitionsAndHolesTable[i].PID=partitionsAndHolesTable[i-1].PID;
+		memcpy((void*) (&(partitionsAndHolesTable[i])), (void *) (&(partitionsAndHolesTable[i-1])), sizeof(PARTITIONDATA));
+	}
+	partitionsAndHolesTable[i].size=size;
+	partitionsAndHolesTable[i].initAddress=address_base;
+	partitionsAndHolesTable[i].PID=PID;
+
+	numberOfPartitionsAndHoles++;
+
+	return numberOfPartitionsAndHoles;
+}
+
+// Remove a partition or hole into the table
+// pertitionOrHole: position of the remove
+// return number of partitions and holes final, or negative if error
+int OperatingSystem_RemovePartitionOrHole(int partitionOrHole) { // V4-studentsCode
+	if (partitionOrHole<0 || partitionOrHole >= numberOfPartitionsAndHoles)
+		return -1;
+	
+	int i;
+	for (i=partitionOrHole;i<numberOfPartitionsAndHoles-1;i++) {
+		// partitionsAndHolesTable[i].size=partitionsAndHolesTable[i+1].size;
+		// partitionsAndHolesTable[i].initAddress=partitionsAndHolesTable[i+1].initAddress;
+		// partitionsAndHolesTable[i].PID=partitionsAndHolesTable[i+1].PID;
+		memcpy((void*) (&(partitionsAndHolesTable[i])), (void *) (&(partitionsAndHolesTable[i+1])), sizeof(PARTITIONDATA));
+	}
+	numberOfPartitionsAndHoles--;
+	return numberOfPartitionsAndHoles;
+}
+#endif								  

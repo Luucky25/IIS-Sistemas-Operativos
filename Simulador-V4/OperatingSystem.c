@@ -75,6 +75,7 @@ int PROCESSTABLEMAXSIZE = 4;
 //Variables del ejercicio 11-14
 char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
 char * queueNames [NUMBEROFQUEUES] = {"HIGHPRIOUSER", "LOWPRIOUSER", "DAEMONS"};
+char * typeOfExceptions[] = {"division by zero", "invalid processor mode", "invalid address", "invalid instruction"};
 
 // Initial set of tasks of the OS
 void OperatingSystem_Initialize(int programsFromFileIndex) {
@@ -453,8 +454,10 @@ void OperatingSystem_SaveContext(int PID) {
 // Exception management routine
 void OperatingSystem_HandleException() {
   
-	// Show message "Process [executingProcessID] has generated an exception and is terminating\n"
-	ComputerSystem_DebugMessage(TIMED_MESSAGE,71,INTERRUPT,executingProcessID,programList[processTable[executingProcessID].programListIndex]->executableName);
+	// Obtenemos el tipo de excepción generada leyendo el registro D
+	int exceptionType = Processor_GetRegisterD();
+	
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 32, INTERRUPT, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName, typeOfExceptions[exceptionType]);
 	
 	OperatingSystem_TerminateExecutingProcess();
 

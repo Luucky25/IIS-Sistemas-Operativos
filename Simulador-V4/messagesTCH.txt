@@ -1,4 +1,22 @@
-// V2-studentsCode
+// V4-studentsCode
+// Redefinition of exception messages
+31,@RERROR: A process could not be created from program [%s] because an appropriate partition is not available@@\n
+32,Process [@R%d - %s@@] has caused an exception (@R%s@@) and is being terminated\n
+
+// Invalid syscall message
+33,Process [@R%d - %s@@] has made an invalid system call (@R%d@@) and is being terminated\n
+
+// Memory System messages
+42,Process [@G%d - %s@@] requests [@G%d@@] memory positions\n
+43,Partition [@G%d@@: @G%d@@ -> @G%d@@] has been assigned to process [@G%d - %s@@]\n
+44,New hole [@G%d@@: @G%d@@ -> @G%d@@] has been created after assigning memory to process [@G%d - %s@@]\n
+45,Partition [@G%d@@: @G%d@@ -> @G%d@@] used by process [@G%d - %s@@] has been released\n
+
+46,Main memory state (@G%s@@):\n
+47,\t\t[@G%d@@] [@G%d@@ -> @G%d@@]
+48,[@G%d - %s@@]\n
+49,[@G%s@@]\n
+
 // Message system messages
 60,Illegal Message Number in line @R%d@@ of file @R%s@@\n
 61,Illegal Message Format in line @R%d@@ of file @R%s@@\n
@@ -50,6 +68,7 @@
 92,@MWarning, @@%d@M unchecked asserts in Asserts queue !!!@@\n
 93,@MAssert warning. Unchecked assert @@(Time: %d, Element: %s)\n
 96,@R PID:@@ %d@R; Expected:@@ %d@R; Real:@@ %d
+97,@R PID:@@ %d@R; Expected:@@ %s@R; Real:@@ %s
 
 // Time
 94,[%d] 
