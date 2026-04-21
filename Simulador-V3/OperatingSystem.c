@@ -477,6 +477,7 @@ void OperatingSystem_TerminateExecutingProcess() {
 		Processor_PushInSystemStack(Processor_GetPSW());
 		executingProcessID=NOPROCESS;
 		ComputerSystem_DebugMessage(TIMED_MESSAGE,99,SHUTDOWN,"The system will shut down now...\n");
+		OperatingSystem_PrintStatus();
 		return; // Don't dispatch any process
 	}
 
