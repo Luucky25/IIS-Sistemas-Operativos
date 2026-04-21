@@ -197,6 +197,9 @@ int OperatingSystem_LongTermScheduler() {
 				//Ejercicio V3 - 1 >> Llamadas a IsThereANewProgram 
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 52, ERROR, programList[i] -> executableName);
 				break;
+			case MEMORYFULL:
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 31, ERROR, programList[i]->executableName);
+				break;
 			default:
 				// Process creation has succeeded: additional actions
 				// Show message "Process [createdProcessPID] created from program [executableName]\n"
@@ -236,6 +239,8 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 		return assignedPID;
 	}
 
+	processTable[assignedPID].programListIndex = indexOfExecutableProgram;
+
 	// Check if programFile exists
 	programFile=fopen(executableProgram->executableName, "r");
 	if (programFile==NULL){
@@ -255,10 +260,15 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 	}
 	
 	// Obtain enough memory space
- 	loadingPhysicalAddress=OperatingSystem_ObtainMainMemory(processSize, assignedPID);
-	if(loadingPhysicalAddress == TOOBIGPROCESS){
-		return loadingPhysicalAddress;
+	int partitionIndex=OperatingSystem_ObtainMainMemory(processSize, assignedPID);
+	if(partitionIndex == TOOBIGPROCESS){
+		return TOOBIGPROCESS;
 	}
+	if(partitionIndex == MEMORYFULL){
+		return MEMORYFULL;
+	}
+
+	loadingPhysicalAddress = partitionsAndHolesTable[partitionIndex].initAddress;
 
 	// Load program in the allocated memory
 	if(OperatingSystem_LoadProgram(programFile, loadingPhysicalAddress, processSize) == TOOBIGPROCESS){
@@ -276,10 +286,47 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 // always obtains the chunk whose position in memory is equal to the processor identifier
 int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 
- 	if (processSize>MAINMEMORYSECTIONSIZE)
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 42, SYSMEM, PID, programList[processTable[PID].programListIndex]->executableName, processSize);
+
+	if (processSize > OS_address_base) {
 		return TOOBIGPROCESS;
-	
- 	return PID*MAINMEMORYSECTIONSIZE;
+	}
+
+	int bestFitIndex = -1;
+	int bestFitSize = MAINMEMORYSIZE + 1;
+
+	for (int i = 0; i < numberOfPartitionsAndHoles; i++) {
+		if (partitionsAndHolesTable[i].PID == NOPROCESS) { // NOPROCESS sirve como identificador para HOLE
+			int currentHoleSize = partitionsAndHolesTable[i].size;
+			// El uso de '<' estricto en lugar de '<=' garantiza que, en caso de empate,
+			// se escoja la dirección de memoria más baja (la primera que se encuentra).
+			if (currentHoleSize >= processSize && currentHoleSize < bestFitSize) {
+				bestFitSize = currentHoleSize;
+				bestFitIndex = i;
+			}
+		}
+	}
+
+	if (bestFitIndex == -1) {
+		return MEMORYFULL;
+	}
+
+	int holeInitAddress = partitionsAndHolesTable[bestFitIndex].initAddress;
+	int holeSize = partitionsAndHolesTable[bestFitIndex].size;
+
+	partitionsAndHolesTable[bestFitIndex].PID = PID;
+	partitionsAndHolesTable[bestFitIndex].size = processSize;
+
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 43, SYSMEM, bestFitIndex, holeInitAddress, processSize, PID, programList[processTable[PID].programListIndex]->executableName);
+
+	if (holeSize > processSize) {
+		int newHoleInitAddress = holeInitAddress + processSize;
+		int newHoleSize = holeSize - processSize;
+		OperatingSystem_InsertIntopartitionsAndHolesTable(bestFitIndex + 1, NOPROCESS, newHoleInitAddress, newHoleSize);
+		ComputerSystem_DebugMessage(TIMED_MESSAGE, 44, SYSMEM, bestFitIndex + 1, newHoleInitAddress, newHoleSize, PID, programList[processTable[PID].programListIndex]->executableName);
+	}
+
+	return bestFitIndex;
 }
 
 

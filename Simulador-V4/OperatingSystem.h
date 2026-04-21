@@ -11,6 +11,7 @@
 
 #define NOFREEENTRY -3
 #define TOOBIGPROCESS -4
+#define MEMORYFULL -5
 
 // V4 - 5 >> Partitions and holes configuration definition
 #define MEMCONFIG // in OperatingSystem.h
