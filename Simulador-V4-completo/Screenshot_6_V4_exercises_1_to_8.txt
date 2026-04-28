@@ -1,0 +1,17 @@
+[0m	[[1;31m102[0m] [0mProcess [[1;32m1 - programV4-26[0m] requests [[1;32m500[0m] memory positions
+[0m	[[1;31m102[0m] [0mMain memory state ([1;32mbefore allocating memory[0m):
+[0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m0 - SystemIdleProcess[0m]
+[0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m236[0m][0m[[1;32mHOLE[0m]
+[0m	[[1;31m102[0m] [0m[1;31mERROR: Program [programV4-26] is too big[0m
+[0m[[1;31m103[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m0[0m, PC: [1;31m3[0m, Accumulator: [1;31m2426[0m, PSW: [1;31m0080[0m [[1;31m--------X-------[0m], IntLine: [[1;31m0000[0m])
+[0m[[1;31m104[0m] [0m{04 003 000} TRAP 3 0 (PID: [1;32m0[0m, PC: [1;31m4[0m, Accumulator: [1;31m2426[0m, PSW: [1;31m0080[0m [[1;31m--------X-------[0m], IntLine: [[1;31m0004[0m])
+[0m[[1;31m105[0m] [0m{0C 002 000} OS 2 0 (PID: [1;32m0[0m, PC: [1;31m242[0m, Accumulator: [1;31m2426[0m, PSW: [1;31m8080[0m [[1;31mM-------X-------[0m], IntLine: [[1;31m0200[0m])
+[0m	[[1;31m106[0m] [0m[1;31mProcess [0 - SystemIdleProcess] has requested to terminate[0m
+[0m	[[1;31m106[0m] [0mProcess [[1;32m0[0m - [1;32mSystemIdleProcess[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mEXIT[0m] state
+[0m	[[1;31m106[0m] [0mMain memory state ([1;32mbefore releasing memory[0m):
+[0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m0 - SystemIdleProcess[0m]
+[0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m236[0m][0m[[1;32mHOLE[0m]
+[0m	[[1;31m106[0m] [0mPartition [[1;32m0[0m: [1;32m0[0m -> [1;32m4[0m] used by process [[1;32m0 - SystemIdleProcess[0m] has been released
+[0m	[[1;31m106[0m] [0mMain memory state ([1;32mafter releasing memory[0m):
+[0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m240[0m][0m[[1;32mHOLE[0m]
+[0m[[1;31m106[0m] [0m[1;31mThe system will shut down now...

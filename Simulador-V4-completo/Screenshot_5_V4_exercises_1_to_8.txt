@@ -1,0 +1,22 @@
+[0m	[[1;31m61[0m] [0mProcess [[1;31m8 - programV4-25[0m] has caused an exception ([1;31mdivision by zero[0m) and is being terminated
+[0m	[[1;31m61[0m] [0mProcess [[1;32m8[0m - [1;32mprogramV4-25[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mEXIT[0m] state
+[0m	[[1;31m61[0m] [0mMain memory state ([1;32mbefore releasing memory[0m):
+[0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m0 - SystemIdleProcess[0m]
+[0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m100[0m][0m[[1;32mHOLE[0m]
+[0m		[[1;32m2[0m] [[1;32m104[0m -> [1;32m40[0m][0m[[1;32m4 - programV4-22[0m]
+[0m		[[1;32m3[0m] [[1;32m144[0m -> [1;32m50[0m][0m[[1;32mHOLE[0m]
+[0m		[[1;32m4[0m] [[1;32m194[0m -> [1;32m35[0m][0m[[1;32m8 - programV4-25[0m]
+[0m		[[1;32m5[0m] [[1;32m229[0m -> [1;32m11[0m][0m[[1;32mHOLE[0m]
+[0m	[[1;31m61[0m] [0mPartition [[1;32m4[0m: [1;32m194[0m -> [1;32m35[0m] used by process [[1;32m8 - programV4-25[0m] has been released
+[0m	[[1;31m61[0m] [0mMain memory state ([1;32mafter releasing memory[0m):
+[0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m0 - SystemIdleProcess[0m]
+[0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m100[0m][0m[[1;32mHOLE[0m]
+[0m		[[1;32m2[0m] [[1;32m104[0m -> [1;32m40[0m][0m[[1;32m4 - programV4-22[0m]
+[0m		[[1;32m3[0m] [[1;32m144[0m -> [1;32m96[0m][0m[[1;32mHOLE[0m]
+[0m	[[1;31m61[0m] [0mProcess [[1;32m4[0m - [1;32mprogramV4-22[0m] moving from the [[1;32mREADY[0m] state to the [[1;32mEXECUTING[0m] state
+[0m	[[1;31m61[0m] [0mRunning Process Information:
+		[PID: [1;32m4[0m, Priority: 5, WakeUp: [1;31m-1[0m, Queue: LOWPRIOUSER]
+[0m	[[1;31m61[0m] [0mReady-to-run processes queues:
+		HIGHPRIOUSER:
+		LOWPRIOUSER:
+		DAEMONS:[[1;32m0[0m,100]
