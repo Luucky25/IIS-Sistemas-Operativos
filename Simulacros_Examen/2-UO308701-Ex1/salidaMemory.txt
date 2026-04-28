@@ -1,0 +1,213 @@
+	[0] Main memory state (during system initialization - Partitions and Holes table size: 16):
+		[0] [0 -> 240][HOLE]
+	[0] Process [7 - SystemIdleProcess] requests [4] memory positions
+	[0] Main memory state (before allocating memory):
+		[0] [0 -> 240][HOLE]
+	[0] New hole [0: 0 -> 236] has been created after assigning memory to process [7 - SystemIdleProcess]
+	[0] Partition [1: 236 -> 4] has been assigned to process [7 - SystemIdleProcess]
+	[0] Main memory state (after allocating memory):
+		[0] [0 -> 236][HOLE]
+		[1] [236 -> 4][7 - SystemIdleProcess]
+	[12] Process [0 - daemon2] requests [30] memory positions
+	[12] Main memory state (before allocating memory):
+		[0] [0 -> 236][HOLE]
+		[1] [236 -> 4][7 - SystemIdleProcess]
+	[12] New hole [0: 0 -> 206] has been created after assigning memory to process [0 - daemon2]
+	[12] Partition [1: 206 -> 30] has been assigned to process [0 - daemon2]
+	[12] Main memory state (after allocating memory):
+		[0] [0 -> 206][HOLE]
+		[1] [206 -> 30][0 - daemon2]
+		[2] [236 -> 4][7 - SystemIdleProcess]
+	[23] Process [1 - ex6] requests [30] memory positions
+	[23] Main memory state (before allocating memory):
+		[0] [0 -> 206][HOLE]
+		[1] [206 -> 30][0 - daemon2]
+		[2] [236 -> 4][7 - SystemIdleProcess]
+	[23] New hole [1: 30 -> 176] has been created after assigning memory to process [1 - ex6]
+	[23] Partition [0: 0 -> 30] has been assigned to process [1 - ex6]
+	[23] Main memory state (after allocating memory):
+		[0] [0 -> 30][1 - ex6]
+		[1] [30 -> 176][HOLE]
+		[2] [206 -> 30][0 - daemon2]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[23] Process [2 - ex5] requests [30] memory positions
+	[23] Main memory state (before allocating memory):
+		[0] [0 -> 30][1 - ex6]
+		[1] [30 -> 176][HOLE]
+		[2] [206 -> 30][0 - daemon2]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[23] New hole [2: 60 -> 146] has been created after assigning memory to process [2 - ex5]
+	[23] Partition [1: 30 -> 30] has been assigned to process [2 - ex5]
+	[23] Main memory state (after allocating memory):
+		[0] [0 -> 30][1 - ex6]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 146][HOLE]
+		[3] [206 -> 30][0 - daemon2]
+		[4] [236 -> 4][7 - SystemIdleProcess]
+	[27] Main memory state (before releasing memory):
+		[0] [0 -> 30][1 - ex6]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 146][HOLE]
+		[3] [206 -> 30][0 - daemon2]
+		[4] [236 -> 4][7 - SystemIdleProcess]
+	[27] Partition [0: 0 -> 30] used by process [1 - ex6] has been released
+	[27] Main memory state (after releasing memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 146][HOLE]
+		[3] [206 -> 30][0 - daemon2]
+		[4] [236 -> 4][7 - SystemIdleProcess]
+	[30] Process [3 - daemon2] requests [30] memory positions
+	[30] Main memory state (before allocating memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 146][HOLE]
+		[3] [206 -> 30][0 - daemon2]
+		[4] [236 -> 4][7 - SystemIdleProcess]
+	[30] New hole [2: 60 -> 116] has been created after assigning memory to process [3 - daemon2]
+	[30] Partition [3: 176 -> 30] has been assigned to process [3 - daemon2]
+	[30] Main memory state (after allocating memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 116][HOLE]
+		[3] [176 -> 30][3 - daemon2]
+		[4] [206 -> 30][0 - daemon2]
+		[5] [236 -> 4][7 - SystemIdleProcess]
+	[30] Process [4 - ex6] requests [30] memory positions
+	[30] Main memory state (before allocating memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 116][HOLE]
+		[3] [176 -> 30][3 - daemon2]
+		[4] [206 -> 30][0 - daemon2]
+		[5] [236 -> 4][7 - SystemIdleProcess]
+	[30] Partition [0: 0 -> 30] has been assigned to process [4 - ex6]
+	[30] Main memory state (after allocating memory):
+		[0] [0 -> 30][4 - ex6]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 116][HOLE]
+		[3] [176 -> 30][3 - daemon2]
+		[4] [206 -> 30][0 - daemon2]
+		[5] [236 -> 4][7 - SystemIdleProcess]
+	[30] Process [5 - ex5] requests [30] memory positions
+	[30] Main memory state (before allocating memory):
+		[0] [0 -> 30][4 - ex6]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 116][HOLE]
+		[3] [176 -> 30][3 - daemon2]
+		[4] [206 -> 30][0 - daemon2]
+		[5] [236 -> 4][7 - SystemIdleProcess]
+	[30] New hole [3: 90 -> 86] has been created after assigning memory to process [5 - ex5]
+	[30] Partition [2: 60 -> 30] has been assigned to process [5 - ex5]
+	[30] Main memory state (after allocating memory):
+		[0] [0 -> 30][4 - ex6]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 30][5 - ex5]
+		[3] [90 -> 86][HOLE]
+		[4] [176 -> 30][3 - daemon2]
+		[5] [206 -> 30][0 - daemon2]
+		[6] [236 -> 4][7 - SystemIdleProcess]
+	[37] Main memory state (before releasing memory):
+		[0] [0 -> 30][4 - ex6]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 30][5 - ex5]
+		[3] [90 -> 86][HOLE]
+		[4] [176 -> 30][3 - daemon2]
+		[5] [206 -> 30][0 - daemon2]
+		[6] [236 -> 4][7 - SystemIdleProcess]
+	[37] Partition [0: 0 -> 30] used by process [4 - ex6] has been released
+	[37] Main memory state (after releasing memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 30][5 - ex5]
+		[3] [90 -> 86][HOLE]
+		[4] [176 -> 30][3 - daemon2]
+		[5] [206 -> 30][0 - daemon2]
+		[6] [236 -> 4][7 - SystemIdleProcess]
+	[67] Main memory state (before releasing memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 30][5 - ex5]
+		[3] [90 -> 86][HOLE]
+		[4] [176 -> 30][3 - daemon2]
+		[5] [206 -> 30][0 - daemon2]
+		[6] [236 -> 4][7 - SystemIdleProcess]
+	[67] Partition [2: 60 -> 30] used by process [5 - ex5] has been released
+	[67] Two or more holes has been coalesced
+	[67] Main memory state (after releasing memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 116][HOLE]
+		[3] [176 -> 30][3 - daemon2]
+		[4] [206 -> 30][0 - daemon2]
+		[5] [236 -> 4][7 - SystemIdleProcess]
+	[77] Main memory state (before releasing memory):
+		[0] [0 -> 30][HOLE]
+		[1] [30 -> 30][2 - ex5]
+		[2] [60 -> 116][HOLE]
+		[3] [176 -> 30][3 - daemon2]
+		[4] [206 -> 30][0 - daemon2]
+		[5] [236 -> 4][7 - SystemIdleProcess]
+	[77] Partition [1: 30 -> 30] used by process [2 - ex5] has been released
+	[77] Two or more holes has been coalesced
+	[77] Main memory state (after releasing memory):
+		[0] [0 -> 176][HOLE]
+		[1] [176 -> 30][3 - daemon2]
+		[2] [206 -> 30][0 - daemon2]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[102] Process [6 - daemon3] requests [150] memory positions
+	[102] Main memory state (before allocating memory):
+		[0] [0 -> 176][HOLE]
+		[1] [176 -> 30][3 - daemon2]
+		[2] [206 -> 30][0 - daemon2]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[102] New hole [0: 0 -> 26] has been created after assigning memory to process [6 - daemon3]
+	[102] Partition [1: 26 -> 150] has been assigned to process [6 - daemon3]
+	[102] Main memory state (after allocating memory):
+		[0] [0 -> 26][HOLE]
+		[1] [26 -> 150][6 - daemon3]
+		[2] [176 -> 30][3 - daemon2]
+		[3] [206 -> 30][0 - daemon2]
+		[4] [236 -> 4][7 - SystemIdleProcess]
+	[106] Main memory state (before releasing memory):
+		[0] [0 -> 26][HOLE]
+		[1] [26 -> 150][6 - daemon3]
+		[2] [176 -> 30][3 - daemon2]
+		[3] [206 -> 30][0 - daemon2]
+		[4] [236 -> 4][7 - SystemIdleProcess]
+	[106] Partition [1: 26 -> 150] used by process [6 - daemon3] has been released
+	[106] Two or more holes has been coalesced
+	[106] Main memory state (after releasing memory):
+		[0] [0 -> 176][HOLE]
+		[1] [176 -> 30][3 - daemon2]
+		[2] [206 -> 30][0 - daemon2]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[116] Main memory state (before releasing memory):
+		[0] [0 -> 176][HOLE]
+		[1] [176 -> 30][3 - daemon2]
+		[2] [206 -> 30][0 - daemon2]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[116] Partition [2: 206 -> 30] used by process [0 - daemon2] has been released
+	[116] Main memory state (after releasing memory):
+		[0] [0 -> 176][HOLE]
+		[1] [176 -> 30][3 - daemon2]
+		[2] [206 -> 30][HOLE]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[131] Main memory state (before releasing memory):
+		[0] [0 -> 176][HOLE]
+		[1] [176 -> 30][3 - daemon2]
+		[2] [206 -> 30][HOLE]
+		[3] [236 -> 4][7 - SystemIdleProcess]
+	[131] Partition [1: 176 -> 30] used by process [3 - daemon2] has been released
+	[131] Two or more holes has been coalesced
+	[131] Main memory state (after releasing memory):
+		[0] [0 -> 236][HOLE]
+		[1] [236 -> 4][7 - SystemIdleProcess]
+	[134] ERROR: Program [iDontExist] is not valid [--- it does not exist ---]
+	[141] Main memory state (before releasing memory):
+		[0] [0 -> 236][HOLE]
+		[1] [236 -> 4][7 - SystemIdleProcess]
+	[141] Partition [1: 236 -> 4] used by process [7 - SystemIdleProcess] has been released
+	[141] Two or more holes has been coalesced
+	[141] Main memory state (after releasing memory):
+		[0] [0 -> 240][HOLE]

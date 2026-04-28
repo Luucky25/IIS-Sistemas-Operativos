@@ -1,0 +1,28 @@
+	[0] New hole [0: 0 -> 236] has been created after assigning memory to process [7 - SystemIdleProcess]
+	[0] Partition [1: 236 -> 4] has been assigned to process [7 - SystemIdleProcess]
+	[12] New hole [0: 0 -> 206] has been created after assigning memory to process [0 - daemon2]
+	[12] Partition [1: 206 -> 30] has been assigned to process [0 - daemon2]
+	[23] New hole [1: 30 -> 176] has been created after assigning memory to process [1 - ex6]
+	[23] Partition [0: 0 -> 30] has been assigned to process [1 - ex6]
+	[23] New hole [2: 60 -> 146] has been created after assigning memory to process [2 - ex5]
+	[23] Partition [1: 30 -> 30] has been assigned to process [2 - ex5]
+	[27] Partition [0: 0 -> 30] used by process [1 - ex6] has been released
+	[30] New hole [2: 60 -> 116] has been created after assigning memory to process [3 - daemon2]
+	[30] Partition [3: 176 -> 30] has been assigned to process [3 - daemon2]
+	[30] Partition [0: 0 -> 30] has been assigned to process [4 - ex6]
+	[30] New hole [3: 90 -> 86] has been created after assigning memory to process [5 - ex5]
+	[30] Partition [2: 60 -> 30] has been assigned to process [5 - ex5]
+	[37] Partition [0: 0 -> 30] used by process [4 - ex6] has been released
+	[67] Partition [2: 60 -> 30] used by process [5 - ex5] has been released
+	[67] Two or more holes has been coalesced
+	[77] Partition [1: 30 -> 30] used by process [2 - ex5] has been released
+	[77] Two or more holes has been coalesced
+	[102] New hole [0: 0 -> 26] has been created after assigning memory to process [6 - daemon3]
+	[102] Partition [1: 26 -> 150] has been assigned to process [6 - daemon3]
+	[106] Partition [1: 26 -> 150] used by process [6 - daemon3] has been released
+	[106] Two or more holes has been coalesced
+	[116] Partition [2: 206 -> 30] used by process [0 - daemon2] has been released
+	[131] Partition [1: 176 -> 30] used by process [3 - daemon2] has been released
+	[131] Two or more holes has been coalesced
+	[141] Partition [1: 236 -> 4] used by process [7 - SystemIdleProcess] has been released
+	[141] Two or more holes has been coalesced
