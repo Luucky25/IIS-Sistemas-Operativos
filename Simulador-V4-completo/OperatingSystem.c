@@ -244,11 +244,13 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 	// Check if programFile exists
 	programFile=fopen(executableProgram->executableName, "r");
 	if (programFile==NULL){
+		processTable[assignedPID].busy = 0;
 		return PROGRAMDOESNOTEXIST;
 	}
 	// Obtain the memory requirements of the program
 	processSize=OperatingSystem_ObtainProgramSize(programFile);	
 	if(processSize == PROGRAMNOTVALID){
+		processTable[assignedPID].busy = 0;
 		return processSize;
 	}
 	
@@ -256,15 +258,18 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 	// Obtain the priority for the process
 	priority=OperatingSystem_ObtainPriority(programFile);
 	if(priority == PROGRAMNOTVALID){
+		processTable[assignedPID].busy = 0;
 		return priority;
 	}
 	
 	// Obtain enough memory space
 	int partitionIndex=OperatingSystem_ObtainMainMemory(processSize, assignedPID);
 	if(partitionIndex == TOOBIGPROCESS){
+		processTable[assignedPID].busy = 0;
 		return TOOBIGPROCESS;
 	}
 	if(partitionIndex == MEMORYFULL){
+		processTable[assignedPID].busy = 0;
 		return MEMORYFULL;
 	}
 
@@ -272,6 +277,7 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 
 	// Load program in the allocated memory
 	if(OperatingSystem_LoadProgram(programFile, loadingPhysicalAddress, processSize) == TOOBIGPROCESS){
+		processTable[assignedPID].busy = 0;
 		return TOOBIGPROCESS;
 	}
 	
@@ -296,7 +302,7 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 	int bestFitSize = MAINMEMORYSIZE + 1;
 
 	for (int i = 0; i < numberOfPartitionsAndHoles; i++) {
-		if (partitionsAndHolesTable[i].PID == NOPROCESS) { // NOPROCESS sirve como identificador para HOLE
+		if (partitionsAndHolesTable[i].PID == HOLE) { // HOLE es el identificador real para huecos
 			int currentHoleSize = partitionsAndHolesTable[i].size;
 			// El uso de '<' estricto en lugar de '<=' garantiza que, en caso de empate,
 			// se escoja la dirección de memoria más baja (la primera que se encuentra).
@@ -325,7 +331,7 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
 	if (holeSize > processSize) {
 		int newHoleInitAddress = holeInitAddress + processSize;
 		int newHoleSize = holeSize - processSize;
-		OperatingSystem_InsertIntopartitionsAndHolesTable(bestFitIndex + 1, NOPROCESS, newHoleInitAddress, newHoleSize);
+		OperatingSystem_InsertIntopartitionsAndHolesTable(bestFitIndex + 1, HOLE, newHoleInitAddress, newHoleSize);
 		ComputerSystem_DebugMessage(TIMED_MESSAGE, 44, SYSMEM, bestFitIndex + 1, newHoleInitAddress, newHoleSize, PID, programList[processTable[PID].programListIndex]->executableName);
 	}
 
@@ -360,7 +366,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
 		processTable[PID].queueID = DEAMONSQUEUE;
 	}else{
-		if(processSize <= 30){
+		if(processSize < 30){
 			processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
 		}else{
 			processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
@@ -723,8 +729,10 @@ void OperatingSystem_HandleClockInterrupt() {
 		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
 	} 
 
-	//V3-c >> Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto o proponer el shutdown del sistema
-	if(awakened > 0 || (OperatingSystem_LongTermScheduler() > 0 )){
+	int nuevosProcesos = OperatingSystem_LongTermScheduler();
+
+	//V3-c >> Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto
+	if(awakened > 0 || nuevosProcesos > 0){
 		OperatingSystem_PrintStatus();
 
 		int nuevoCandidato_PID = NOPROCESS; 
@@ -756,13 +764,14 @@ void OperatingSystem_HandleClockInterrupt() {
 				OperatingSystem_Dispatch(selectedProcess);
 				OperatingSystem_PrintStatus();
 			}
-		}else{
-			// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
-			if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
-				OperatingSystem_ReadyToShutdown();
-			}
 		}
 	}
+
+	// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
+	if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
+		OperatingSystem_ReadyToShutdown();
+	}
+
 	return;
 } 
 
@@ -809,7 +818,7 @@ void OperatingSystem_ReleaseMainMemory() {
 		
 		ComputerSystem_DebugMessage(TIMED_MESSAGE, 45, SYSMEM, partitionIndex, partitionsAndHolesTable[partitionIndex].initAddress, partitionsAndHolesTable[partitionIndex].size, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName);
 		
-		partitionsAndHolesTable[partitionIndex].PID = NOPROCESS; // NOPROCESS representa un HOLE
+		partitionsAndHolesTable[partitionIndex].PID = HOLE; // HOLE representa un hueco
 		
 		OperatingSystem_CoalesceHoles();
 		
@@ -823,7 +832,7 @@ void OperatingSystem_CoalesceHoles() {
 	int i = 0;
 	
 	while (i < numberOfPartitionsAndHoles - 1) {
-		if (partitionsAndHolesTable[i].PID == NOPROCESS && partitionsAndHolesTable[i+1].PID == NOPROCESS) {
+		if (partitionsAndHolesTable[i].PID == HOLE && partitionsAndHolesTable[i+1].PID == HOLE) {
 			partitionsAndHolesTable[i].size += partitionsAndHolesTable[i+1].size;
 			OperatingSystem_RemovePartitionOrHole(i+1);
 			coalesced = 1;

@@ -1,0 +1,792 @@
+62 messages loaded from file messagesTCH.txt
+5 messages loaded from file messagesSTD.txt
+Using asserts file: asserts_1_to_8_V4
+Maximum number of asserts: 500
+154 Asserts Loaded
+[0] STARTING simulation
+ [0] User programs list:
+  	 Program [programV4-21] with arrival time [0] 
+ 	 Program [programV4-21] with arrival time [0] 
+ 	 Program [programV4-22] with arrival time [1] 
+ 	 Program [programV4-22] with arrival time [2] 
+ 	 Program [programV4-23] with arrival time [3] 
+ 	 Program [programV4-23] with arrival time [3] 
+ 	 Program [programV4-24] with arrival time [20] 
+ 	 Program [programV4-24] with arrival time [20] 
+ 	 Program [programV4-25] with arrival time [25] 
+ 	 Program [programV4-25] with arrival time [25] 
+ 	 Program [programV4-26] with arrival time [100] 
+	[0] Arrival Time Queue:
+		[SystemIdleProcess, 0, DAEMON-PROGRAM]
+		[programV4-21, 0, USER-PROGRAM]
+		[programV4-21, 0, USER-PROGRAM]
+		[programV4-22, 1, USER-PROGRAM]
+		[programV4-22, 2, USER-PROGRAM]
+		[programV4-23, 3, USER-PROGRAM]
+		[programV4-23, 3, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+	[0] Main memory state (during system initialization):
+		[0] [0 -> 240][HOLE]
+	[0] Process [0 - SystemIdleProcess] requests [4] memory positions
+	[0] Main memory state (before allocating memory):
+		[0] [0 -> 240][HOLE]
+	[0] Partition [0: 0 -> 4] has been assigned to process [0 - SystemIdleProcess]
+	[0] New hole [1: 4 -> 236] has been created after assigning memory to process [0 - SystemIdleProcess]
+	[0] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 236][HOLE]
+	[0] Process [0] created into the [NEW] state, from program [SystemIdleProcess]
+	[0] Process [0 - SystemIdleProcess] moving from the [NEW] state to the [READY] state
+	[0] Process [1 - programV4-21] requests [30] memory positions
+	[0] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 236][HOLE]
+	[0] Partition [1: 4 -> 30] has been assigned to process [1 - programV4-21]
+	[0] New hole [2: 34 -> 206] has been created after assigning memory to process [1 - programV4-21]
+	[0] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][1 - programV4-21]
+		[2] [34 -> 206][HOLE]
+	[0] Process [1] created into the [NEW] state, from program [programV4-21]
+	[0] Process [1 - programV4-21] moving from the [NEW] state to the [READY] state
+	[0] Process [2 - programV4-21] requests [30] memory positions
+	[0] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][1 - programV4-21]
+		[2] [34 -> 206][HOLE]
+	[0] Partition [2: 34 -> 30] has been assigned to process [2 - programV4-21]
+	[0] New hole [3: 64 -> 176] has been created after assigning memory to process [2 - programV4-21]
+	[0] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][1 - programV4-21]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 176][HOLE]
+	[0] Process [2] created into the [NEW] state, from program [programV4-21]
+	[0] Process [2 - programV4-21] moving from the [NEW] state to the [READY] state
+	[0] Process [1 - programV4-21] moving from the [READY] state to the [EXECUTING] state
+	[0] Running Process Information:
+		[PID: 1, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[0]  Ready-to-run processes queue: 
+ 	[0]  	 HIGHPRIOUSER:  
+	[0]  	 LOWPRIOUSER:  [2,5]
+	[0]  	 DAEMONS:  [0,100]
+	[0] SLEEPING Queue:
+		[--- empty queue ---]
+	[0] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21
+		PID: 2 -> programV4-21
+	[0] Arrival Time Queue:
+		[programV4-22, 1, USER-PROGRAM]
+		[programV4-22, 2, USER-PROGRAM]
+		[programV4-23, 3, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-23, 3, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+[1] {0D 000 000} IRET 0 0 (PID: 1, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[2] {04 29A 000} TRAP 666 0 (PID: 1, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0004])
+[3] {0C 002 000} OS 2 0 (PID: 1, PC: 242, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[4] Process [1 - programV4-21] has made an invalid system call (666) and is being terminated
+	[4] Process [1 - programV4-21] moving from the [EXECUTING] state to the [EXIT] state
+	[4] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][1 - programV4-21]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 176][HOLE]
+	[4] Partition [1: 4 -> 30] used by process [1 - programV4-21] has been released
+	[4] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 176][HOLE]
+	[4] Process [2 - programV4-21] moving from the [READY] state to the [EXECUTING] state
+	[4] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[4]  Ready-to-run processes queue: 
+ 	[4]  	 HIGHPRIOUSER:  
+	[4]  	 LOWPRIOUSER:  
+	[4]  	 DAEMONS:  [0,100]
+	[4] SLEEPING Queue:
+		[--- empty queue ---]
+	[4] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+	[4] Arrival Time Queue:
+		[programV4-22, 1, USER-PROGRAM]
+		[programV4-22, 2, USER-PROGRAM]
+		[programV4-23, 3, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-23, 3, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+ OS 2 0 (PID: 2, PC: 243, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[5] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[6] {0C 009 000} OS 9 0 (PID: 2, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[7] Clock interrupt number [1] has occurred
+	[7] Process [3 - programV4-22] requests [40] memory positions
+	[7] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 176][HOLE]
+	[7] Partition [3: 64 -> 40] has been assigned to process [3 - programV4-22]
+	[7] New hole [4: 104 -> 136] has been created after assigning memory to process [3 - programV4-22]
+	[7] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 136][HOLE]
+	[7] Process [3] created into the [NEW] state, from program [programV4-22]
+	[7] Process [3 - programV4-22] moving from the [NEW] state to the [READY] state
+	[7] Process [4 - programV4-22] requests [40] memory positions
+	[7] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 136][HOLE]
+	[7] Partition [4: 104 -> 40] has been assigned to process [4 - programV4-22]
+	[7] New hole [5: 144 -> 96] has been created after assigning memory to process [4 - programV4-22]
+	[7] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 96][HOLE]
+	[7] Process [4] created into the [NEW] state, from program [programV4-22]
+	[7] Process [4 - programV4-22] moving from the [NEW] state to the [READY] state
+	[7] Process [5 - programV4-23] requests [15] memory positions
+	[7] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 96][HOLE]
+	[7] Partition [1: 4 -> 15] has been assigned to process [5 - programV4-23]
+	[7] New hole [2: 19 -> 15] has been created after assigning memory to process [5 - programV4-23]
+	[7] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 15][5 - programV4-23]
+		[2] [19 -> 15][HOLE]
+		[3] [34 -> 30][2 - programV4-21]
+		[4] [64 -> 40][3 - programV4-22]
+		[5] [104 -> 40][4 - programV4-22]
+		[6] [144 -> 96][HOLE]
+	[7] Process [5] created into the [NEW] state, from program [programV4-23]
+	[7] Process [5 - programV4-23] moving from the [NEW] state to the [READY] state
+	[7] Process [6 - programV4-23] requests [15] memory positions
+	[7] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 15][5 - programV4-23]
+		[2] [19 -> 15][HOLE]
+		[3] [34 -> 30][2 - programV4-21]
+		[4] [64 -> 40][3 - programV4-22]
+		[5] [104 -> 40][4 - programV4-22]
+		[6] [144 -> 96][HOLE]
+	[7] Partition [2: 19 -> 15] has been assigned to process [6 - programV4-23]
+	[7] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 15][5 - programV4-23]
+		[2] [19 -> 15][6 - programV4-23]
+		[3] [34 -> 30][2 - programV4-21]
+		[4] [64 -> 40][3 - programV4-22]
+		[5] [104 -> 40][4 - programV4-22]
+		[6] [144 -> 96][HOLE]
+	[7] Process [6] created into the [NEW] state, from program [programV4-23]
+	[7] Process [6 - programV4-23] moving from the [NEW] state to the [READY] state
+	[7] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[7]  Ready-to-run processes queue: 
+ 	[7]  	 HIGHPRIOUSER:  [5,5], [6,5]
+	[7]  	 LOWPRIOUSER:  [3,5], [4,5]
+	[7]  	 DAEMONS:  [0,100]
+	[7] SLEEPING Queue:
+		[--- empty queue ---]
+	[7] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 5 -> programV4-23
+		PID: 6 -> programV4-23
+	[7] Arrival Time Queue:
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+	[7] Process [2 - programV4-21] will be thrown out of the processor by process [5 - programV4-23]
+	[7] Process [2 - programV4-21] moving from the [EXECUTING] state to the [READY] state
+	[7] Process [5 - programV4-23] moving from the [READY] state to the [EXECUTING] state
+	[7] Running Process Information:
+		[PID: 5, Priority: 5, WakeUp: -1, Queue: HIGHPRIOUSER]
+	[7]  Ready-to-run processes queue: 
+ 	[7]  	 HIGHPRIOUSER:  [6,5]
+	[7]  	 LOWPRIOUSER:  [3,5], [4,5], [2,5]
+	[7]  	 DAEMONS:  [0,100]
+	[7] SLEEPING Queue:
+		[--- empty queue ---]
+	[7] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 5 -> programV4-23
+		PID: 6 -> programV4-23
+	[7] Arrival Time Queue:
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+ OS 9 0 (PID: 5, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[8] {0D 000 000} IRET 0 0 (PID: 5, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[9] {08 A2B 000} WRITE -555 0 (PID: 5, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0040])
+[10] {0C 006 000} OS 6 0 (PID: 5, PC: 244, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[11] Process [5 - programV4-23] has caused an exception (invalid address) and is being terminated
+	[11] Process [5 - programV4-23] moving from the [EXECUTING] state to the [EXIT] state
+	[11] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 15][5 - programV4-23]
+		[2] [19 -> 15][6 - programV4-23]
+		[3] [34 -> 30][2 - programV4-21]
+		[4] [64 -> 40][3 - programV4-22]
+		[5] [104 -> 40][4 - programV4-22]
+		[6] [144 -> 96][HOLE]
+	[11] Partition [1: 4 -> 15] used by process [5 - programV4-23] has been released
+	[11] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 15][HOLE]
+		[2] [19 -> 15][6 - programV4-23]
+		[3] [34 -> 30][2 - programV4-21]
+		[4] [64 -> 40][3 - programV4-22]
+		[5] [104 -> 40][4 - programV4-22]
+		[6] [144 -> 96][HOLE]
+	[11] Process [6 - programV4-23] moving from the [READY] state to the [EXECUTING] state
+	[11] Running Process Information:
+		[PID: 6, Priority: 5, WakeUp: -1, Queue: HIGHPRIOUSER]
+	[11]  Ready-to-run processes queue: 
+ 	[11]  	 HIGHPRIOUSER:  
+	[11]  	 LOWPRIOUSER:  [3,5], [4,5], [2,5]
+	[11]  	 DAEMONS:  [0,100]
+	[11] SLEEPING Queue:
+		[--- empty queue ---]
+	[11] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 5 -> programV4-23 Zombie process!
+		PID: 6 -> programV4-23
+	[11] Arrival Time Queue:
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+ OS 6 0 (PID: 6, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[12] {0D 000 000} IRET 0 0 (PID: 6, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[13] {0C 009 000} OS 9 0 (PID: 6, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[14] Clock interrupt number [2] has occurred
+ OS 9 0 (PID: 6, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[15] {0D 000 000} IRET 0 0 (PID: 6, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[16] {0C 009 000} OS 9 0 (PID: 6, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[17] Clock interrupt number [3] has occurred
+ OS 9 0 (PID: 6, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[18] {0D 000 000} IRET 0 0 (PID: 6, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[19] {08 A2B 000} WRITE -555 0 (PID: 6, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0040])
+[20] {0C 006 000} OS 6 0 (PID: 6, PC: 244, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[21] Process [6 - programV4-23] has caused an exception (invalid address) and is being terminated
+	[21] Process [6 - programV4-23] moving from the [EXECUTING] state to the [EXIT] state
+	[21] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 15][HOLE]
+		[2] [19 -> 15][6 - programV4-23]
+		[3] [34 -> 30][2 - programV4-21]
+		[4] [64 -> 40][3 - programV4-22]
+		[5] [104 -> 40][4 - programV4-22]
+		[6] [144 -> 96][HOLE]
+	[21] Partition [2: 19 -> 15] used by process [6 - programV4-23] has been released
+	[21]  Two or more holes have been coalesced
+	[21] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 96][HOLE]
+	[21] Process [3 - programV4-22] moving from the [READY] state to the [EXECUTING] state
+	[21] Running Process Information:
+		[PID: 3, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[21]  Ready-to-run processes queue: 
+ 	[21]  	 HIGHPRIOUSER:  
+	[21]  	 LOWPRIOUSER:  [4,5], [2,5]
+	[21]  	 DAEMONS:  [0,100]
+	[21] SLEEPING Queue:
+		[--- empty queue ---]
+	[21] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 5 -> programV4-23 Zombie process!
+		PID: 6 -> programV4-23 Zombie process!
+	[21] Arrival Time Queue:
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-24, 20, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+ OS 6 0 (PID: 3, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[22] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[23] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[24] Clock interrupt number [4] has occurred
+	[24] Process [7 - programV4-24] requests [50] memory positions
+	[24] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 96][HOLE]
+	[24] Partition [5: 144 -> 50] has been assigned to process [7 - programV4-24]
+	[24] New hole [6: 194 -> 46] has been created after assigning memory to process [7 - programV4-24]
+	[24] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 50][7 - programV4-24]
+		[6] [194 -> 46][HOLE]
+	[24] Process [7] created into the [NEW] state, from program [programV4-24]
+	[24] Process [7 - programV4-24] moving from the [NEW] state to the [READY] state
+	[24] Process [8 - programV4-24] requests [50] memory positions
+	[24] ERROR: A process could not be created from program [programV4-24] because an appropriate partition is not available
+	[24] Running Process Information:
+		[PID: 3, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[24]  Ready-to-run processes queue: 
+ 	[24]  	 HIGHPRIOUSER:  
+	[24]  	 LOWPRIOUSER:  [4,5], [2,5], [7,5]
+	[24]  	 DAEMONS:  [0,100]
+	[24] SLEEPING Queue:
+		[--- empty queue ---]
+	[24] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 5 -> programV4-23 Zombie process!
+		PID: 6 -> programV4-23 Zombie process!
+		PID: 7 -> programV4-24
+	[24] Arrival Time Queue:
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+	[24] Process [3 - programV4-22] will be thrown out of the processor by process [4 - programV4-22]
+	[24] Process [3 - programV4-22] moving from the [EXECUTING] state to the [READY] state
+	[24] Process [4 - programV4-22] moving from the [READY] state to the [EXECUTING] state
+	[24] Running Process Information:
+		[PID: 4, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[24]  Ready-to-run processes queue: 
+ 	[24]  	 HIGHPRIOUSER:  
+	[24]  	 LOWPRIOUSER:  [2,5], [7,5], [3,5]
+	[24]  	 DAEMONS:  [0,100]
+	[24] SLEEPING Queue:
+		[--- empty queue ---]
+	[24] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 1 -> programV4-21 Zombie process!
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 5 -> programV4-23 Zombie process!
+		PID: 6 -> programV4-23 Zombie process!
+		PID: 7 -> programV4-24
+	[24] Arrival Time Queue:
+		[programV4-25, 25, USER-PROGRAM]
+		[programV4-26, 100, USER-PROGRAM]
+		[programV4-25, 25, USER-PROGRAM]
+ OS 9 0 (PID: 4, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[25] {0D 000 000} IRET 0 0 (PID: 4, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[26] {0C 009 000} OS 9 0 (PID: 4, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[27] Clock interrupt number [5] has occurred
+	[27] Process [8 - programV4-25] requests [35] memory positions
+	[27] Main memory state (before allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 50][7 - programV4-24]
+		[6] [194 -> 46][HOLE]
+	[27] Partition [6: 194 -> 35] has been assigned to process [8 - programV4-25]
+	[27] New hole [7: 229 -> 11] has been created after assigning memory to process [8 - programV4-25]
+	[27] Main memory state (after allocating memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 50][7 - programV4-24]
+		[6] [194 -> 35][8 - programV4-25]
+		[7] [229 -> 11][HOLE]
+	[27] Process [8] created into the [NEW] state, from program [programV4-25]
+	[27] Process [8 - programV4-25] moving from the [NEW] state to the [READY] state
+	[27] Zombie process [1 -> programV4-21], with size [30] and initial address [4] is removed from system
+	[27] Zombie process [5 -> programV4-23], with size [15] and initial address [4] is removed from system
+	[27] Zombie process [6 -> programV4-23], with size [15] and initial address [19] is removed from system
+	[27] Process [1 - programV4-25] requests [35] memory positions
+	[27] ERROR: A process could not be created from program [programV4-25] because an appropriate partition is not available
+	[27] Running Process Information:
+		[PID: 4, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[27]  Ready-to-run processes queue: 
+ 	[27]  	 HIGHPRIOUSER:  
+	[27]  	 LOWPRIOUSER:  [2,5], [7,5], [3,5], [8,5]
+	[27]  	 DAEMONS:  [0,100]
+	[27] SLEEPING Queue:
+		[--- empty queue ---]
+	[27] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 7 -> programV4-24
+		PID: 8 -> programV4-25
+	[27] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+	[27] Process [4 - programV4-22] will be thrown out of the processor by process [2 - programV4-21]
+	[27] Process [4 - programV4-22] moving from the [EXECUTING] state to the [READY] state
+	[27] Process [2 - programV4-21] moving from the [READY] state to the [EXECUTING] state
+	[27] Running Process Information:
+		[PID: 2, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[27]  Ready-to-run processes queue: 
+ 	[27]  	 HIGHPRIOUSER:  
+	[27]  	 LOWPRIOUSER:  [7,5], [3,5], [8,5], [4,5]
+	[27]  	 DAEMONS:  [0,100]
+	[27] SLEEPING Queue:
+		[--- empty queue ---]
+	[27] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 7 -> programV4-24
+		PID: 8 -> programV4-25
+	[27] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+ OS 9 0 (PID: 2, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[28] {0D 000 000} IRET 0 0 (PID: 2, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[29] {04 29A 000} TRAP 666 0 (PID: 2, PC: 1, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0004])
+[30] {0C 002 000} OS 2 0 (PID: 2, PC: 242, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[31] Process [2 - programV4-21] has made an invalid system call (666) and is being terminated
+	[31] Process [2 - programV4-21] moving from the [EXECUTING] state to the [EXIT] state
+	[31] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 30][HOLE]
+		[2] [34 -> 30][2 - programV4-21]
+		[3] [64 -> 40][3 - programV4-22]
+		[4] [104 -> 40][4 - programV4-22]
+		[5] [144 -> 50][7 - programV4-24]
+		[6] [194 -> 35][8 - programV4-25]
+		[7] [229 -> 11][HOLE]
+	[31] Partition [2: 34 -> 30] used by process [2 - programV4-21] has been released
+	[31]  Two or more holes have been coalesced
+	[31] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 60][HOLE]
+		[2] [64 -> 40][3 - programV4-22]
+		[3] [104 -> 40][4 - programV4-22]
+		[4] [144 -> 50][7 - programV4-24]
+		[5] [194 -> 35][8 - programV4-25]
+		[6] [229 -> 11][HOLE]
+	[31] Process [7 - programV4-24] moving from the [READY] state to the [EXECUTING] state
+	[31] Running Process Information:
+		[PID: 7, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[31]  Ready-to-run processes queue: 
+ 	[31]  	 HIGHPRIOUSER:  
+	[31]  	 LOWPRIOUSER:  [3,5], [8,5], [4,5]
+	[31]  	 DAEMONS:  [0,100]
+	[31] SLEEPING Queue:
+		[--- empty queue ---]
+	[31] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21 Zombie process!
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 7 -> programV4-24
+		PID: 8 -> programV4-25
+	[31] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+ OS 2 0 (PID: 7, PC: 243, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[32] {0D 000 000} IRET 0 0 (PID: 7, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[33] {0C 009 000} OS 9 0 (PID: 7, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[34] Clock interrupt number [6] has occurred
+ OS 9 0 (PID: 7, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[35] {0D 000 000} IRET 0 0 (PID: 7, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[36] {0C 009 000} OS 9 0 (PID: 7, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[37] Clock interrupt number [7] has occurred
+ OS 9 0 (PID: 7, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[38] {0D 000 000} IRET 0 0 (PID: 7, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[39] {0B 000 000} HALT 0 0 (PID: 7, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0040])
+[40] {0C 006 000} OS 6 0 (PID: 7, PC: 244, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[41] Process [7 - programV4-24] has caused an exception (invalid processor mode) and is being terminated
+	[41] Process [7 - programV4-24] moving from the [EXECUTING] state to the [EXIT] state
+	[41] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 60][HOLE]
+		[2] [64 -> 40][3 - programV4-22]
+		[3] [104 -> 40][4 - programV4-22]
+		[4] [144 -> 50][7 - programV4-24]
+		[5] [194 -> 35][8 - programV4-25]
+		[6] [229 -> 11][HOLE]
+	[41] Partition [4: 144 -> 50] used by process [7 - programV4-24] has been released
+	[41] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 60][HOLE]
+		[2] [64 -> 40][3 - programV4-22]
+		[3] [104 -> 40][4 - programV4-22]
+		[4] [144 -> 50][HOLE]
+		[5] [194 -> 35][8 - programV4-25]
+		[6] [229 -> 11][HOLE]
+	[41] Process [3 - programV4-22] moving from the [READY] state to the [EXECUTING] state
+	[41] Running Process Information:
+		[PID: 3, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[41]  Ready-to-run processes queue: 
+ 	[41]  	 HIGHPRIOUSER:  
+	[41]  	 LOWPRIOUSER:  [8,5], [4,5]
+	[41]  	 DAEMONS:  [0,100]
+	[41] SLEEPING Queue:
+		[--- empty queue ---]
+	[41] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21 Zombie process!
+		PID: 3 -> programV4-22
+		PID: 4 -> programV4-22
+		PID: 7 -> programV4-24 Zombie process!
+		PID: 8 -> programV4-25
+	[41] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+ OS 6 0 (PID: 3, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[42] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[43] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[44] Clock interrupt number [8] has occurred
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[45] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[46] {0C 009 000} OS 9 0 (PID: 3, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[47] Clock interrupt number [9] has occurred
+ OS 9 0 (PID: 3, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[48] {0D 000 000} IRET 0 0 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[49] {00 001 002} NONEXISTING_INSTRUCTION 1 2 (PID: 3, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0040])
+[50] {0C 006 000} OS 6 0 (PID: 3, PC: 244, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[51] Process [3 - programV4-22] has caused an exception (invalid instruction) and is being terminated
+	[51] Process [3 - programV4-22] moving from the [EXECUTING] state to the [EXIT] state
+	[51] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 60][HOLE]
+		[2] [64 -> 40][3 - programV4-22]
+		[3] [104 -> 40][4 - programV4-22]
+		[4] [144 -> 50][HOLE]
+		[5] [194 -> 35][8 - programV4-25]
+		[6] [229 -> 11][HOLE]
+	[51] Partition [2: 64 -> 40] used by process [3 - programV4-22] has been released
+	[51]  Two or more holes have been coalesced
+	[51] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 100][HOLE]
+		[2] [104 -> 40][4 - programV4-22]
+		[3] [144 -> 50][HOLE]
+		[4] [194 -> 35][8 - programV4-25]
+		[5] [229 -> 11][HOLE]
+	[51] Process [8 - programV4-25] moving from the [READY] state to the [EXECUTING] state
+	[51] Running Process Information:
+		[PID: 8, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[51]  Ready-to-run processes queue: 
+ 	[51]  	 HIGHPRIOUSER:  
+	[51]  	 LOWPRIOUSER:  [4,5]
+	[51]  	 DAEMONS:  [0,100]
+	[51] SLEEPING Queue:
+		[--- empty queue ---]
+	[51] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21 Zombie process!
+		PID: 3 -> programV4-22 Zombie process!
+		PID: 4 -> programV4-22
+		PID: 7 -> programV4-24 Zombie process!
+		PID: 8 -> programV4-25
+	[51] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+ OS 6 0 (PID: 8, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[52] {0D 000 000} IRET 0 0 (PID: 8, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[53] {0C 009 000} OS 9 0 (PID: 8, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[54] Clock interrupt number [10] has occurred
+ OS 9 0 (PID: 8, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[55] {0D 000 000} IRET 0 0 (PID: 8, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[56] {0C 009 000} OS 9 0 (PID: 8, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[57] Clock interrupt number [11] has occurred
+ OS 9 0 (PID: 8, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[58] {0D 000 000} IRET 0 0 (PID: 8, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[59] {03 14D 000} DIV 333 0 (PID: 8, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0040])
+[60] {0C 006 000} OS 6 0 (PID: 8, PC: 244, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[61] Process [8 - programV4-25] has caused an exception (division by zero) and is being terminated
+	[61] Process [8 - programV4-25] moving from the [EXECUTING] state to the [EXIT] state
+	[61] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 100][HOLE]
+		[2] [104 -> 40][4 - programV4-22]
+		[3] [144 -> 50][HOLE]
+		[4] [194 -> 35][8 - programV4-25]
+		[5] [229 -> 11][HOLE]
+	[61] Partition [4: 194 -> 35] used by process [8 - programV4-25] has been released
+	[61]  Two or more holes have been coalesced
+	[61] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 100][HOLE]
+		[2] [104 -> 40][4 - programV4-22]
+		[3] [144 -> 96][HOLE]
+	[61] Process [4 - programV4-22] moving from the [READY] state to the [EXECUTING] state
+	[61] Running Process Information:
+		[PID: 4, Priority: 5, WakeUp: -1, Queue: LOWPRIOUSER]
+	[61]  Ready-to-run processes queue: 
+ 	[61]  	 HIGHPRIOUSER:  
+	[61]  	 LOWPRIOUSER:  
+	[61]  	 DAEMONS:  [0,100]
+	[61] SLEEPING Queue:
+		[--- empty queue ---]
+	[61] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21 Zombie process!
+		PID: 3 -> programV4-22 Zombie process!
+		PID: 4 -> programV4-22
+		PID: 7 -> programV4-24 Zombie process!
+		PID: 8 -> programV4-25 Zombie process!
+	[61] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+ OS 6 0 (PID: 4, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[62] {0D 000 000} IRET 0 0 (PID: 4, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[63] {0C 009 000} OS 9 0 (PID: 4, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[64] Clock interrupt number [12] has occurred
+ OS 9 0 (PID: 4, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[65] {0D 000 000} IRET 0 0 (PID: 4, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0200])
+[66] {0C 009 000} OS 9 0 (PID: 4, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[67] Clock interrupt number [13] has occurred
+ OS 9 0 (PID: 4, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[68] {0D 000 000} IRET 0 0 (PID: 4, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0000])
+[69] {00 001 002} NONEXISTING_INSTRUCTION 1 2 (PID: 4, PC: 0, Accumulator: 0, PSW: 0002 [--------------Z-], IntLine: [0040])
+[70] {0C 006 000} OS 6 0 (PID: 4, PC: 244, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+	[71] Process [4 - programV4-22] has caused an exception (invalid instruction) and is being terminated
+	[71] Process [4 - programV4-22] moving from the [EXECUTING] state to the [EXIT] state
+	[71] Main memory state (before releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 100][HOLE]
+		[2] [104 -> 40][4 - programV4-22]
+		[3] [144 -> 96][HOLE]
+	[71] Partition [2: 104 -> 40] used by process [4 - programV4-22] has been released
+	[71]  Two or more holes have been coalesced
+	[71] Main memory state (after releasing memory):
+		[0] [0 -> 4][0 - SystemIdleProcess]
+		[1] [4 -> 236][HOLE]
+	[71] Process [0 - SystemIdleProcess] moving from the [READY] state to the [EXECUTING] state
+	[71] Running Process Information:
+		[PID: 0, Priority: 100, WakeUp: -1, Queue: DAEMONS]
+	[71]  Ready-to-run processes queue: 
+ 	[71]  	 HIGHPRIOUSER:  
+	[71]  	 LOWPRIOUSER:  
+	[71]  	 DAEMONS:  
+	[71] SLEEPING Queue:
+		[--- empty queue ---]
+	[71] PID association with program's name:
+		PID: 0 -> SystemIdleProcess
+		PID: 2 -> programV4-21 Zombie process!
+		PID: 3 -> programV4-22 Zombie process!
+		PID: 4 -> programV4-22 Zombie process!
+		PID: 7 -> programV4-24 Zombie process!
+		PID: 8 -> programV4-25 Zombie process!
+	[71] Arrival Time Queue:
+		[programV4-26, 100, USER-PROGRAM]
+ OS 6 0 (PID: 0, PC: 245, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0200])
+[72] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
+[73] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[74] Clock interrupt number [14] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[75] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0200])
+[76] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+	[77] Clock interrupt number [15] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 0, PSW: 8082 [M-------X-----Z-], IntLine: [0000])
+[78] {0D 000 000} IRET 0 0 (PID: 0, PC: 0, Accumulator: 0, PSW: 0082 [--------X-----Z-], IntLine: [0000])
+[79] {01 5E2 398} ADD 1506 920 (PID: 0, PC: 1, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[80] {05 000 000} NOP 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
+[81] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[82] Clock interrupt number [16] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+[83] {0D 000 000} IRET 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[84] {06 801 000} JUMP -1 0 (PID: 0, PC: 1, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[85] {05 000 000} NOP 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
+[86] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[87] Clock interrupt number [17] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+[88] {0D 000 000} IRET 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[89] {06 801 000} JUMP -1 0 (PID: 0, PC: 1, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[90] {05 000 000} NOP 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
+[91] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[92] Clock interrupt number [18] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+[93] {0D 000 000} IRET 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[94] {06 801 000} JUMP -1 0 (PID: 0, PC: 1, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[95] {05 000 000} NOP 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
+[96] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[97] Clock interrupt number [19] has occurred
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+[98] {0D 000 000} IRET 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[99] {06 801 000} JUMP -1 0 (PID: 0, PC: 1, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[100] {05 000 000} NOP 0 0 (PID: 0, PC: 2, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0200])
+[101] {0C 009 000} OS 9 0 (PID: 0, PC: 246, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+	[102] Clock interrupt number [20] has occurred
+	[102] Process [1 - programV4-26] requests [500] memory positions
+	[102] ERROR: Program [programV4-26] is too big
+ OS 9 0 (PID: 0, PC: 247, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0000])
+[103] {0D 000 000} IRET 0 0 (PID: 0, PC: 3, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0000])
+[104] {04 003 000} TRAP 3 0 (PID: 0, PC: 4, Accumulator: 2426, PSW: 0080 [--------X-------], IntLine: [0004])
+[105] {0C 002 000} OS 2 0 (PID: 0, PC: 242, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0200])
+	[106] Process [0 - SystemIdleProcess] has requested to terminate
+	[106] Process [0 - SystemIdleProcess] moving from the [EXECUTING] state to the [EXIT] state
+[106] The system will shut down now...
+	[106] Running Process Information:
+		[--- No running process ---]
+	[106]  Ready-to-run processes queue: 
+ 	[106]  	 HIGHPRIOUSER:  
+	[106]  	 LOWPRIOUSER:  
+	[106]  	 DAEMONS:  
+	[106] SLEEPING Queue:
+		[--- empty queue ---]
+	[106] PID association with program's name:
+		PID: 0 -> SystemIdleProcess Zombie process!
+		PID: 2 -> programV4-21 Zombie process!
+		PID: 3 -> programV4-22 Zombie process!
+		PID: 4 -> programV4-22 Zombie process!
+		PID: 7 -> programV4-24 Zombie process!
+		PID: 8 -> programV4-25 Zombie process!
+	[106] Arrival Time Queue:
+		[--- empty queue ---]
+ OS 2 0 (PID: -1, PC: 243, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0200])
+[107] {0D 000 000} IRET 0 0 (PID: -1, PC: 241, Accumulator: 2426, PSW: 8080 [M-------X-------], IntLine: [0200])
+[108] {0B 000 000} HALT 0 0 (PID: -1, PC: 241, Accumulator: 2426, PSW: 8081 [M-------X------S], IntLine: [0200])
+[108] END of the simulation
