@@ -9,3 +9,7 @@
 103, Ready-to-run processes queue: \n 
 104, \t @G%s@@:  
 114, @GTwo or more holes have been coalesced@@\n
+
+//Simulador 
+
+115, @MThe Long-Term Scheduler is executed because of an exception [%d] ticks after its last execution@@\n

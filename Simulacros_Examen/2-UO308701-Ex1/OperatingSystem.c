@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <time.h>
+#include "Clock.h"
 
 // Functions prototypes
 void OperatingSystem_PCBInitialization(int, int, int, int, int);
@@ -71,6 +72,15 @@ int MAINMEMORYSECTIONSIZE = 60;
 extern int MAINMEMORYSIZE;
 
 int PROCESSTABLEMAXSIZE = 4;
+
+// --- EXAMEN V4 - Ejercicio 1: Variables globales para el control del LTS ---
+#ifndef EXAM
+#define EXAM 'e'
+#endif
+int last_LTS_tick = 0;
+int last_LTS_user_processes = 0;
+int terminatingFromException = 0;
+// ---------------------------------------------------------------------------
 
 //Variables del ejercicio 11-14
 char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
@@ -180,6 +190,9 @@ int OperatingSystem_LongTermScheduler() {
 	int createdProcessPID, i,
 		numberOfSuccessfullyCreatedProcesses=0;
 	
+	// --- EXAMEN V4 - Ejercicio 1: Variable local para contar procesos de usuario ---
+	int userProcessesCreated = 0;
+	
 	while (OperatingSystem_IsThereANewProgram() == YES) {
 		i=Heap_poll(arrivalTimeQueue,QUEUE_ARRIVAL,&numberOfProgramsInArrivalTimeQueue);
 		createdProcessPID=OperatingSystem_CreateProcess(i);
@@ -206,8 +219,11 @@ int OperatingSystem_LongTermScheduler() {
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 54, SYSPROC, createdProcessPID, statesNames[NEW], programList[i]->executableName);
 				//ComputerSystem_DebugMessage(TIMED_MESSAGE,70,SYSPROC,createdProcessPID,programList[i]->executableName);
 				numberOfSuccessfullyCreatedProcesses++;
-				if (programList[i]->type==USERPROGRAM) 
+				if (programList[i]->type==USERPROGRAM) {
 					numberOfNotTerminatedUserProcesses++;
+					// --- EXAMEN V4 - Ejercicio 1: Incrementamos el contador de procesos de usuario ---
+					userProcessesCreated++;
+				}
 				// Move process to the ready state
 				OperatingSystem_MoveToTheREADYState(createdProcessPID);
 		}
@@ -217,7 +233,10 @@ int OperatingSystem_LongTermScheduler() {
 		OperatingSystem_PrintStatus();
 	}*/
 
-
+	// --- EXAMEN V4 - Ejercicio 1: Actualizamos el tick y los procesos de usuario creados ---
+	last_LTS_tick = Clock_GetTime();
+	last_LTS_user_processes = userProcessesCreated;
+	// ---------------------------------------------------------------------------------------
 
 	// Return the number of succesfully created processes
 	return numberOfSuccessfullyCreatedProcesses;
@@ -521,7 +540,11 @@ void OperatingSystem_HandleException() {
 	
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 32, INTERRUPT, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName, typeOfExceptions[exceptionType]);
 	
+	// --- EXAMEN V4 - Ejercicio 1: Activamos el flag de terminación por excepción ---
+	terminatingFromException = 1;
 	OperatingSystem_TerminateExecutingProcess();
+	terminatingFromException = 0;
+	// -----------------------------------------------------------------------------
 
 	//Ejercicio V2 - 3b 
 	OperatingSystem_PrintStatus();
@@ -554,6 +577,17 @@ void OperatingSystem_TerminateExecutingProcess() {
 		// One more user process that has terminated
 		numberOfNotTerminatedUserProcesses--;
 	
+	// --- EXAMEN V4 - Ejercicio 1: Condición para invocar al LTS en caso de Excepción ---
+	if (terminatingFromException) {
+		int currentTick = Clock_GetTime();
+		int ticksSinceLastLTS = currentTick - last_LTS_tick;
+		
+		if (last_LTS_user_processes == 0 && ticksSinceLastLTS >= 2) {
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 115, EXAM, ticksSinceLastLTS);
+			OperatingSystem_LongTermScheduler();
+		}
+	}
+	// -----------------------------------------------------------------------------------
 	
 	if (numberOfNotTerminatedUserProcesses==0 && numberOfProgramsInArrivalTimeQueue == 0) {
 		// Simulation must finish, telling sipID to finish
