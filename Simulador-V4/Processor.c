@@ -282,7 +282,6 @@ void Processor_DecodeAndExecuteInstruction() {
 				registerPC_CPU++;
 				// Update PSW bits (ZERO_BIT, NEGATIVE_BIT, ...)
 				Processor_UpdatePSW();
-				return; // Salimos de la función para evitar imprimir el mensaje duplicado
 			}else{
 				Processor_RaiseException(INVALIDPROCESSORMODE);
 			}
