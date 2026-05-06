@@ -540,6 +540,7 @@ void OperatingSystem_TerminateExecutingProcess() {
 		Processor_SetSSP(MAINMEMORYSIZE-1);
 		Processor_PushInSystemStack(OS_address_base+1);
 		Processor_PushInSystemStack(Processor_GetPSW());
+		OperatingSystem_ReleaseMainMemory();
 		executingProcessID=NOPROCESS;
 		ComputerSystem_DebugMessage(TIMED_MESSAGE,99,SHUTDOWN,"The system will shut down now...\n");
 		OperatingSystem_PrintStatus();
