@@ -1,0 +1,70 @@
+Consejos importantes a tener en cuenta:
+
+1. Limpia tu código:
+
+	a. Intenta no repetir bloques grandes de código: usa funciones auxiliares.
+	
+	b. Usa constantes cuando se proporcionen (o añade las tuyas propias).
+	
+	c. Evita condiciones innecesarias:
+	
+		• ¿Por qué comparar con ‘<’ en esta sentencia?
+		
+			if (numberOfSleepingProcesses <= 0) …
+
+2. Revisa todos los mensajes requeridos (de V1 a V4):
+
+	a. Qué deben imprimir.
+	
+	b. El formato a seguir.
+
+3. Revisa todo el feedback recibido del profesor.
+
+4. Tus soluciones deben funcionar:
+
+	a. 	Independientemente del tamaño de la tabla de procesos: puedes usar la
+		opción --numProcesses=10 para especificar un nuevo tamaño para esa tabla.
+		
+	b. 	Independientemente del PID que tenga cada proceso: puedes usar la 
+		opción --initialPID=5 para especificar el PID inicial que se asignará.
+		
+	c. 	Independientemente de los tiempos de llegada de los programas y de su 
+		orden en la línea de comandos.
+		
+	d. 	Independientemente de cuántos procesos de usuario y demonio coexistan 
+		(--daemonsProgramsFile=DaemonsFile).
+		
+	e.	Independientemente de los valores que usemos desde la línea de ordenes
+		para sobrescribir algunos valores por defecto (ver ejemplos abajo).
+
+5. Además de las pruebas que te proporcionamos, crea tus propias pruebas.
+
+6. Como ejecutar los tests: 
+
+	Copia todos los ficheros y asertos del directorio All_Versions_Test 
+	en tu copia de trabajo y ejecuta lo siguiente:
+
+	Test 1:
+
+		./Simulator --debugSections=A --numAsserts=1200 --assertsFile=asserts_test_1 --daemonsProgramsFile=teachersDaemonsTest --numProcesses=6 test1-1 100
+
+		./Simulator --debugSections=A --numAsserts=1200 --assertsFile=asserts_test_1 --daemonsProgramsFile=teachersDaemonsTest --numProcesses=6 test1-1 100 test1-2 110 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END
+
+	Test 2:
+
+		./Simulator --assertsFile=asserts_test_2  test2-1 10 test2-2 30 iDontExist 350
+
+		./Simulator --assertsFile=asserts_test_2  test2-1 10 test2-2 30 iDontExist 350 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END
+		
+	Test 3:
+
+		./Simulator --assertsFile=asserts_test_3 --numProcesses=8 --initialPID=5 --daemonsProgramsFile=daemonsFileTest3 test3-1 10 test3-2 11 test3-3 12
+
+		./Simulator --assertsFile=asserts_test_3 --numProcesses=8 --initialPID=5 --daemonsProgramsFile=daemonsFileTest3 test3-1 10 test3-2 11 test3-3 12 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END -e transfer
+		
+	Test 4:
+		
+		./Simulator --assertsFile=asserts_test_4  test4-1 10 test4-2 11
+
+		./Simulator --assertsFile=asserts_test_4  test4-1 10 test4-2 11 | grep -e transfer -e MOV -e ADD -e assigned -e released -e END
+		
