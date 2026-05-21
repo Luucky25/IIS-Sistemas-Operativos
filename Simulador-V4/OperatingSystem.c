@@ -565,6 +565,10 @@ void OperatingSystem_TerminateExecutingProcess() {
 
 	// Assign the processor to that process
 	OperatingSystem_Dispatch(selectedProcess);
+
+	OperatingSystem_Dispatch(selectedProcess); 
+	OperatingSystem_PrintStatus();
+
 }
 
 // System call management routine
@@ -753,7 +757,7 @@ void OperatingSystem_HandleClockInterrupt() {
 	
 			if(nuevoCandidato_Queue < actualQueue){
 				mustPreempt = 1; 
-			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority <= processTable[executingProcessID].priority){
+			}else if (nuevoCandidato_Queue == actualQueue && processTable[nuevoCandidato_PID].priority < processTable[executingProcessID].priority){
 				mustPreempt = 1; 
 			}
 	
