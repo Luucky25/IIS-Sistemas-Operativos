@@ -366,7 +366,7 @@ void OperatingSystem_PCBInitialization(int PID, int initialPhysicalAddress, int 
 	if(programList[processPLIndex] -> type == DAEMONPROGRAM){
 		processTable[PID].queueID = DEAMONSQUEUE;
 	}else{
-		if(processSize < 30){
+		if(processSize <= 30){
 			processTable[PID].queueID = HIGHPRIOUSERPROCQUEUE;
 		}else{
 			processTable[PID].queueID = LOWPRIOUSERPROCQUEUE;
