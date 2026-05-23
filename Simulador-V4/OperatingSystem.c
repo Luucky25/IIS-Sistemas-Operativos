@@ -560,13 +560,13 @@ void OperatingSystem_TerminateExecutingProcess() {
 		// Simulation must finish, telling sipID to finish
 		OperatingSystem_ReadyToShutdown();
 	}
+	
+	
 	// Select the next process to execute (sipID if no more user processes)
 	int selectedProcess=OperatingSystem_ShortTermScheduler();
 
 	// Assign the processor to that process
 	OperatingSystem_Dispatch(selectedProcess);
-
-	OperatingSystem_Dispatch(selectedProcess); 
 	OperatingSystem_PrintStatus();
 
 }
