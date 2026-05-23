@@ -13,13 +13,10 @@
 #define TOOBIGPROCESS -4
 #define MEMORYFULL -5
 
-// V4 - 5 >> Partitions and holes configuration definition
+// Partitions and holes configuration definition 
 #define MEMCONFIG // in OperatingSystem.h
 
 #define NOPROCESS -1
-
-// Adiciones de la V2
-#define SLEEPINGQUEUE
 
 // Number of queues of ready to run processes, initially one queue...
 #define NUMBEROFQUEUES 3
@@ -40,6 +37,9 @@ enum SystemCallIdentifiers {
 	SYSCALL_LOAD= 11
 };
 
+
+#define SLEEPINGQUEUE
+
 // A PCB contains all of the information about a process that is needed by the OS
 typedef struct {
 	int busy;
@@ -50,12 +50,13 @@ typedef struct {
 	int priority;
 	int copyOfPCRegister;
 	unsigned int copyOfPSWRegister;
+	int programListIndex;
+	int queueID;
+	// Ejercicio 15
 	int copyOfAccumulator; 
 	int copyOfRegisterA; 
 	int copyOfRegisterB;
-	int programListIndex;
-	int queueID;
-	// V2 - Ejercicio 5 
+	// Ejercicio 5a - V2
 	int whenToWakeUp;
 } PCB;
 
@@ -69,7 +70,4 @@ void OperatingSystem_InterruptLogic(int);
 int OperatingSystem_ShortTermScheduler();
 void OperatingSystem_Dispatch(int);
 void OperatingSystem_HandleClockInterrupt();
-
-void OperatingSystem_ReleaseMainMemory();
-void OperatingSystem_CoalesceHoles();
 #endif

@@ -373,10 +373,8 @@ void Processor_ManageInterrupts() {
 				Processor_PushInSystemStack(registerPSW_CPU);	
 				// Activate protected excution mode
 				Processor_ActivatePSW_Bit(EXECUTION_MODE_BIT);
-
-				//Ejercicio V2 - 2.d
+				// Mask further interrupts while handling this one
 				Processor_ActivatePSW_Bit(INTERRUPT_MASKED_BIT);
-
 				// Call the appropriate OS interrupt-handling routine setting PC register
 				registerPC_CPU=interruptVectorTable[i];
 				break; // Don't process another interrupt
@@ -408,7 +406,4 @@ char * Processor_ShowPSW(){
 
 int Processor_GetRegisterD(){
 	return registerD_CPU;
-}
-void Processor_SetRegisterD(int value){
-	registerD_CPU = value;
 }

@@ -18,6 +18,8 @@ enum PSW_BITS {POWEROFF_BIT=0, ZERO_BIT=1, NEGATIVE_BIT=2, OVERFLOW_BIT=3, EXECU
 // interrupt types 
 enum INT_BITS {SYSCALL_BIT=2, EXCEPTION_BIT=6, CLOCKINT_BIT = 9};
 
+enum EXCEPTIONS {DIVISIONBYZERO, INVALIDPROCESSORMODE, INVALIDADDRESS, INVALIDINSTRUCTION};
+
 // Functions prototypes
 void Processor_InitializeInterruptVectorTable(int);
 int Processor_FetchInstruction();
@@ -30,14 +32,7 @@ char * Processor_ShowPSW();
 int Processor_GetCTRL();
 void Processor_SetCTRL(int);
 
-#endif
-
 //V2 - Ejercicio 5
 int Processor_GetRegisterD();
-void Processor_SetRegisterD(int);
 
-
-//V4 - 1 >> Añadir el Enum 
-enum EXCEPTIONS {DIVISIONBYZERO, INVALIDPROCESSORMODE, INVALIDADDRESS, INVALIDINSTRUCTION};
-
-void Processor_RaiseException(int);
+#endif
