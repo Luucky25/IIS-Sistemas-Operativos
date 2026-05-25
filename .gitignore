@@ -1,3 +1,4 @@
+# Obviamos archivos de configuracion de IDES y editores de texto
 # Archivos objeto 
 *.o
 
@@ -5,3 +6,4 @@
 # Binarios y ejecutables 
 *.out
 *.exe
+
