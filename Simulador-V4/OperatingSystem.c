@@ -316,8 +316,8 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 // Main memory is assigned in chunks. All chunks are the same size. A process
 // always obtains the chunk whose position in memory is equal to the processor identifier
 int OperatingSystem_ObtainMainMemory(int processSize, int PID __attribute__((unused))) {
-	int bestIndex = -1; 
-	int bestSize = -1; 
+	int worstIndex = -1; 
+	int worstSize = -1; 
 	int maxHoleSize = 0;
 
 	for (int i = 0; i < numberOfPartitionsAndHoles; i++) {
@@ -326,23 +326,23 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID __attribute__((unu
 			if (holeSize >= maxHoleSize) 
 				maxHoleSize = holeSize;
 			if(holeSize >= processSize){
-				if(bestIndex == -1 || holeSize < bestSize || 
-					(holeSize == bestSize && partitionsAndHolesTable[i].initAddress < partitionsAndHolesTable[bestIndex].initAddress)){
-					bestIndex = i; 
-					bestSize = holeSize;
+				if(worstIndex == -1 || holeSize > worstSize || 
+					(holeSize == worstSize && partitionsAndHolesTable[i].initAddress < partitionsAndHolesTable[worstIndex].initAddress)){
+					worstIndex = i; 
+					worstSize = holeSize;
 				}
 			}
 		}
 	}
 
-	if(bestIndex == -1){
+	if(worstIndex == -1){
 		if(processSize > OS_address_base)
 			return TOOBIGPROCESS;
 		else
 			return MEMORYFULL;
 	}
 
-	return bestIndex;
+	return worstIndex;
 }
 
 
@@ -701,79 +701,81 @@ void OperatingSystem_PrintReadyToRunQueue(){
 
 // Adiciones del V2 ::::::::::::::::::::::::::::::::
 void OperatingSystem_HandleClockInterrupt() { 
-	numberOfClockInterrupts++;
+	numberOfClockInterrupts ++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
-	// Exercise 4-c of V3: record total ready processes as first action of clock interrupt
+	//V3 - 4 >> Insertar estadistica con el numero de procesos listoos 
 	int totalReadyProcesses = 0;
-	for (int i = 0; i < NUMBEROFQUEUES; i++)
+	for (int i = 0; i < NUMBEROFQUEUES; i++) {
 		totalReadyProcesses += numberOfReadyToRunProcesses[i];
+	}
 	OperatingSystem_InsertStatistics(&stats, totalReadyProcesses);
 
-	// candidatePID es el PID del proceso con menor whenToWakeUp
-	// Su campo whenToWakeUp esta en: processTable[candidatePID].whenToWakeUp
-	int candidatePID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
-	int wokeUpCount = 0;
 
-	while(candidatePID != NOPROCESS
-			&& processTable[candidatePID].whenToWakeUp == numberOfClockInterrupts){
+	//Candidato_PID es el PID del proceso con menor tiempo para levanttarse
+	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+	int awakened = 0; 
+
+	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
+	//Si hay procesos y el tiempo de despertar del primero sea el actual 
+	while(candidato_PID != NOPROCESS 
+			&& processTable[candidato_PID].whenToWakeUp == numberOfClockInterrupts){
 		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
 		OperatingSystem_MoveToTheREADYState(pid);
-		wokeUpCount++;
-		candidatePID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
-	}
+		awakened++;
+		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+	} 
 
-	if(wokeUpCount > 0){
+	if(awakened > 0 ){
 		OperatingSystem_PrintStatus();
 	}
 
-	// Exercise 2-a of V3: call the Long Term Scheduler on every clock interrupt
-	int newProcessesCount = OperatingSystem_LongTermScheduler();
+	// V3 - 2a >> Llamar al LTS en cada interrupción de reloj
+	int nuevosProcesos = OperatingSystem_LongTermScheduler();
 
-	// Exercise 3-b of V3: if no user processes active and no more programs will arrive, shut down
-	if (numberOfNotTerminatedUserProcesses == 0 && numberOfProgramsInArrivalTimeQueue == 0) {
+	// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
+	if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
 		OperatingSystem_ReadyToShutdown();
-		return;
 	}
 
-	if(wokeUpCount > 0 || newProcessesCount > 0){
-		int bestCandidatePID = NOPROCESS;
-		int bestCandidateQueue = -1;
-		for (size_t i = 0; i < NUMBEROFQUEUES; i++){
-			bestCandidatePID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
-			if(bestCandidatePID != NOPROCESS){
-				bestCandidateQueue = i;
+	//V3-c >> Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto
+	if(awakened > 0 || nuevosProcesos > 0){
+		int nuevoCandidato_PID = NOPROCESS; 
+		int nuevoCandidato_QUEUE = -1;
+		for(size_t i = 0; i < NUMBEROFQUEUES; i++){
+			nuevoCandidato_PID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+			if(nuevoCandidato_PID != NOPROCESS){
+				nuevoCandidato_QUEUE = i;
 				break;
 			}
 		}
-
-		if(bestCandidatePID != NOPROCESS){
-			int executingQueue = processTable[executingProcessID].queueID;
-			int mustPreempt = 0;
-
-			if (bestCandidateQueue < executingQueue) {
-				mustPreempt = 1;
-			} else if (bestCandidateQueue == executingQueue
-					   && processTable[bestCandidatePID].priority < processTable[executingProcessID].priority) {
-				mustPreempt = 1;
+	
+		if(nuevoCandidato_PID != NOPROCESS){
+			int actualQueue = processTable[executingProcessID].queueID;
+			int mustPreempt = 0; 
+	
+			if(nuevoCandidato_QUEUE < actualQueue){
+				mustPreempt = 1; 
+			}else if (nuevoCandidato_QUEUE == actualQueue 
+					&& processTable[nuevoCandidato_PID].priority < processTable[executingProcessID].priority){
+				mustPreempt = 1; 
 			}
-
+	
 			if(mustPreempt){
-				ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE,
-				executingProcessID,
-				programList[processTable[executingProcessID].programListIndex]->executableName,
-				bestCandidatePID,
-				programList[processTable[bestCandidatePID].programListIndex]->executableName);
-
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE, 
+					executingProcessID, 
+					programList[processTable[executingProcessID].programListIndex] -> executableName, 
+					nuevoCandidato_PID, 
+					programList[processTable[nuevoCandidato_PID].programListIndex]-> executableName);
 				OperatingSystem_PreemptRunningProcess();
 				int selectedProcess = OperatingSystem_ShortTermScheduler();
 				OperatingSystem_Dispatch(selectedProcess);
-
 				OperatingSystem_PrintStatus();
 			}
 		}
 	}
-		
+
+
 	return;
 } 
 
@@ -846,8 +848,8 @@ void OperatingSystem_CoalesceHoles() {
 			i++;
 		}
 	}
-	
-	if (coalesced) {
+
+	if(coalesced){
 		ComputerSystem_DebugMessage(TIMED_MESSAGE, 114, SYSMEM);
 	}
 }
