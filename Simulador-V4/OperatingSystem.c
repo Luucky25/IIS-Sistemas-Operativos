@@ -561,6 +561,8 @@ void OperatingSystem_TerminateExecutingProcess() {
 
 	// Assign the processor to that process
 	OperatingSystem_Dispatch(selectedProcess);
+
+	OperatingSystem_PrintStatus();
 }
 
 // System call management routine
@@ -620,8 +622,12 @@ void OperatingSystem_HandleSystemCall() {
 		}
 		case SYSCALL_SLEEP:
 		{
-			int operand2 = Processor_GetRegisterD();
-			int delay = (operand2 > 0) ? operand2 : 0; 
+			int delay; 
+			if(Processor_GetRegisterD() > 0) {
+				delay = Processor_GetRegisterD(); 
+			}else{
+				delay = abs(Processor_GetAccumulator());
+			}
 			processTable[executingProcessID].whenToWakeUp = delay + numberOfClockInterrupts +1;
 
 			//Bloquear el proceso 
@@ -695,81 +701,79 @@ void OperatingSystem_PrintReadyToRunQueue(){
 
 // Adiciones del V2 ::::::::::::::::::::::::::::::::
 void OperatingSystem_HandleClockInterrupt() { 
-	numberOfClockInterrupts ++;
+	numberOfClockInterrupts++;
 	ComputerSystem_DebugMessage(TIMED_MESSAGE, 57, INTERRUPT, numberOfClockInterrupts);
 
-	//V3 - 4 >> Insertar estadistica con el numero de procesos listoos 
+	// Exercise 4-c of V3: record total ready processes as first action of clock interrupt
 	int totalReadyProcesses = 0;
-	for (int i = 0; i < NUMBEROFQUEUES; i++) {
+	for (int i = 0; i < NUMBEROFQUEUES; i++)
 		totalReadyProcesses += numberOfReadyToRunProcesses[i];
-	}
 	OperatingSystem_InsertStatistics(&stats, totalReadyProcesses);
 
+	// candidatePID es el PID del proceso con menor whenToWakeUp
+	// Su campo whenToWakeUp esta en: processTable[candidatePID].whenToWakeUp
+	int candidatePID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+	int wokeUpCount = 0;
 
-	//Candidato_PID es el PID del proceso con menor tiempo para levanttarse
-	int candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
-	int awakened = 0; 
-
-	//6a 6b >> Despertar procesos cuyo tiempo hay llegado 
-	//Si hay procesos y el tiempo de despertar del primero sea el actual 
-	while(candidato_PID != NOPROCESS 
-			&& processTable[candidato_PID].whenToWakeUp == numberOfClockInterrupts){
+	while(candidatePID != NOPROCESS
+			&& processTable[candidatePID].whenToWakeUp == numberOfClockInterrupts){
 		int pid = OperatingSystem_ExtractFromSleepingProcessesQueue();
 		OperatingSystem_MoveToTheREADYState(pid);
-		awakened++;
-		candidato_PID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
-	} 
+		wokeUpCount++;
+		candidatePID = Heap_getFirst(sleepingProcessesQueue, numberOfSleepingProcesses);
+	}
 
-	if(awakened > 0 ){
+	if(wokeUpCount > 0){
 		OperatingSystem_PrintStatus();
 	}
 
-	// V3 - 2a >> Llamar al LTS en cada interrupción de reloj
-	int nuevosProcesos = OperatingSystem_LongTermScheduler();
+	// Exercise 2-a of V3: call the Long Term Scheduler on every clock interrupt
+	int newProcessesCount = OperatingSystem_LongTermScheduler();
 
-	// V3 - b >> Proponemos la parada del sistema si no hay procesos no terminados ni programas en llegada
-	if(numberOfProgramsInArrivalTimeQueue == 0 && numberOfNotTerminatedUserProcesses == 0){
+	// Exercise 3-b of V3: if no user processes active and no more programs will arrive, shut down
+	if (numberOfNotTerminatedUserProcesses == 0 && numberOfProgramsInArrivalTimeQueue == 0) {
 		OperatingSystem_ReadyToShutdown();
+		return;
 	}
 
-	//V3-c >> Comprobar si hay procesos despertados o nuevos procesos en llegada para decidir si hacer un cambio de contexto
-	if(awakened > 0 || nuevosProcesos > 0){
-		int nuevoCandidato_PID = NOPROCESS; 
-		int nuevoCandidato_QUEUE = -1;
-		for(size_t i = 0; i < NUMBEROFQUEUES; i++){
-			nuevoCandidato_PID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
-			if(nuevoCandidato_PID != NOPROCESS){
-				nuevoCandidato_QUEUE = i;
+	if(wokeUpCount > 0 || newProcessesCount > 0){
+		int bestCandidatePID = NOPROCESS;
+		int bestCandidateQueue = -1;
+		for (size_t i = 0; i < NUMBEROFQUEUES; i++){
+			bestCandidatePID = Heap_getFirst(readyToRunQueue[i], numberOfReadyToRunProcesses[i]);
+			if(bestCandidatePID != NOPROCESS){
+				bestCandidateQueue = i;
 				break;
 			}
 		}
-	
-		if(nuevoCandidato_PID != NOPROCESS){
-			int actualQueue = processTable[executingProcessID].queueID;
-			int mustPreempt = 0; 
-	
-			if(nuevoCandidato_QUEUE < actualQueue){
-				mustPreempt = 1; 
-			}else if (nuevoCandidato_QUEUE == actualQueue 
-					&& processTable[nuevoCandidato_PID].priority < processTable[executingProcessID].priority){
-				mustPreempt = 1; 
+
+		if(bestCandidatePID != NOPROCESS){
+			int executingQueue = processTable[executingProcessID].queueID;
+			int mustPreempt = 0;
+
+			if (bestCandidateQueue < executingQueue) {
+				mustPreempt = 1;
+			} else if (bestCandidateQueue == executingQueue
+					   && processTable[bestCandidatePID].priority < processTable[executingProcessID].priority) {
+				mustPreempt = 1;
 			}
-	
+
 			if(mustPreempt){
-				ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE, 
-					executingProcessID, 
-					programList[processTable[executingProcessID].programListIndex] -> executableName, 
-					nuevoCandidato_PID, 
-					programList[processTable[nuevoCandidato_PID].programListIndex]-> executableName);
+				ComputerSystem_DebugMessage(TIMED_MESSAGE, 58, SHORTTERMSCHEDULE,
+				executingProcessID,
+				programList[processTable[executingProcessID].programListIndex]->executableName,
+				bestCandidatePID,
+				programList[processTable[bestCandidatePID].programListIndex]->executableName);
+
 				OperatingSystem_PreemptRunningProcess();
 				int selectedProcess = OperatingSystem_ShortTermScheduler();
 				OperatingSystem_Dispatch(selectedProcess);
+
 				OperatingSystem_PrintStatus();
 			}
 		}
 	}
-
-
+		
 	return;
 } 
 
