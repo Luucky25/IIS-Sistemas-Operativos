@@ -396,9 +396,9 @@ Maximum number of asserts: 1200
 [0m	[[1;31m105[0m] [0mRunning Process Information:
 		[PID: [1;32m0[0m, Priority: 5, WakeUp: [1;31m19[0m, Queue: DAEMONS]
 [0m	[[1;31m105[0m] [0m Ready-to-run processes queue: 
- 	[[1;31m105[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m[[1;32m3[0m,333]
-[0m	[[1;31m105[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
-	[[1;31m105[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m5[0m,100]
+ 	[[1;31m105[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
+	[[1;31m105[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m[[1;32m3[0m,333]
+[0m	[[1;31m105[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m5[0m,100]
 [0m	[[1;31m105[0m] [0mSLEEPING Queue:
 		[[1;32m1[0m, 5, [1;31m22[0m][0m, [[1;32m2[0m, 2, [1;31m30[0m][0m
 	[[1;31m105[0m] [0mPID association with program's name:
@@ -414,7 +414,7 @@ Maximum number of asserts: 1200
 [0m	[[1;31m105[0m] [0mProcess [[1;32m0[0m - [1;32mdaemonTest1[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mREADY[0m] state
 [0m	[[1;31m105[0m] [0mProcess [[1;32m3[0m - [1;32mtest1-1[0m] moving from the [[1;32mREADY[0m] state to the [[1;32mEXECUTING[0m] state
 [0m	[[1;31m105[0m] [0mRunning Process Information:
-		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: HIGHPRIOUSER]
+		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: LOWPRIOUSER]
 [0m	[[1;31m105[0m] [0m Ready-to-run processes queue: 
  	[[1;31m105[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
 	[[1;31m105[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
@@ -439,7 +439,7 @@ Maximum number of asserts: 1200
 [0m	[[1;31m112[0m] [0m[1;36mClock interrupt number [22] has occurred[0m
 [0m	[[1;31m112[0m] [0mProcess [[1;32m1[0m - [1;32mdaemonTest2[0m] moving from the [[1;32mBLOCKED[0m] state to the [[1;32mREADY[0m] state
 [0m	[[1;31m112[0m] [0mRunning Process Information:
-		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: HIGHPRIOUSER]
+		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: LOWPRIOUSER]
 [0m	[[1;31m112[0m] [0m Ready-to-run processes queue: 
  	[[1;31m112[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
 	[[1;31m112[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
@@ -476,7 +476,7 @@ Maximum number of asserts: 1200
 [0m	[[1;31m112[0m] [0mProcess [[1;32m4[0m] created into the [[1;32mNEW[0m] state, from program [[1;32mtest1-2[0m]
 [0m	[[1;31m112[0m] [0mProcess [[1;32m4[0m - [1;32mtest1-2[0m] moving from the [[1;32mNEW[0m] state to the [[1;32mREADY[0m] state
 [0m	[[1;31m112[0m] [0mRunning Process Information:
-		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: HIGHPRIOUSER]
+		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: LOWPRIOUSER]
 [0m	[[1;31m112[0m] [0m Ready-to-run processes queue: 
  	[[1;31m112[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m[[1;32m4[0m,444]
 [0m	[[1;31m112[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
@@ -492,23 +492,32 @@ Maximum number of asserts: 1200
 		PID: [1;32m5[0m -> SystemIdleProcess[0m
 	[[1;31m112[0m] [0mArrival Time Queue:
 		[[1;32mdaemonTest1[0m, [1;31m700[0m, [1;32mDAEMON-PROGRAM[0m]
-[0m[1;31mAssert failed. Time:[0m 112[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 130[1;31m; Real:[0m 100[0m
-[1;31mAssert failed. Time:[0m 112[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 4[1;31m; Real:[0m 3[0m
-[[1;31m113[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m3[0m, PC: [1;31m1[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0000[0m])
-[0m[1;31mAssert failed. Time:[0m 113[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 130[1;31m; Real:[0m 100[0m
-[1;31mAssert failed. Time:[0m 113[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 4[1;31m; Real:[0m 3[0m
-[114] {01 00A 80D} ADD 10 -13 (PID: [1;32m3[0m, PC: [1;31m2[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0000[0m])
-[0m[1;31mAssert failed. Time:[0m 114[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 130[1;31m; Real:[0m 100[0m
-[1;31mAssert failed. Time:[0m 114[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 4[1;31m; Real:[0m 3[0m
-[115] {08 00F 000} WRITE 15 0 (PID: [1;32m3[0m, PC: [1;31m3[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0200[0m])
-[0m[[1;31m116[0m] [0m{0C 009 000} OS 9 0 (PID: [1;32m3[0m, PC: [1;31m246[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m8084[0m [[1;31mM-------X----N--[0m], IntLine: [[1;31m0000[0m])
-[0m	[[1;31m117[0m] [0m[1;36mClock interrupt number [23] has occurred[0m
-[0m[[1;31m118[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m3[0m, PC: [1;31m3[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0000[0m])
-[0m[119] {0B 000 000} HALT 0 0 (PID: [1;32m3[0m, PC: [1;31m3[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0040[0m])
-[0m[[1;31m120[0m] [0m{0C 006 000} OS 6 0 (PID: [1;32m3[0m, PC: [1;31m244[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m8084[0m [[1;31mM-------X----N--[0m], IntLine: [[1;31m0200[0m])
-[0m	[[1;31m121[0m] [0mProcess [[1;31m3 - test1-1[0m] has caused an exception ([1;31minvalid processor mode[0m) and is being terminated
-[0m	[[1;31m121[0m] [0mProcess [[1;32m3[0m - [1;32mtest1-1[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mEXIT[0m] state
-[0m	[[1;31m121[0m] [0mMain memory state ([1;32mbefore releasing memory[0m):
+[0m	[[1;31m112[0m] [0mProcess [[1;32m3[0m - [1;32mtest1-1[0m] will be thrown out of the processor by process [[1;32m4[0m - [1;32mtest1-2[0m]
+[0m	[[1;31m112[0m] [0mProcess [[1;32m3[0m - [1;32mtest1-1[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mREADY[0m] state
+[0m	[[1;31m112[0m] [0mProcess [[1;32m4[0m - [1;32mtest1-2[0m] moving from the [[1;32mREADY[0m] state to the [[1;32mEXECUTING[0m] state
+[0m	[[1;31m112[0m] [0mRunning Process Information:
+		[PID: [1;32m4[0m, Priority: 444, WakeUp: [1;31m-1[0m, Queue: HIGHPRIOUSER]
+[0m	[[1;31m112[0m] [0m Ready-to-run processes queue: 
+ 	[[1;31m112[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
+	[[1;31m112[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m[[1;32m3[0m,333]
+[0m	[[1;31m112[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m0[0m,5], [0m[[1;32m1[0m,5], [0m[[1;32m5[0m,100]
+[0m	[[1;31m112[0m] [0mSLEEPING Queue:
+		[[1;32m2[0m, 2, [1;31m30[0m][0m
+	[[1;31m112[0m] [0mPID association with program's name:
+		PID: [1;32m0[0m -> daemonTest1[0m
+		PID: [1;32m1[0m -> daemonTest2[0m
+		PID: [1;32m2[0m -> daemonTest3[0m
+		PID: [1;32m3[0m -> test1-1[0m
+		PID: [1;32m4[0m -> test1-2[0m
+		PID: [1;32m5[0m -> SystemIdleProcess[0m
+	[[1;31m112[0m] [0mArrival Time Queue:
+		[[1;32mdaemonTest1[0m, [1;31m700[0m, [1;32mDAEMON-PROGRAM[0m]
+[0m[[1;31m113[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m4[0m, PC: [1;31m0[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0000[0m])
+[0m[114] {08 801 000} WRITE -1 0 (PID: [1;32m4[0m, PC: [1;31m1[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0040[0m])
+[0m[[1;31m115[0m] [0m{0C 006 000} OS 6 0 (PID: [1;32m4[0m, PC: [1;31m244[0m, Accumulator: [1;31m0[0m, PSW: [1;31m8082[0m [[1;31mM-------X-----Z-[0m], IntLine: [[1;31m0200[0m])
+[0m	[[1;31m116[0m] [0mProcess [[1;31m4 - test1-2[0m] has caused an exception ([1;31minvalid address[0m) and is being terminated
+[0m	[[1;31m116[0m] [0mProcess [[1;32m4[0m - [1;32mtest1-2[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mEXIT[0m] state
+[0m	[[1;31m116[0m] [0mMain memory state ([1;32mbefore releasing memory[0m):
 [0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m5 - SystemIdleProcess[0m]
 [0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m32[0m][0m[[1;32m0 - daemonTest1[0m]
 [0m		[[1;32m2[0m] [[1;32m36[0m -> [1;32m32[0m][0m[[1;32m1 - daemonTest2[0m]
@@ -516,82 +525,74 @@ Maximum number of asserts: 1200
 [0m		[[1;32m4[0m] [[1;32m100[0m -> [1;32m30[0m][0m[[1;32m3 - test1-1[0m]
 [0m		[[1;32m5[0m] [[1;32m130[0m -> [1;32m5[0m][0m[[1;32m4 - test1-2[0m]
 [0m		[[1;32m6[0m] [[1;32m135[0m -> [1;32m105[0m][0m[[1;32mHOLE[0m]
-[0m	[[1;31m121[0m] [0mPartition [[1;32m4[0m: [1;32m100[0m -> [1;32m30[0m] used by process [[1;32m3 - test1-1[0m] has been released
-[0m	[[1;31m121[0m] [0mMain memory state ([1;32mafter releasing memory[0m):
+[0m	[[1;31m116[0m] [0mPartition [[1;32m5[0m: [1;32m130[0m -> [1;32m5[0m] used by process [[1;32m4 - test1-2[0m] has been released
+[0m	[[1;31m116[0m] [0m [1;32mTwo or more holes have been coalesced[0m
+[0m	[[1;31m116[0m] [0mMain memory state ([1;32mafter releasing memory[0m):
 [0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m5 - SystemIdleProcess[0m]
 [0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m32[0m][0m[[1;32m0 - daemonTest1[0m]
 [0m		[[1;32m2[0m] [[1;32m36[0m -> [1;32m32[0m][0m[[1;32m1 - daemonTest2[0m]
 [0m		[[1;32m3[0m] [[1;32m68[0m -> [1;32m32[0m][0m[[1;32m2 - daemonTest3[0m]
-[0m		[[1;32m4[0m] [[1;32m100[0m -> [1;32m30[0m][0m[[1;32mHOLE[0m]
-[0m		[[1;32m5[0m] [[1;32m130[0m -> [1;32m5[0m][0m[[1;32m4 - test1-2[0m]
-[0m		[[1;32m6[0m] [[1;32m135[0m -> [1;32m105[0m][0m[[1;32mHOLE[0m]
-[0m	[[1;31m121[0m] [0mProcess [[1;32m4[0m - [1;32mtest1-2[0m] moving from the [[1;32mREADY[0m] state to the [[1;32mEXECUTING[0m] state
-[0m	[[1;31m121[0m] [0mRunning Process Information:
-		[PID: [1;32m4[0m, Priority: 444, WakeUp: [1;31m-1[0m, Queue: HIGHPRIOUSER]
-[0m	[[1;31m121[0m] [0m Ready-to-run processes queue: 
- 	[[1;31m121[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
-	[[1;31m121[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
-	[[1;31m121[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m0[0m,5], [0m[[1;32m1[0m,5], [0m[[1;32m5[0m,100]
-[0m	[[1;31m121[0m] [0mSLEEPING Queue:
+[0m		[[1;32m4[0m] [[1;32m100[0m -> [1;32m30[0m][0m[[1;32m3 - test1-1[0m]
+[0m		[[1;32m5[0m] [[1;32m130[0m -> [1;32m110[0m][0m[[1;32mHOLE[0m]
+[0m	[[1;31m116[0m] [0mProcess [[1;32m3[0m - [1;32mtest1-1[0m] moving from the [[1;32mREADY[0m] state to the [[1;32mEXECUTING[0m] state
+[0m	[[1;31m116[0m] [0mRunning Process Information:
+		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: LOWPRIOUSER]
+[0m	[[1;31m116[0m] [0m Ready-to-run processes queue: 
+ 	[[1;31m116[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
+	[[1;31m116[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
+	[[1;31m116[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m0[0m,5], [0m[[1;32m1[0m,5], [0m[[1;32m5[0m,100]
+[0m	[[1;31m116[0m] [0mSLEEPING Queue:
 		[[1;32m2[0m, 2, [1;31m30[0m][0m
-	[[1;31m121[0m] [0mPID association with program's name:
+	[[1;31m116[0m] [0mPID association with program's name:
 		PID: [1;32m0[0m -> daemonTest1[0m
 		PID: [1;32m1[0m -> daemonTest2[0m
 		PID: [1;32m2[0m -> daemonTest3[0m
-		PID: [1;32m3[0m -> test1-1[0m[1;31m Zombie process![0m[0m
-		PID: [1;32m4[0m -> test1-2[0m
+		PID: [1;32m3[0m -> test1-1[0m
+		PID: [1;32m4[0m -> test1-2[0m[1;31m Zombie process![0m[0m
 		PID: [1;32m5[0m -> SystemIdleProcess[0m
-	[[1;31m121[0m] [0mArrival Time Queue:
+	[[1;31m116[0m] [0mArrival Time Queue:
 		[[1;32mdaemonTest1[0m, [1;31m700[0m, [1;32mDAEMON-PROGRAM[0m]
-[0m	[[1;31m121[0m] [0mRunning Process Information:
-		[PID: [1;32m4[0m, Priority: 444, WakeUp: [1;31m-1[0m, Queue: HIGHPRIOUSER]
-[0m	[[1;31m121[0m] [0m Ready-to-run processes queue: 
- 	[[1;31m121[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
-	[[1;31m121[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
-	[[1;31m121[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m0[0m,5], [0m[[1;32m1[0m,5], [0m[[1;32m5[0m,100]
-[0m	[[1;31m121[0m] [0mSLEEPING Queue:
+[0m	[[1;31m116[0m] [0mRunning Process Information:
+		[PID: [1;32m3[0m, Priority: 333, WakeUp: [1;31m-1[0m, Queue: LOWPRIOUSER]
+[0m	[[1;31m116[0m] [0m Ready-to-run processes queue: 
+ 	[[1;31m116[0m] [0m 	 [1;32mHIGHPRIOUSER[0m:  [0m
+	[[1;31m116[0m] [0m 	 [1;32mLOWPRIOUSER[0m:  [0m
+	[[1;31m116[0m] [0m 	 [1;32mDAEMONS[0m:  [0m[[1;32m0[0m,5], [0m[[1;32m1[0m,5], [0m[[1;32m5[0m,100]
+[0m	[[1;31m116[0m] [0mSLEEPING Queue:
 		[[1;32m2[0m, 2, [1;31m30[0m][0m
-	[[1;31m121[0m] [0mPID association with program's name:
+	[[1;31m116[0m] [0mPID association with program's name:
 		PID: [1;32m0[0m -> daemonTest1[0m
 		PID: [1;32m1[0m -> daemonTest2[0m
 		PID: [1;32m2[0m -> daemonTest3[0m
-		PID: [1;32m3[0m -> test1-1[0m[1;31m Zombie process![0m[0m
-		PID: [1;32m4[0m -> test1-2[0m
+		PID: [1;32m3[0m -> test1-1[0m
+		PID: [1;32m4[0m -> test1-2[0m[1;31m Zombie process![0m[0m
 		PID: [1;32m5[0m -> SystemIdleProcess[0m
-	[[1;31m121[0m] [0mArrival Time Queue:
+	[[1;31m116[0m] [0mArrival Time Queue:
 		[[1;32mdaemonTest1[0m, [1;31m700[0m, [1;32mDAEMON-PROGRAM[0m]
-[0m[[1;31m122[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m4[0m, PC: [1;31m0[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0200[0m])
-[0m[1;31mAssert failed. Time:[0m 122[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 100[1;31m; Real:[0m 130[0m
-[1;31mAssert failed. Time:[0m 122[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 3[1;31m; Real:[0m 4[0m
-[[1;31m123[0m] [0m{0C 009 000} OS 9 0 (PID: [1;32m4[0m, PC: [1;31m246[0m, Accumulator: [1;31m0[0m, PSW: [1;31m8082[0m [[1;31mM-------X-----Z-[0m], IntLine: [[1;31m0000[0m])
-[0m	[[1;31m124[0m] [0m[1;36mClock interrupt number [24] has occurred[0m
-[0m[1;31mAssert failed. Time:[0m 124[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 100[1;31m; Real:[0m 130[0m
-[1;31mAssert failed. Time:[0m 124[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 3[1;31m; Real:[0m 4[0m
-[[1;31m125[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m4[0m, PC: [1;31m0[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0200[0m])
-[0m[1;31mAssert failed. Time:[0m 125[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 100[1;31m; Real:[0m 130[0m
-[1;31mAssert failed. Time:[0m 125[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 3[1;31m; Real:[0m 4[0m
-[[1;31m126[0m] [0m{0C 009 000} OS 9 0 (PID: [1;32m4[0m, PC: [1;31m246[0m, Accumulator: [1;31m0[0m, PSW: [1;31m8082[0m [[1;31mM-------X-----Z-[0m], IntLine: [[1;31m0000[0m])
+[0m[[1;31m117[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m3[0m, PC: [1;31m1[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0200[0m])
+[0m[[1;31m118[0m] [0m{0C 009 000} OS 9 0 (PID: [1;32m3[0m, PC: [1;31m246[0m, Accumulator: [1;31m0[0m, PSW: [1;31m8082[0m [[1;31mM-------X-----Z-[0m], IntLine: [[1;31m0000[0m])
+[0m	[[1;31m119[0m] [0m[1;36mClock interrupt number [23] has occurred[0m
+[0m[[1;31m120[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m3[0m, PC: [1;31m1[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0200[0m])
+[0m[[1;31m121[0m] [0m{0C 009 000} OS 9 0 (PID: [1;32m3[0m, PC: [1;31m246[0m, Accumulator: [1;31m0[0m, PSW: [1;31m8082[0m [[1;31mM-------X-----Z-[0m], IntLine: [[1;31m0000[0m])
+[0m	[[1;31m122[0m] [0m[1;36mClock interrupt number [24] has occurred[0m
+[0m[[1;31m123[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m3[0m, PC: [1;31m1[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0000[0m])
+[0m[124] {01 00A 80D} ADD 10 -13 (PID: [1;32m3[0m, PC: [1;31m2[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0000[0m])
+[0m[125] {08 00F 000} WRITE 15 0 (PID: [1;32m3[0m, PC: [1;31m3[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0200[0m])
+[0m[[1;31m126[0m] [0m{0C 009 000} OS 9 0 (PID: [1;32m3[0m, PC: [1;31m246[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m8084[0m [[1;31mM-------X----N--[0m], IntLine: [[1;31m0000[0m])
 [0m	[[1;31m127[0m] [0m[1;36mClock interrupt number [25] has occurred[0m
-[0m[1;31mAssert failed. Time:[0m 127[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 100[1;31m; Real:[0m 130[0m
-[1;31mAssert failed. Time:[0m 127[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 3[1;31m; Real:[0m 4[0m
-[[1;31m128[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m4[0m, PC: [1;31m0[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0000[0m])
-[0m[1;31mAssert failed. Time:[0m 128[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 100[1;31m; Real:[0m 130[0m
-[1;31mAssert failed. Time:[0m 128[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 3[1;31m; Real:[0m 4[0m
-[129] {08 801 000} WRITE -1 0 (PID: [1;32m4[0m, PC: [1;31m1[0m, Accumulator: [1;31m0[0m, PSW: [1;31m0002[0m [[1;31m--------------Z-[0m], IntLine: [[1;31m0040[0m])
-[0m[1;31mAssert failed. Time:[0m 129[1;31m; Element:[0m MMU BaSe;[0m[1;31m Expected:[0m 100[1;31m; Real:[0m 130[0m
-[1;31mAssert failed. Time:[0m 129[1;31m; Element:[0m eXecuting PID;[0m[1;31m Expected:[0m 3[1;31m; Real:[0m 4[0m
-[[1;31m130[0m] [0m{0C 006 000} OS 6 0 (PID: [1;32m4[0m, PC: [1;31m244[0m, Accumulator: [1;31m0[0m, PSW: [1;31m8082[0m [[1;31mM-------X-----Z-[0m], IntLine: [[1;31m0200[0m])
-[0m	[[1;31m131[0m] [0mProcess [[1;31m4 - test1-2[0m] has caused an exception ([1;31minvalid address[0m) and is being terminated
-[0m	[[1;31m131[0m] [0mProcess [[1;32m4[0m - [1;32mtest1-2[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mEXIT[0m] state
+[0m[[1;31m128[0m] [0m{0D 000 000} IRET 0 0 (PID: [1;32m3[0m, PC: [1;31m3[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0000[0m])
+[0m[129] {0B 000 000} HALT 0 0 (PID: [1;32m3[0m, PC: [1;31m3[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m0004[0m [[1;31m-------------N--[0m], IntLine: [[1;31m0040[0m])
+[0m[[1;31m130[0m] [0m{0C 006 000} OS 6 0 (PID: [1;32m3[0m, PC: [1;31m244[0m, Accumulator: [1;31m-3[0m, PSW: [1;31m8084[0m [[1;31mM-------X----N--[0m], IntLine: [[1;31m0200[0m])
+[0m	[[1;31m131[0m] [0mProcess [[1;31m3 - test1-1[0m] has caused an exception ([1;31minvalid processor mode[0m) and is being terminated
+[0m	[[1;31m131[0m] [0mProcess [[1;32m3[0m - [1;32mtest1-1[0m] moving from the [[1;32mEXECUTING[0m] state to the [[1;32mEXIT[0m] state
 [0m	[[1;31m131[0m] [0mMain memory state ([1;32mbefore releasing memory[0m):
 [0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m5 - SystemIdleProcess[0m]
 [0m		[[1;32m1[0m] [[1;32m4[0m -> [1;32m32[0m][0m[[1;32m0 - daemonTest1[0m]
 [0m		[[1;32m2[0m] [[1;32m36[0m -> [1;32m32[0m][0m[[1;32m1 - daemonTest2[0m]
 [0m		[[1;32m3[0m] [[1;32m68[0m -> [1;32m32[0m][0m[[1;32m2 - daemonTest3[0m]
-[0m		[[1;32m4[0m] [[1;32m100[0m -> [1;32m30[0m][0m[[1;32mHOLE[0m]
-[0m		[[1;32m5[0m] [[1;32m130[0m -> [1;32m5[0m][0m[[1;32m4 - test1-2[0m]
-[0m		[[1;32m6[0m] [[1;32m135[0m -> [1;32m105[0m][0m[[1;32mHOLE[0m]
-[0m	[[1;31m131[0m] [0mPartition [[1;32m5[0m: [1;32m130[0m -> [1;32m5[0m] used by process [[1;32m4 - test1-2[0m] has been released
+[0m		[[1;32m4[0m] [[1;32m100[0m -> [1;32m30[0m][0m[[1;32m3 - test1-1[0m]
+[0m		[[1;32m5[0m] [[1;32m130[0m -> [1;32m110[0m][0m[[1;32mHOLE[0m]
+[0m	[[1;31m131[0m] [0mPartition [[1;32m4[0m: [1;32m100[0m -> [1;32m30[0m] used by process [[1;32m3 - test1-1[0m] has been released
 [0m	[[1;31m131[0m] [0m [1;32mTwo or more holes have been coalesced[0m
 [0m	[[1;31m131[0m] [0mMain memory state ([1;32mafter releasing memory[0m):
 [0m		[[1;32m0[0m] [[1;32m0[0m -> [1;32m4[0m][0m[[1;32m5 - SystemIdleProcess[0m]

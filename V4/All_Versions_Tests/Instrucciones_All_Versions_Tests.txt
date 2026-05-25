@@ -46,7 +46,7 @@ Consejos importantes a tener en cuenta:
 
 	Test 1:
 
-		./Simulator --debugSections=A --numAsserts=1200 --assertsFile=asserts_test_1 --daemonsProgramsFile=teachersDaemonsTest --numProcesses=6 test1-1 100 test1-2 100 
+		./Simulator --debugSections=A --numAsserts=1200 --assertsFile=asserts_test_1 --daemonsProgramsFile=teachersDaemonsTest --numProcesses=6 test1-1 100 test1-2 110 
 
 		./Simulator --debugSections=A --numAsserts=1200 --assertsFile=asserts_test_1 --daemonsProgramsFile=teachersDaemonsTest --numProcesses=6 test1-1 100 test1-2 110 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END
 
