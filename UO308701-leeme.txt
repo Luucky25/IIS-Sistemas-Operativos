@@ -1,0 +1,34 @@
+Álvarez Pérez, Lucas 
+UO308701
+
+Lineas de Simulaciones :::::::::::::::::::::::::::::::::
+
+ - Sentencia 1 - 
+ ./Simulator --debugSections=A --numAsserts=1200 --assertsFile=asserts_test_1 --daemonsProgramsFile=teachersDaemonsTest --numProcesses=6 test1-1 100 test1-2 110 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END
+
+ Función: Comprobar la robustez del simulador bajo carga, gestionando memoria dinámica y daemonsProgramsFile
+
+ - Sentencia 2 - 
+ ./Simulator --assertsFile=asserts_test_2 test2-1 10 test2-2 30 iDontExist 350 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END
+
+ Función: Valorar el comportamiento del LongTermScheduler y el gestor de arranque frente a peticiones imposibles/erróneas
+
+ - Sentencia 3 - 
+ ./Simulator --assertsFile=asserts_test_3 --numProcesses=8 --initialPID=5 --daemonsProgramsFile=daemonsFileTest3 test3-1 10 test3-2 11 test3-3 12 | grep -e ERROR -e exception -e invalid -e assigned -e released -e thrown -e END -e transfer
+
+ Función: Valorar la inicialización correcta de la tabla de procesos y el ciclo de vida complejo de varios procesos de usuario al mismo tiempo
+
+ - Sentencia 4 - 
+ ./Simulator --assertsFile=asserts_test_4 test4-1 10 test4-2 11 | grep -e transfer -e MOV -e ADD -e assigned -e released -e END
+
+ Función: Comprobar que la CPU haga los calculos y movimientos de datos entre registros correctamente. 
+
+Programas de Prueba ::::::::::::::::::::::::::::::::::::
+
+Los programas utilizados se han mencionado en el apartado anterior, cuya funcionalidad concreta se deduce del carácter de su prueba y su propósito. 
+
+
+Apreciaciones :::::::::::::::::::::::::::::::::::
+Los programas que aparecen en las carpetas "Old*" son programas que se han utilizado para 
+probar versiones anteriores o entregas parciales de la V4. El material empleado en el directorio 
+V4 es el que se ha utilizado para las pruebas concretas de la entrega final de esta versión.  
