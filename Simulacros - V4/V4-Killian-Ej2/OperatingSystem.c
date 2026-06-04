@@ -278,24 +278,51 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 	// Get hole info and convert hole to partition 
 	int holeStartAddr = partitionsAndHolesTable[partitionIndex].initAddress;
 	int holeSize = partitionsAndHolesTable[partitionIndex].size;
+	
+	// EXPLICACION: Creamos variable para controlar la dirección de carga del proceso dependiendo de si es daemon o no, 
+	//	dado que los daemons se cargan al final del hueco y los procesos de usuario al principio.
+	int isDaemon = (executableProgram->type == DAEMONPROGRAM);
+
+	if (isDaemon) {
+		loadingPhysicalAddress = holeStartAddr + holeSize - processSize;
+	} else {
+		loadingPhysicalAddress = holeStartAddr;
+	}
+
 	partitionsAndHolesTable[partitionIndex].PID = assignedPID; 
 	partitionsAndHolesTable[partitionIndex].size = processSize;
-	loadingPhysicalAddress = holeStartAddr;
+	partitionsAndHolesTable[partitionIndex].initAddress = loadingPhysicalAddress;
+
+	// EXPLICACION: Variables para controlar la creación del hueco sobrante, dependiendo de si el proceso es daemon o no.
+	int holeIndex = -1;
+	int partitionFinalIndex = partitionIndex;
 
 	// Create leftover hole if needed 
 	if(holeSize > processSize){
-		OperatingSystem_InsertIntopartitionsAndHolesTable(
-			partitionIndex + 1, HOLE, holeStartAddr + processSize, holeSize - processSize);
+		// EXPLICACION : Dependiendo de si es daemon o no: 
+			// Si es daemon, el proceso se carga al final del hueco, por lo que el hueco sobrante queda al principio. 
+			if (isDaemon) {
+				OperatingSystem_InsertIntopartitionsAndHolesTable(
+					partitionIndex, HOLE, holeStartAddr, holeSize - processSize);
+					holeIndex = partitionIndex;
+					partitionFinalIndex = partitionIndex + 1;
+				// Si no es daemon, el proceso se carga al principio del hueco, por lo que el hueco sobrante queda al final.
+		} else {
+			OperatingSystem_InsertIntopartitionsAndHolesTable(
+				partitionIndex + 1, HOLE, holeStartAddr + processSize, holeSize - processSize);
+			holeIndex = partitionIndex + 1;
+			partitionFinalIndex = partitionIndex;
+		}
 	}
 
-	// Show assignment messages
-	ComputerSystem_DebugMessage(TIMED_MESSAGE, 43, SYSMEM, 
-		partitionIndex, holeStartAddr, processSize, assignedPID, executableProgram -> executableName);
+	// Show assignment messages (Hole first, then Partition)
 	if(holeSize > processSize){
 		ComputerSystem_DebugMessage(TIMED_MESSAGE, 44, SYSMEM, 
-			partitionIndex +1, holeStartAddr + processSize, holeSize - processSize,
+			holeIndex, partitionsAndHolesTable[holeIndex].initAddress, partitionsAndHolesTable[holeIndex].size,
 			assignedPID, executableProgram -> executableName);
 	}
+	ComputerSystem_DebugMessage(TIMED_MESSAGE, 43, SYSMEM, 
+		partitionFinalIndex, loadingPhysicalAddress, processSize, assignedPID, executableProgram -> executableName);
 
 	// Show partition table after allocation 
 	OperatingSystem_ShowPartitionsAndHolesTable("after allocating memory");
@@ -315,10 +342,11 @@ int OperatingSystem_CreateProcess(int indexOfExecutableProgram) {
 
 // Main memory is assigned in chunks. All chunks are the same size. A process
 // always obtains the chunk whose position in memory is equal to the processor identifier
-int OperatingSystem_ObtainMainMemory(int processSize, int PID __attribute__((unused))) {
-	int worstIndex = -1; 
-	int worstSize = -1; 
+int OperatingSystem_ObtainMainMemory(int processSize, int PID) {
+	int bestIndex = -1; 
+	int bestSize = -1; 
 	int maxHoleSize = 0;
+	int isDaemon = (programList[processTable[PID].programListIndex]->type == DAEMONPROGRAM);
 
 	for (int i = 0; i < numberOfPartitionsAndHoles; i++) {
 		if (partitionsAndHolesTable[i].PID == HOLE) { 
@@ -326,23 +354,29 @@ int OperatingSystem_ObtainMainMemory(int processSize, int PID __attribute__((unu
 			if (holeSize >= maxHoleSize) 
 				maxHoleSize = holeSize;
 			if(holeSize >= processSize){
-				if(worstIndex == -1 || holeSize > worstSize || 
-					(holeSize == worstSize && partitionsAndHolesTable[i].initAddress < partitionsAndHolesTable[worstIndex].initAddress)){
-					worstIndex = i; 
-					worstSize = holeSize;
+				if (isDaemon) {
+					// Last Fit for Daemons
+					bestIndex = i;
+				} else {
+					// Best Fit for Users (Corrected previous Worst-Fit typo)
+					if(bestIndex == -1 || holeSize < bestSize || 
+						(holeSize == bestSize && partitionsAndHolesTable[i].initAddress < partitionsAndHolesTable[bestIndex].initAddress)){
+						bestIndex = i; 
+						bestSize = holeSize;
+					}
 				}
 			}
 		}
 	}
 
-	if(worstIndex == -1){
+	if(bestIndex == -1){
 		if(processSize > OS_address_base)
 			return TOOBIGPROCESS;
 		else
 			return MEMORYFULL;
 	}
 
-	return worstIndex;
+	return bestIndex;
 }
 
 
@@ -845,6 +879,11 @@ void OperatingSystem_CoalesceHoles() {
 			partitionsAndHolesTable[i].size += partitionsAndHolesTable[i+1].size;
 			OperatingSystem_RemovePartitionOrHole(i+1);
 			coalesced = 1;
+			// After merging i and i+1, the new block at i might be mergeable with the one at i-1.
+			// By decrementing i, we ensure the next iteration will re-check from the previous position.
+			if (i > 0) {
+				i--;
+			}
 		} else {
 			i++;
 		}
