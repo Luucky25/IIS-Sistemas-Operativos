@@ -79,6 +79,14 @@ char * statesNames [5]={"NEW","READY","EXECUTING","BLOCKED","EXIT"};
 char * queueNames [NUMBEROFQUEUES] = {"HIGHPRIOUSER", "LOWPRIOUSER", "DAEMONS"};
 char * typeOfExceptions[] = {"division by zero", "invalid processor mode", "invalid address", "invalid instruction"};
 
+
+// :::::::::::::::::::::::::::::::::::::::::::::::::
+// VARIABLES SIMULACRO 
+// :::::::::::::::::::::::::::::::::::::::::::::::::
+int lastLTSTic = 0; 
+int lastLTSCreatedUserProcesses = 0;
+
+
 // Initial set of tasks of the OS
 void OperatingSystem_Initialize(int programsFromFileIndex) {
 	
@@ -182,6 +190,8 @@ int OperatingSystem_LongTermScheduler() {
   
 	int createdProcessPID, i,
 		numberOfSuccessfullyCreatedProcesses=0;
+
+	int userProcessesCreated = 0; 
 	
 	while (OperatingSystem_IsThereANewProgram() == YES) {
 		i=Heap_poll(arrivalTimeQueue,QUEUE_ARRIVAL,&numberOfProgramsInArrivalTimeQueue);
@@ -217,6 +227,10 @@ int OperatingSystem_LongTermScheduler() {
 	}
 	if(numberOfSuccessfullyCreatedProcesses > 0)
 		OperatingSystem_PrintStatus();
+
+	// NUEVO : Guardamos el estado para futuras excepciones 
+	lastLTSTic = numberOfClockInterrupts;
+	lastLTSCreatedUserProcesses = userProcessesCreated;
 
 	// Return the number of succesfully created processed 
 	return numberOfSuccessfullyCreatedProcesses;
@@ -520,7 +534,25 @@ void OperatingSystem_HandleException() {
 		exceptionDescription);
 	
 	OperatingSystem_TerminateExecutingProcess();
-	OperatingSystem_PrintStatus();
+	
+	// EXPLICACION : Como hemos eliminado la llamada al Short Term Scheduler mediante el Dispatch del TerminateExecutingProcess 
+	// 		Ahora podemos gestionar la llamada desde el handleException y meter en medio al LTS
+
+	if(executingProcessID != NOPROCESS){
+		int ticksSinceLastLTS = numberOfClockInterrupts - lastLTSTic; 
+
+		// ¿0 procesos creado y han pasado >= 2 tics? 
+		if(lastLTSCreatedUserProcesses == 0 && ticksSinceLastLTS >= 2){
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 115, SYSPROC, ticksSinceLastLTS);
+			OperatingSystem_LongTermScheduler();
+		}
+
+		// Recuperamos el STS y Dispatch que quitamos de Terminate Executing Process
+		int selectedProcess = OperatingSystem_ShortTermScheduler(); 
+		OperatingSystem_Dispatch(selectedProcess);
+		OperatingSystem_PrintStatus();
+	}
+
 }
 
 // All tasks regarding the removal of the executing process
@@ -558,12 +590,10 @@ void OperatingSystem_TerminateExecutingProcess() {
 	}
 	
 	// Select the next process to execute (sipID if no more user processes)
-	int selectedProcess=OperatingSystem_ShortTermScheduler();
-
+	//int selectedProcess=OperatingSystem_ShortTermScheduler();
 	// Assign the processor to that process
-	OperatingSystem_Dispatch(selectedProcess);
-
-	OperatingSystem_PrintStatus();
+	//OperatingSystem_Dispatch(selectedProcess);
+	//OperatingSystem_PrintStatus();
 }
 
 // System call management routine
@@ -584,14 +614,15 @@ void OperatingSystem_HandleSystemCall() {
 			// Show message: "Process [executingProcessID] has requested to terminate\n"
 			ComputerSystem_DebugMessage(TIMED_MESSAGE,73,SYSPROC,executingProcessID,programList[processTable[executingProcessID].programListIndex]->executableName);
 			OperatingSystem_TerminateExecutingProcess();
+			// Explicación : Siempre que se llame al TerminateExecutingProcess se gestionará el STS manualmente
+			if(executingProcessID != NOPROCESS){
+				// Recuperamos el STS y Dispatch que quitamos de Terminate Executing Process
+				int selectedProcess = OperatingSystem_ShortTermScheduler(); 
+				OperatingSystem_Dispatch(selectedProcess);
+				OperatingSystem_PrintStatus();
+			}
 			break;
-		//Ejercicio 14, incluir llamada SYSCAL_YIELD - Give control to 
-		//		READY process with same prio - Make it the highest prio process in the READY queue
-		//		Call function DebugMessage with custom message 55, using SHORTERMSCHEDULER 
-		//		if there's not same prio process in the READY queue or not anymore process in the READY queue {
-		//			do nothing, the executing process don't leave the CPU 
-		//			show custom message 56, using SHORTERMSCHEDULER
-		//			}
+
 		case SYSCALL_YIELD: 
 		{
 			int miQUEUEID = processTable[executingProcessID].queueID;
@@ -661,7 +692,13 @@ void OperatingSystem_HandleSystemCall() {
 		default:
 			ComputerSystem_DebugMessage(TIMED_MESSAGE, 33, INTERRUPT, executingProcessID, programList[processTable[executingProcessID].programListIndex]->executableName, systemCallID);
 			OperatingSystem_TerminateExecutingProcess();
-			OperatingSystem_PrintStatus();
+			//Explicación : Gestionamos manualmente la llamada al STS y Dispatch en TerminateExecutingProcess
+			if(executingProcessID != NOPROCESS){
+				// Recuperamos el STS y Dispatch que quitamos de Terminate Executing Process
+				int selectedProcess = OperatingSystem_ShortTermScheduler(); 
+				OperatingSystem_Dispatch(selectedProcess);
+				OperatingSystem_PrintStatus();
+			}
 			break;
 	}
 }
