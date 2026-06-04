@@ -8,6 +8,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "Clock.h"
 #include <time.h>
 
 // Functions prototypes
@@ -219,8 +220,10 @@ int OperatingSystem_LongTermScheduler() {
 				ComputerSystem_DebugMessage(TIMED_MESSAGE, 54, SYSPROC, createdProcessPID, statesNames[NEW], programList[i]->executableName);
 				
 				numberOfSuccessfullyCreatedProcesses++;
-				if (programList[i]->type==USERPROGRAM) 
+				if (programList[i]->type==USERPROGRAM) {
 					numberOfNotTerminatedUserProcesses++;
+					userProcessesCreated++;
+				}
 				// Move process to the ready state
 				OperatingSystem_MoveToTheREADYState(createdProcessPID);
 		}
@@ -229,7 +232,7 @@ int OperatingSystem_LongTermScheduler() {
 		OperatingSystem_PrintStatus();
 
 	// NUEVO : Guardamos el estado para futuras excepciones 
-	lastLTSTic = numberOfClockInterrupts;
+	lastLTSTic = Clock_GetTime();
 	lastLTSCreatedUserProcesses = userProcessesCreated;
 
 	// Return the number of succesfully created processed 
@@ -539,11 +542,11 @@ void OperatingSystem_HandleException() {
 	// 		Ahora podemos gestionar la llamada desde el handleException y meter en medio al LTS
 
 	if(executingProcessID != NOPROCESS){
-		int ticksSinceLastLTS = numberOfClockInterrupts - lastLTSTic; 
+		int ticksSinceLastLTS = Clock_GetTime() - lastLTSTic; 
 
 		// ¿0 procesos creado y han pasado >= 2 tics? 
 		if(lastLTSCreatedUserProcesses == 0 && ticksSinceLastLTS >= 2){
-			ComputerSystem_DebugMessage(TIMED_MESSAGE, 115, SYSPROC, ticksSinceLastLTS);
+			ComputerSystem_DebugMessage(TIMED_MESSAGE, 115, EXAM, ticksSinceLastLTS);
 			OperatingSystem_LongTermScheduler();
 		}
 
